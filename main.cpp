@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/22 17:38:07 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/22 18:38:18 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ ar.push_back(5);
     // cout << "The vector elements are : ";
     // for(ptr = ar.begin(); ptr < ar.end(); ptr++)
         cout << *ptr << " ";
-		*ptr = 10;
+		ptr + 10;
 		cout << *ptr << " ";
       
     return 0;    
