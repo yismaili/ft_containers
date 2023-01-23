@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/23 22:25:01 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:59:31 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ public:
     }
     ~vector()
     {
+    }
+    vector& operator= (const vector& x)
+    {
+       this.size = x.n;
+       this.alloc.allocator(x.n);
     }
 private:
     allocator_type alloc;
