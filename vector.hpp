@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/24 14:01:09 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:39:52 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,13 @@ public:
     
     template <class InputIterator>
     vector (InputIterator first, InputIterator last,const allocator_type& alloc = allocator_type()){
-                    
+        this.size = last - first;
+        this.ptr = alloc.allocte(last - first);
+        this->capacity = last - first;
+        for (first < last; first++)
+        {
+            alloc.construct(ptr++, first)
+        }
     }
     
     vector& operator= (const vector& x)
