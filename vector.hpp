@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/26 00:34:00 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 00:43:00 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,18 @@ public:
         exit (0);
     }
     return (ptr[pos]);
+   }
+   reference front(){
+    return (ptr[0]);
+   }
+   const_reference front() const{
+    return (ptr[0]);
+   }
+   reference back(){
+    return (ptr[size()]);
+   }
+   const_reference back() const{
+    return (ptr[size()]);
    }
    /*-------------Capacity------------------*/
    size_type size() const{
