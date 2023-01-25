@@ -6,13 +6,13 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/26 00:14:16 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 00:34:00 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <memory>
-
+ namespace ft {
 template<typename T, class allocator = std::allocator<T> >
 class vector
 {
@@ -72,14 +72,36 @@ public:
         this.capacity = x.n;
     }
    /*----------Element access--------------*/
-   T & reference at( size_type pos )
+   reference at( size_type pos )
    {
     if (pos >= size()){
-        throw ft::out_ofrange("Position out of range");
+        std::cont<< "Position out of range"<<std::endl;
+        exit (0);
     }
     return (ptr[pos]);
    }
-   
+   const_reference at( size_type pos ) const{
+    if (pos >= size()){
+        std::cont<< "Position out of range"<<std::endl;
+        exit (0);
+    }
+    return (ptr[pos]);
+   }
+   reference operator[]( size_type pos )
+   {
+    if (pos >= size()){
+        std::cont<< "Position out of range"<<std::endl;
+        exit (0);
+    }
+    return (ptr[pos]);
+   }
+   const_reference operator[]( size_type pos ) const{
+    if (pos >= size()){
+        std::cont<< "Position out of range"<<std::endl;
+        exit (0);
+    }
+    return (ptr[pos]);
+   }
    /*-------------Capacity------------------*/
    size_type size() const{
     size_type len = 0;
@@ -94,3 +116,4 @@ private:
     size_type capacity;
 };
 
+ }
