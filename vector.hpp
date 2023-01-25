@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/24 15:39:52 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 00:14:16 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ public:
     vector(const allocator_type & alloc = allocator_type){
         size = 0;
         ptr = NULL;
+        capacity = 0;
     }
     
     vector (size_type n, const value_type& val = value_type(),const allocator_type& alloc = allocator_type()){
@@ -70,7 +71,22 @@ public:
         }
         this.capacity = x.n;
     }
-    
+   /*----------Element access--------------*/
+   T & reference at( size_type pos )
+   {
+    if (pos >= size()){
+        throw ft::out_ofrange("Position out of range");
+    }
+    return (ptr[pos]);
+   }
+   
+   /*-------------Capacity------------------*/
+   size_type size() const{
+    size_type len = 0;
+    while (ptr[len])
+        len ++;
+    return (len);
+   }
 private:
     allocator_type alloc;
     size_type size;
