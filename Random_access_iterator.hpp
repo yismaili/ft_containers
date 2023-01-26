@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/26 22:25:13 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/27 00:08:23 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,16 @@
   template <typename T> class Random_access_iterator
    {
    private:
-        T *ptr
+        T *ptr;
    public:
     Random_access_iterator(){}
-    Random_access_iterator(T *ptr_)
-    {
-        this.ptr = ptr;
+    Random_access_iterator(T *ptr_){
+        ptr = ptr_;
     }
      ~Random_access_iterator(){}
     Random_access_iterator(const Random_access_iterator &obj)
     {
-        this.ptr = obj.ptr;
+        ptr = obj.ptr;
     }
     Random_access_iterator & operator=(const Random_access_iterator &obj)
     {
@@ -34,14 +33,14 @@
         return (*this);
     }
      bool operator == (const Random_access_iterator &opj) {
-          if (this.ptr == opj.ptr){
+          if (ptr == opj.ptr){
                return (true);
           }else {
                return (false);
           }
        } 
      bool operator != (const Random_access_iterator &opj) {
-          if (this.ptr != opj.ptr){
+          if (ptr != opj.ptr){
                return (true);
           }else {
                return (false);
@@ -54,20 +53,20 @@
           return (&*ptr);
      }
      Random_access_iterator& operator++(){
-          ++ptr
+          ++ptr;
           return (*this);
      }
      Random_access_iterator& operator--(){
-          --ptr
+          --ptr;
           return (*this);
      }
      Random_access_iterator operator++(int){ //!!!!!!
           
-          ptr++
+          ptr++;
           return (ptr);
      }
      Random_access_iterator& operator--(int){
-          ptr--
+          ptr--;
           return (ptr);
      }
      Random_access_iterator& operator+(const int n){
@@ -85,13 +84,13 @@
           return (*this);
      }
      Random_access_iterator& operator+=(const Random_access_iterator &obj){
-          return (this.ptr + obj.ptr);
+          return (ptr + obj.ptr);
      }
      Random_access_iterator& operator-=(const Random_access_iterator &obj){
-          return (this.ptr - obj.ptr);
+          return (ptr - obj.ptr);
      }
      bool operator<(const Random_access_iterator &obj){
-          if (this.ptr < obj.ptr){
+          if (ptr < obj.ptr){
                return (true);
           }
           else {
@@ -99,7 +98,7 @@
           }
      }
      bool operator>(const Random_access_iterator &obj){
-          if (this.ptr > obj.ptr){
+          if (ptr > obj.ptr){
                return (true);
           }
           else {
@@ -107,7 +106,7 @@
           }
      }
      bool operator<=(const Random_access_iterator &obj){
-          if (this.ptr <= obj.ptr){
+          if (ptr <= obj.ptr){
                return (true);
           }
           else {
@@ -115,7 +114,7 @@
           }
      }
      bool operator>=(const Random_access_iterator &obj){
-          if (this.ptr >= obj.ptr){
+          if (ptr >= obj.ptr){
                return (true);
           }
           else {
