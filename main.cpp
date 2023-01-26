@@ -6,30 +6,25 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/23 21:27:37 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 01:02:12 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include<iostream>
 #include<iterator> 
-#include<vector>
-using namespace std;
+#include "vector.hpp"
+void pointer_func(const int* p,ft::size_type size)
+{
+   std::cout << "data = ";
+    for (ft::size_type i = 0; i < size; ++i)
+       std::cout << p[i] << ' ';
+   std::cout << '\n';
+}
+ 
+ 
 int main()
 {
-   vector<int> ar;
-ar.push_back(1);
-ar.push_back(2);
-ar.push_back(33);
-ar.push_back(4);
-ar.push_back(5);
-    vector<int>::iterator ptr;
-	ptr = ar.begin();
-    // cout << "The vector elements are : ";
-    // for(ptr = ar.begin(); ptr < ar.end(); ptr++)
-        cout << *ptr << " ";
-		ptr + 10;
-		cout << *ptr << " ";
-      
-    return 0;    
+   ft::vector<int> container { 1, 2, 3, 4 };
+    pointer_func(container.data(), container.size());
 }
 

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/26 00:43:00 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 00:58:33 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ public:
     }
     return (ptr[pos]);
    }
+   
    const_reference at( size_type pos ) const{
     if (pos >= size()){
         std::cont<< "Position out of range"<<std::endl;
@@ -87,6 +88,7 @@ public:
     }
     return (ptr[pos]);
    }
+   
    reference operator[]( size_type pos )
    {
     if (pos >= size()){
@@ -95,6 +97,7 @@ public:
     }
     return (ptr[pos]);
    }
+   
    const_reference operator[]( size_type pos ) const{
     if (pos >= size()){
         std::cont<< "Position out of range"<<std::endl;
@@ -102,18 +105,31 @@ public:
     }
     return (ptr[pos]);
    }
+   
    reference front(){
     return (ptr[0]);
    }
+   
    const_reference front() const{
     return (ptr[0]);
    }
+   
    reference back(){
     return (ptr[size()]);
    }
+   
    const_reference back() const{
     return (ptr[size()]);
    }
+   
+   T* data(){
+    return (ptr);
+   }
+   
+   const T* data() const{
+    return (ptr);
+   }
+   
    /*-------------Capacity------------------*/
    size_type size() const{
     size_type len = 0;
@@ -121,6 +137,7 @@ public:
         len ++;
     return (len);
    }
+   
 private:
     allocator_type alloc;
     size_type size;
