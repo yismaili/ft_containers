@@ -6,12 +6,13 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/26 01:08:42 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:36:03 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <memory>
+#include "Random_access_iterator.hpp"
  namespace ft {
 template<typename T, class allocator = std::allocator<T> >
 class vector
@@ -75,34 +76,23 @@ public:
    reference at( size_type pos )
    {
     if (pos >= size()){
-        std::cont<< "Position out of range"<<std::endl;
-        exit (0);
+         throw std::out_of_range("Position out of range");
     }
     return (ptr[pos]);
    }
    
    const_reference at( size_type pos ) const{
     if (pos >= size()){
-        std::cont<< "Position out of range"<<std::endl;
-        exit (0);
+       throw std::out_of_range("Position out of range");
     }
     return (ptr[pos]);
    }
    
-   reference operator[]( size_type pos )
-   {
-    if (pos >= size()){
-        std::cont<< "Position out of range"<<std::endl;
-        exit (0);
-    }
+   reference operator[]( size_type pos ){
     return (ptr[pos]);
    }
    
    const_reference operator[]( size_type pos ) const{
-    if (pos >= size()){
-        std::cont<< "Position out of range"<<std::endl;
-        exit (0);
-    }
     return (ptr[pos]);
    }
    
@@ -115,11 +105,11 @@ public:
    }
    
    reference back(){
-    return (ptr[size()]);
+    return (ptr[size() -1]);
    }
    
    const_reference back() const{
-    return (ptr[size()]);
+    return (ptr[size() -1]);
    }
    
    T* data(){
@@ -137,6 +127,7 @@ public:
         len ++;
     return (len);
    }
+   
    bool empty() const{
     if (begin() == end()){
         return (true)
@@ -145,11 +136,24 @@ public:
         return (false);
     }
    }
+
    size_type max_size() const{
-    return (capacity);
+    return (alloc.max_size());
    }
-   void reserve( size_type new_cap ){
-    
+   
+   size_type capacity() const{
+    return (size() * 2);
+   }
+   /*-------------- Modifiers ------------------*/
+
+   void clear(){
+    for (size_t i = 0; i < size(); i++)
+    {
+         this.alloc.deallocate(ptr[i]);
+    }
+    iterator insert( const_iterator pos, const T& value ){
+        
+    }
    }
 private:
     allocator_type alloc;
