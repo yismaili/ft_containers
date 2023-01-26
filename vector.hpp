@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/26 00:58:33 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 01:08:42 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,20 @@ public:
         len ++;
     return (len);
    }
-   
+   bool empty() const{
+    if (begin() == end()){
+        return (true)
+    }
+    else {
+        return (false);
+    }
+   }
+   size_type max_size() const{
+    return (capacity);
+   }
+   void reserve( size_type new_cap ){
+    
+   }
 private:
     allocator_type alloc;
     size_type size;
