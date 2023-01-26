@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/26 21:31:06 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 22:34:03 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ public:
     
     ~vector()
     {
+        for (size_t i = 0; i < size_v; i++){
+            this.alloc.deallocate(ptr[i]);
+        }
     }
     
     template <class InputIterator>
@@ -56,8 +59,7 @@ public:
         this.size = last - first;
         this.ptr = alloc.allocte(last - first);
         this->capacity = last - first;
-        for (first < last; first++)
-        {
+        for (first < last; first++){
             alloc.construct(ptr++, first)
         }
     }
