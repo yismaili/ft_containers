@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/22 18:39:59 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 19:23:14 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
           return (*this->ptr);
      }
      Random_access_iterator& operator->(){
-          return (ptr);
+          return (&*ptr);
      }
      Random_access_iterator& operator++(){
           ++ptr
@@ -61,7 +61,8 @@
           --ptr
           return (*this);
      }
-     Random_access_iterator& operator++(int){
+     Random_access_iterator operator++(int){
+          
           ptr++
           return (ptr);
      }
@@ -120,6 +121,9 @@
           else {
                return (false);
           }
+     }
+      Random_access_iterator& operator[](const int n){
+          return (ptr[n]);
      }
     };
  };
