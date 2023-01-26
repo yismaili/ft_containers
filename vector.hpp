@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/26 16:36:03 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/26 21:31:06 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ public:
     typedef typename allocator_type::size_type       size_type;
     
     vector(const allocator_type & alloc = allocator_type){
-        size = 0;
+        size_v = 0;
         ptr = NULL;
         capacity = 0;
     }
     
     vector (size_type n, const value_type& val = value_type(),const allocator_type& alloc = allocator_type()){
-        size = n;
+        size_v = n;
         ptr = alloc.allocate(n);
         for (size_t i = 0; i < n; i++){
             alloc.construct(ptr + i, val);
@@ -151,13 +151,35 @@ public:
     {
          this.alloc.deallocate(ptr[i]);
     }
-    iterator insert( const_iterator pos, const T& value ){
-        
-    }
    }
+    /*---------------Iterators--------------------*/
+    iterator begin(){
+        return (ptr[0]);
+    }
+    const_iterator begin() const{
+        return (ptr[0]); 
+    }
+    iterator end(){
+        return (ptr[size() - 1]);
+    }
+    const_iterator end() const{
+        return (ptr[size() - 1]); 
+    }
+    reverse_iterator rbegin(){
+        return (ptr[size() - 1]);  
+    }
+    const_reverse_iterator rbegin() const{
+        return (ptr[size() - 1]);  
+    }
+    reverse_iterator rend(){
+        return (ptr[0]);  
+    }
+    const_reverse_iterator rend() const{
+        return (ptr[0]); 
+    }
 private:
     allocator_type alloc;
-    size_type size;
+    size_type size_v;
     pointer ptr;
     size_type capacity;
 };
