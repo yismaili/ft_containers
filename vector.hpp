@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/27 00:56:52 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:27:31 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ public:
         size_v = 0;
         ptr = NULL;
         capacity_v = 0;
+        (void)alloc;
     }
     
     vector (size_type n, const value_type& val = value_type(),const allocator_type& alloc = allocator_type()){
@@ -49,9 +50,9 @@ public:
     
     ~vector()
     {
-        for (size_t i = 0; i < size_v; i++){
-            alloc.deallocate(ptr[i]);
-        }
+        // for (size_t i = 0; i < size_v; i++){
+        //     alloc.deallocate(ptr[i]);
+        // }
     }
     
     template <class InputIterator>
@@ -156,13 +157,6 @@ public:
    size_type capacity() const{
     return (size() * 2);
    }
-   /*-------------- Modifiers ------------------*/
-
-   void clear(){
-    for (size_t i = 0; i < size(); i++){
-        alloc.deallocate(ptr[i]);
-    }
-   }
     /*---------------Iterators--------------------*/
     iterator begin(){
         return (ptr[0]);
@@ -188,6 +182,14 @@ public:
     // const_reverse_iterator rend() const{
     //     return (ptr[0]); 
     // }
+    
+   /*-------------- Modifiers ------------------*/
+
+   void clear(){
+    for (size_t i = 0; i < size(); i++){
+        alloc.deallocate(ptr[i]);
+    }
+   }
 private:
     allocator_type alloc;
     size_type size_v;

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/27 00:08:23 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:23:01 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
         this->ptr = obj.ptr;
         return (*this);
     }
+    
      bool operator == (const Random_access_iterator &opj) {
           if (ptr == opj.ptr){
                return (true);

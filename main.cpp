@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/27 01:24:14 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:20:32 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void pointer_func(const int* p,ft::vector<int>::size_type size)
        std::cout << p[i] << ' ';
    std::cout << '\n';
 }
- 
  
 int main()
 {
