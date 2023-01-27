@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/27 22:40:36 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:49:08 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ public:
           for (size_t i = 0; i < size_v; i++){
             alloc.destroy(ptr + i);
         }
-        deallocate(ptr, capacity_v);
+        alloc.deallocate(ptr, capacity_v);
     }
     
     template <class InputIterator>
@@ -198,6 +198,10 @@ public:
         alloc.deallocate(ptr[i]);
     }
    }
+//    iterator insert( const_iterator pos, const T& value ){
+    
+//    }
+   
 private:
     allocator_type alloc;
     size_type size_v;
