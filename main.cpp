@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/26 22:34:57 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/27 00:55:38 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void pointer_func(const int* p,ft::vector<int>::size_type size)
 }
  
  
-int main()
-{
-   ft::vector<int> container;
-   pointer_func(container.data(), container.size());
-}
+// int main()
+// {
+//    ft::vector<int> container;
+//    pointer_func(container.data(), container.size());
+// }
 
