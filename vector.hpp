@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/28 19:43:55 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/28 21:12:10 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,25 @@ public:
     }
     return (ptr);
    }
+   
+   void push_back( const T& value ){
+    if (capacity_v == size_v){
+        reserve((capacity_v +1)*2);
+    }
+    ptr[size_v ++] = value;
+   }
+   
+   void pop_back(){
+    if (!empty()){
+        return (ptr[size_v - 1]);
+    }else {
+        throw std::out_of_range("Empty !!!");
+    }
+   }
+
+void resize( size_type count, T value = T() ){
+    if ()
+}
 private:
     allocator_type alloc;
     size_type size_v;
@@ -289,3 +308,17 @@ private:
 };
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
