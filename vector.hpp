@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/28 18:43:28 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:43:55 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,8 +242,44 @@ public:
     }
     return (ptr);
    }
-   iterator insert( const_iterator pos, size_type count, const T& value ){
-    
+   constexpr iterator insert( const_iterator pos, size_type count, const T& value ){
+    if (capacity_v == size_v){
+        reserve(capacity_v * 2);
+    }
+    int i = size_v - 1;
+    int j = pos - ptr;
+    while (i > j)
+    {
+       ptr[i + 1] = ptr[i];
+       i--;
+    }
+    int k = 0;
+    while (k < count)
+    {
+        size_v++;
+        ptr[j++] = std::move(value);
+        k++; 
+    }
+    return (ptr);
+   }
+   template< class InputIt >
+    iterator insert( const_iterator pos, InputIt first, InputIt last ){
+    if (capacity_v == size_v){
+        reserve(capacity_v * 2);
+    }
+    int i = size_v - 1;
+    int j = pos - ptr;
+    while (i > j)
+    {
+       ptr[i + 1] = ptr[i];
+       i--;
+    }
+    while (first < last)
+    {
+        size_v++;
+        ptr[j++] = std::move(first++);
+    }
+    return (ptr);
    }
 private:
     allocator_type alloc;
