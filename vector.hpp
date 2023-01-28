@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/28 23:33:23 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/28 23:50:27 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,6 +310,28 @@ void resize( size_type count, T value = T() ){
         push_back(value);
     }
 }
+
+void swap( vector& other ){
+    
+    size_type capacity_tmp = other.capacity_v;
+    size_type size_tmp = other.size_v;
+    pointer ptr_tmp = other.ptr;
+    
+    other.capacity_v = capacity_v;
+    capacity_v = capacity_tmp;
+    other.size_v = size_v;
+    size_v = size_tmp;
+    other.ptr = ptr;
+    ptr = ptr_tmp; 
+}
+
+// iterator erase( iterator pos ){
+    
+// }
+
+// iterator erase( iterator first, iterator last ){
+    
+// }
 private:
     allocator_type alloc;
     size_type size_v;
