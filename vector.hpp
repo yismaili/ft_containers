@@ -6,13 +6,14 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/28 21:12:10 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/28 23:50:27 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <memory>
 #include "Random_access_iterator.hpp"
+#include <stdexcept>
  namespace ft {
 template<typename T, class allocator = std::allocator<T> >
 class vector
@@ -170,7 +171,7 @@ public:
     if (new_cap < size_v){
         return ;
     }
-     ptr = alloc.allocate(n);
+     ptr = alloc.allocate(new_cap);
      capacity_v = new_cap;
    }
     /*---------------Iterators--------------------*/
@@ -242,26 +243,26 @@ public:
     }
     return (ptr);
    }
-   constexpr iterator insert( const_iterator pos, size_type count, const T& value ){
-    if (capacity_v == size_v){
-        reserve(capacity_v * 2);
-    }
-    int i = size_v - 1;
-    int j = pos - ptr;
-    while (i > j)
-    {
-       ptr[i + 1] = ptr[i];
-       i--;
-    }
-    int k = 0;
-    while (k < count)
-    {
-        size_v++;
-        ptr[j++] = std::move(value);
-        k++; 
-    }
-    return (ptr);
-   }
+//    constexpr iterator insert( const_iterator pos, size_type count, const T& value ){
+//     if (capacity_v == size_v){
+//         reserve(capacity_v * 2);
+//     }
+//     int i = size_v - 1;
+//     int j = pos - ptr;
+//     while (i > j)
+//     {
+//        ptr[i + 1] = ptr[i];
+//        i--;
+//     }
+//     int k = 0;
+//     while (k < count)
+//     {
+//         size_v++;
+//         ptr[j++] = std::move(value);
+//         k++; 
+//     }
+//     return (ptr);
+//    }
    template< class InputIt >
     iterator insert( const_iterator pos, InputIt first, InputIt last ){
     if (capacity_v == size_v){
@@ -291,15 +292,46 @@ public:
    
    void pop_back(){
     if (!empty()){
-        return (ptr[size_v - 1]);
+       alloc.destroy(ptr[size_v - 1]);
+       size_v--;
     }else {
         throw std::out_of_range("Empty !!!");
     }
    }
 
 void resize( size_type count, T value = T() ){
-    if ()
+    if (size_v > count){
+        pop_back();
+    }
+    else if (size_v < count){
+        throw std::out_of_range("appended !!!");
+    }
+    else {
+        push_back(value);
+    }
 }
+
+void swap( vector& other ){
+    
+    size_type capacity_tmp = other.capacity_v;
+    size_type size_tmp = other.size_v;
+    pointer ptr_tmp = other.ptr;
+    
+    other.capacity_v = capacity_v;
+    capacity_v = capacity_tmp;
+    other.size_v = size_v;
+    size_v = size_tmp;
+    other.ptr = ptr;
+    ptr = ptr_tmp; 
+}
+
+// iterator erase( iterator pos ){
+    
+// }
+
+// iterator erase( iterator first, iterator last ){
+    
+// }
 private:
     allocator_type alloc;
     size_type size_v;
@@ -308,17 +340,4 @@ private:
 };
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
