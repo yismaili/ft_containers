@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/30 22:17:59 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/30 22:36:12 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,11 +215,10 @@ public:
    /*-------------- Modifiers ------------------*/
 
    void clear(){
-    size_t i = 0;
-    while (i < size_v)
+    while (size_v)
     {
-        alloc.destroy(ptr + i);
-        i++;
+        alloc.destroy(ptr + size_v);
+        size_v--;
     }
     }
    
