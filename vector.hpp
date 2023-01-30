@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/28 23:50:27 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/30 12:49:57 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,13 +179,13 @@ public:
         return (ptr[0]);
     }
     const_iterator begin() const{
-        return (ptr[0]); 
+        return (ptr); 
     }
     iterator end(){
         return (ptr[size() - 1]);
     }
     const_iterator end() const{
-        return (ptr[size() - 1]); 
+        return (ptr + (size() - 1)); 
     }
     reverse_iterator rbegin(){
         return (ptr[size() - 1]);  
@@ -292,7 +292,7 @@ public:
    
    void pop_back(){
     if (!empty()){
-       alloc.destroy(ptr[size_v - 1]);
+       alloc.destroy(ptr + (size_v - 1));
        size_v--;
     }else {
         throw std::out_of_range("Empty !!!");
@@ -326,7 +326,13 @@ void swap( vector& other ){
 }
 
 // iterator erase( iterator pos ){
-    
+//     size_t index = pos - begin();
+//     size_t j = 0;
+//      for (size_t i = index; p != end())
+//      {
+//         ptr_tmp[i]
+//      }
+     
 // }
 
 // iterator erase( iterator first, iterator last ){
