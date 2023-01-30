@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/30 16:31:07 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/30 22:17:59 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,13 +188,13 @@ public:
    }
     /*---------------Iterators--------------------*/
     iterator begin(){
-        return (ptr[0]);
+        return (ptr);
     }
     const_iterator begin() const{
         return (ptr); 
     }
     iterator end(){
-        return (ptr[size() - 1]);
+        return (ptr + (size() - 1));
     }
     const_iterator end() const{
         return (ptr + (size() - 1)); 
@@ -206,26 +206,29 @@ public:
         return (ptr[size() - 1]);  
     }
     reverse_iterator rend(){
-        return (ptr[0]);  
+        return (ptr);  
     }
     const_reverse_iterator rend() const{
-        return (ptr[0]); 
+        return (ptr); 
     }
     
    /*-------------- Modifiers ------------------*/
 
    void clear(){
-    for (size_t i = 0; i < size(); i++){
-        alloc.deallocate(ptr[i]);
+    size_t i = 0;
+    while (i < size_v)
+    {
+        alloc.destroy(ptr + i);
+        i++;
     }
-   }
+    }
    
-   iterator insert( const_iterator pos, const T& value ){
+   iterator insert(iterator pos, const T& value ){
     if (capacity_v == size_v){
         reserve(capacity_v * 2);
     }
     int i = size_v - 1;
-    int j = pos - ptr;
+    int j = ptr - pos;
     while (i > j)
     {
        ptr[i + 1] = ptr[i];

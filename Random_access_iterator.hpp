@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/27 16:23:01 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/30 22:18:09 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
    private:
         T *ptr;
    public:
+   typedef T* reference;
+   typedef T& pointer;
     Random_access_iterator(){}
     Random_access_iterator(T *ptr_){
         ptr = ptr_;
@@ -47,10 +49,10 @@
                return (false);
           }
        } 
-     Random_access_iterator& operator*(){
-          return (*this->ptr);
+     reference operator*(){
+          return (*ptr);
      }
-     Random_access_iterator& operator->(){
+     pointer operator->(){
           return (&*ptr);
      }
      Random_access_iterator& operator++(){
