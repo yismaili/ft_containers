@@ -1,7 +1,7 @@
 
 NAME = containers
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++98 # -g -fsanitize=address
 SRCS = main.cpp 
 HDR = vector.hpp Random_access_iterator.hpp
 OBJS = $(SRCS:.cpp=.o)
