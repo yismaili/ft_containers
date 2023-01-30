@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/30 22:18:04 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/30 23:00:14 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 int main ()
 {try
 {
-    ft::vector<int> myvector;
-    //std::vector<int> myvector;
+     ft::vector<int> myvector;
+    // std::vector<int> myvector;
    int j = 0;
    while (j < 10)
    {
@@ -27,19 +27,21 @@ int main ()
       myvector.push_back(j);
       j++;
    }
-  std::cout<< "size "<< myvector.size() << std::endl;
-  std::cout<< "capasity "<< myvector.capacity() << std::endl;
-  std::cout<< "at "<< myvector.at(2) << std::endl;
-  std::cout<< "front "<< myvector.front() << std::endl;
-  std::cout<< "back "<< myvector.back() << std::endl;
-  std::cout<< "data "<< myvector.data()[8]<< std::endl;
+  // std::cout<< "size "<< myvector.size() << std::endl;
+  // std::cout<< "capasity "<< myvector.capacity() << std::endl;
+  // std::cout<< "at "<< myvector.at(2) << std::endl;
+  // std::cout<< "front "<< myvector.front() << std::endl;
+  // std::cout<< "back "<< myvector.back() << std::endl;
+  // std::cout<< "data "<< myvector.data()[8]<< std::endl;
   // std::cout<< "begin "<< *myvector.begin()<< std::endl;
 //  std::cout<< "end "<< *myvector.end()<< std::endl;
   std::cout << "myvector contains:\n";
   for (int i=0;i < (int )myvector.size();i++)
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
-myvector.clear();
+myvector.resize(89, 0);
+ std::cout<< "size "<< myvector.size() << std::endl;
+  std::cout<< "capasity "<< myvector.capacity() << std::endl;
   std::cout << "myvector contains:\n";
   for (int i=0;i < (int )myvector.size();i++)
     std::cout << ' ' << myvector[i];
