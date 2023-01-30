@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/30 12:49:57 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:31:07 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,7 @@ public:
    
    /*-------------Capacity------------------*/
    size_type size() const{
-    size_type len = 0;
-    while (ptr[len])
-        len ++;
-    return (len);
+    return (size_v);
    }
    
    bool empty() const{
@@ -164,15 +161,30 @@ public:
    }
    
    size_type capacity() const{ // is it not correct 
-    return (size() * 2);
+    return (capacity_v);
    }
 
    void reserve( size_type new_cap ){
-    if (new_cap < size_v){
+    if (new_cap < capacity_v){
         return ;
     }
-     ptr = alloc.allocate(new_cap);
-     capacity_v = new_cap;
+    pointer ptr_tmp ;
+    ptr_tmp = alloc.allocate(new_cap);
+    int i  = 0;
+    while (i < (int)size_v)
+    {
+        alloc.construct(ptr_tmp + i, *(ptr + i)); 
+        i++;
+    }
+    i = 0;
+    while (i < (int)size_v)
+    {
+        alloc.destroy(ptr + i);
+        i++;
+    }
+    alloc.deallocate(ptr, capacity_v);
+    std::swap(ptr, ptr_tmp);
+    capacity_v = new_cap;
    }
     /*---------------Iterators--------------------*/
     iterator begin(){
@@ -284,10 +296,14 @@ public:
    }
    
    void push_back( const T& value ){
-    if (capacity_v == size_v){
-        reserve((capacity_v +1)*2);
+    if (capacity_v == 0){
+        reserve(1);
     }
-    ptr[size_v ++] = value;
+   else if (capacity_v == size_v){
+        reserve((capacity_v) * 2);
+    }
+    alloc.construct(ptr + size_v, value);
+    size_v++;
    }
    
    void pop_back(){
