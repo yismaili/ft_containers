@@ -6,24 +6,33 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/27 16:20:32 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/30 12:51:46 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<iostream>
 #include<iterator> 
+#include <iostream>
 #include "vector.hpp"
-void pointer_func(const int* p,ft::vector<int>::size_type size)
+
+int main ()
+{try
 {
-   std::cout << "data = ";
-    for (ft::vector<int>::size_type i = 0; i < size; ++i)
-       std::cout << p[i] << ' ';
-   std::cout << '\n';
+   ft::vector<int> myvector;
+  for (int i=1;i<10;i++) myvector.push_back(i);
+
+  myvector.push_back(5);
+  myvector.push_back(8);
+  myvector.push_back(12);
+
+  std::cout << "myvector contains:";
+  for (int i=0;i < (int )myvector.size();i++)
+    std::cout << ' ' << myvector[i];
+  std::cout << '\n';
 }
- 
-int main()
+catch(const std::exception& e)
 {
-   ft::vector<int> container;
-   pointer_func(container.data(), container.size());
+   std::cerr << e.what() << '\n';
 }
 
+  return 0;
+}
