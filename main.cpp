@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/31 15:37:45 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:57:03 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int main ()
 {
       ft::vector<int> myvector;
     // std::vector<int> myvector;
-   int j = 0;
-   while (j < 10)
+   int j = 11;
+   while (j > 0)
    {
       //  std::cout<< "hey youn"<< std::endl;
       myvector.push_back(j);
-      j++;
+      j--;
    }
   // std::cout<< "size "<< myvector.size() << std::endl;
   // std::cout<< "capasity "<< myvector.capacity() << std::endl;
@@ -34,12 +34,12 @@ int main ()
   // std::cout<< "back "<< myvector.back() << std::endl;
   // std::cout<< "data "<< myvector.data()[8]<< std::endl;
    std::cout<< "begin "<< *myvector.begin()<< std::endl;
-//  std::cout<< "end "<< *myvector.end()<< std::endl;
+  std::cout<< "end "<< *myvector.end() + 1<< std::endl;
   std::cout << "myvector contains:\n";
   for (int i=0;i < (int )myvector.size();i++)
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
- myvector.insert(myvector.end()+1 , 9);
+//  myvector.insert(myvector.end()+1 , 9);
  std::cout<< "size "<< myvector.size() << std::endl;
   std::cout<< "capasity "<< myvector.capacity() << std::endl;
   std::cout << "myvector contains:\n";
