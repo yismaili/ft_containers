@@ -6,20 +6,22 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/30 22:18:09 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:09:53 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-
+#include <cstddef>
+     
  namespace ft {
   template <typename T> class Random_access_iterator
    {
    private:
         T *ptr;
    public:
-   typedef T* reference;
-   typedef T& pointer;
+   typedef T& reference;
+   typedef T* pointer;
+   typedef std::ptrdiff_t difference_type;
     Random_access_iterator(){}
     Random_access_iterator(T *ptr_){
         ptr = ptr_;
@@ -77,6 +79,9 @@
      }
      Random_access_iterator& operator-(const int n){
           return (ptr - n);
+     }
+    int operator-(const Random_access_iterator& other){
+          return (ptr - other.ptr);
      }
      Random_access_iterator& operator+=(const int n){
           ptr +=n;

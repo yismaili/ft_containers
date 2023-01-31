@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/30 23:05:48 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/01/31 13:09:27 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <memory>
 #include "Random_access_iterator.hpp"
 #include <stdexcept>
+#include <iterator>
  namespace ft {
 template<typename T, class allocator = std::allocator<T> >
 class vector
@@ -188,29 +189,29 @@ public:
    }
     /*---------------Iterators--------------------*/
     iterator begin(){
-        return (ptr);
+        return (iterator(ptr));
     }
     const_iterator begin() const{
-        return (ptr); 
+        return (iterator(ptr)); 
     }
     iterator end(){
-        return (ptr + (size() - 1));
+        return (iterator(ptr + size_v));
     }
     const_iterator end() const{
-        return (ptr + (size() - 1)); 
+        return (iterator(ptr + size_v)); 
     }
-    reverse_iterator rbegin(){
-        return (ptr[size() - 1]);  
-    }
-    const_reverse_iterator rbegin() const{
-        return (ptr[size() - 1]);  
-    }
-    reverse_iterator rend(){
-        return (ptr);  
-    }
-    const_reverse_iterator rend() const{
-        return (ptr); 
-    }
+    // reverse_iterator rbegin(){
+    //     return (ptr[size() - 1]);  
+    // }
+    // const_reverse_iterator rbegin() const{
+    //     return (ptr[size() - 1]);  
+    // }
+    // reverse_iterator rend(){
+    //     return (ptr);  
+    // }
+    // const_reverse_iterator rend() const{
+    //     return (ptr); 
+    // }
     
    /*-------------- Modifiers ------------------*/
 
@@ -227,7 +228,7 @@ public:
         reserve(capacity_v * 2);
     }
     int i = size_v - 1;
-    int j = ptr - pos;
+    int  j = pos - begin();
     while (i > j)
     {
        ptr[i + 1] = ptr[i];
@@ -237,26 +238,26 @@ public:
     ptr[j] = std::move(value);
     return (ptr);
    }
-   iterator insert( const_iterator pos, size_type count, const T& value ){
-    if (capacity_v == size_v){
-        reserve(capacity_v * 2);
-    }
-    int i = size_v - 1;
-    int j = pos - ptr;
-    while (i > j)
-    {
-       ptr[i + 1] = ptr[i];
-       i--;
-    }
-    int k = 0;
-    while (k < count)
-    {
-        size_v++;
-        ptr[j++] = std::move(value);
-        k++; 
-    }
-    return (ptr);
-   }
+//    iterator insert( const_iterator pos, size_type count, const T& value ){
+//     if (capacity_v == size_v){
+//         reserve(capacity_v * 2);
+//     }
+//     int i = size_v - 1;
+//     int j = pos - ptr;
+//     while (i > j)
+//     {
+//        ptr[i + 1] = ptr[i];
+//        i--;
+//     }
+//     int k = 0;
+//     while (k < count)
+//     {
+//         size_v++;
+//         ptr[j++] = std::move(value);
+//         k++; 
+//     }
+//     return (ptr);
+//    }
 //    constexpr iterator insert( const_iterator pos, size_type count, const T& value ){
 //     if (capacity_v == size_v){
 //         reserve(capacity_v * 2);
