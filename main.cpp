@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/01 16:31:53 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:14:10 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int main ()
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
 // myvector.insert(myvector.end()+1 , 9);
-ft::vector<int>vctor(myvector.begin(), myvector.end());
+ft::vector<int>vctor(9);
 std::cout<< "size "<< vctor.size() << std::endl;
 std::cout<< "capasity "<< vctor.capacity() << std::endl;
 std::cout << "vctor contains:\n";
