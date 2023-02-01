@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/31 13:09:27 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:29:29 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ public:
         for (size_t i = 0; i < n; i++){
             alloc.construct(ptr + i, val);
         }
-        capacity_v = n;
-        
+        capacity_v = n; 
     }
     
     ~vector()
@@ -66,16 +65,20 @@ public:
     }
     
     template <class InputIterator>
-    vector (InputIterator first, InputIterator last,const allocator_type& alloc = allocator_type()){
-        size_v = cont_size(first, last);
-        ptr = alloc.allocte(last - first);
-        capacity_v = cont_size(first, last);;
+    vector (InputIterator first, InputIterator last, const allocator_type& allocc = allocator_type()){
+        size_v = last - first;
+        capacity_v =  last - first;
+        (void) allocc;
+        ptr = alloc.allocate(capacity_v);
+        size_t i = 0;
         while (first < last)
         {
-            alloc.construct(ptr++, first);
+            alloc.construct(ptr + i, *first);
             first++;
+            i++;
         }
     }
+    
     template <class InputIterator>
     size_type cont_size(InputIterator first, InputIterator last) {
         size_type len = 0;
