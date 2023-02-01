@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/01 16:29:29 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:14:39 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,19 @@ public:
         (void)alloc;
     }
     
-    vector (size_type n, const value_type& val = value_type(),const allocator_type& alloc = allocator_type()){
+    vector (size_type n, const value_type& val = value_type(),const allocator_type& allocc = allocator_type()){
         size_v = n;
+        (void) allocc;
         ptr = alloc.allocate(n);
         for (size_t i = 0; i < n; i++){
             alloc.construct(ptr + i, val);
         }
         capacity_v = n; 
     }
-    
     ~vector()
     {
         free_memory();
     }
-    
     void free_memory(){
           for (size_t i = 0; i < size_v; i++){
             alloc.destroy(ptr + i);
