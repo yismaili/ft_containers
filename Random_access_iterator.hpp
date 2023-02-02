@@ -70,7 +70,7 @@
           ptr++;
           return (ptr);
      }
-     Random_access_iterator& operator--(int){
+     Random_access_iterator operator--(int){
           ptr--;
           return (ptr);
      }
