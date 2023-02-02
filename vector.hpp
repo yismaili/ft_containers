@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/02 13:38:38 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:00:18 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,14 +196,14 @@ public:
     iterator begin(){
         return (iterator(ptr));
     }
-    const_iterator begin() const{
-        return (iterator(ptr)); 
+    const_iterator cbegin() const{
+        return (const_iterator(ptr)); 
     }
     iterator end(){
         return (iterator(ptr + size_v));
     }
-    const_iterator end() const{
-        return (iterator(ptr + size_v)); 
+    const_iterator cend() const{
+        return (const_iterator(ptr + size_v)); 
     }
     // reverse_iterator rbegin(){
     //     return (ptr[size() - 1]);  
@@ -230,11 +230,11 @@ public:
    
    iterator insert(iterator pos, const T& value ){
     if (capacity_v == size_v){
-        reserve(capacity_v * 2);
+        reserve(capacity_v* 2);
     }
-    int i = size_v - 1;
+    int i = size_v;
     int  j = pos - begin();
-    while (i > j)
+    while (i >= j)
     {
        ptr[i + 1] = ptr[i];
        i--;
@@ -243,26 +243,27 @@ public:
     ptr[j] = std::move(value);
     return (ptr);
    }
-//    iterator insert( const_iterator pos, size_type count, const T& value ){
-//     if (capacity_v == size_v){
-//         reserve(capacity_v * 2);
-//     }
-//     int i = size_v - 1;
-//     int j = pos - ptr;
-//     while (i > j)
-//     {
-//        ptr[i + 1] = ptr[i];
-//        i--;
-//     }
-//     int k = 0;
-//     while (k < count)
-//     {
-//         size_v++;
-//         ptr[j++] = std::move(value);
-//         k++; 
-//     }
-//     return (ptr);
-//    }
+   iterator insertt( const_iterator pos, size_type count, const T& value ){
+    size_type l = 0;
+    if (capacity_v == size_v){
+        reserve(capacity_v * 2);
+    }else{
+        capacity_v *= 2;   
+    }
+    while (l < count)
+    {
+        int i = size_v;
+        int  j = pos - cbegin();
+        while (i >= j){
+            ptr[i + 1] = ptr[i];
+            i--;
+        }
+        size_v++;
+        ptr[j] = std::move(value);
+        l++;
+   }
+    return (ptr);
+   }
 //    constexpr iterator insert( const_iterator pos, size_type count, const T& value ){
 //     if (capacity_v == size_v){
 //         reserve(capacity_v * 2);
