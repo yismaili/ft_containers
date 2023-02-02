@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/01 17:14:39 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/02 13:38:38 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "Random_access_iterator.hpp"
 #include <stdexcept>
 #include <iterator>
+#include "traits.hpp"
  namespace ft {
 template<typename T, class allocator = std::allocator<T> >
 class vector
@@ -64,7 +65,9 @@ public:
     }
     
     template <class InputIterator>
-    vector (InputIterator first, InputIterator last, const allocator_type& allocc = allocator_type()){
+    vector (InputIterator first, InputIterator last, const allocator_type& allocc = allocator_type(), 
+    typename ft::enable_if<!ft::is_the_same<InputIterator, int>::value>::type* = 0)
+    {
         size_v = last - first;
         capacity_v =  last - first;
         (void) allocc;
@@ -347,19 +350,26 @@ void swap( vector& other ){
     ptr = ptr_tmp; 
 }
 
-// iterator erase( iterator pos ){
-//     size_t index = pos - begin();
-//     size_t j = 0;
-//      for (size_t i = index; p != end())
-//      {
-//         ptr_tmp[i]
-//      }
-     
-// }
+iterator erase( iterator pos ){
+    size_t index = pos - begin();
+     for (size_t i = index; i < size_v ; i++){
+        ptr[i] = ptr[i + 1];
+     }
+     size_v--;
+     alloc.destroy(ptr + size_v);
+     return(pos);
+}
 
-// iterator erase( iterator first, iterator last ){
-    
-// }
+iterator erase( iterator first, iterator last ){
+    size_type dstnce = last - first;
+    while(dstnce < 0)
+    {
+        erase(first);
+        dstnce--;
+    }
+    return (first);
+}
+
 private:
     allocator_type alloc;
     size_type size_v;
