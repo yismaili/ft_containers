@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/02 17:00:18 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 15:48:12 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ public:
     ptr[j] = std::move(value);
     return (ptr);
    }
-   iterator insertt( const_iterator pos, size_type count, const T& value ){
+   iterator insert( const_iterator pos, size_type count, const T& value ){
     size_type l = 0;
     if (capacity_v == size_v){
         reserve(capacity_v * 2);
@@ -264,43 +264,37 @@ public:
    }
     return (ptr);
    }
-//    constexpr iterator insert( const_iterator pos, size_type count, const T& value ){
-//     if (capacity_v == size_v){
-//         reserve(capacity_v * 2);
-//     }
-//     int i = size_v - 1;
-//     int j = pos - ptr;
-//     while (i > j)
-//     {
-//        ptr[i + 1] = ptr[i];
-//        i--;
-//     }
-//     int k = 0;
-//     while (k < count)
-//     {
-//         size_v++;
-//         ptr[j++] = std::move(value);
-//         k++; 
-//     }
-//     return (ptr);
-//    }
+   
    template< class InputIt >
     iterator insert( const_iterator pos, InputIt first, InputIt last ){
     if (capacity_v == size_v){
         reserve(capacity_v * 2);
+    }else{
+        capacity_v *= 2;   //!!!!!!!!!
     }
-    int i = size_v - 1;
-    int j = pos - ptr;
-    while (i > j)
+      difference_type n = 0;
+     difference_type range_size = last - first;
+     pointer ptr_tmp;
+     ptr_tmp = alloc.allocate(capacity_v);
+     size_type l = 0;
+     while (l < size())
+     {
+        alloc.construct(ptr_tmp + l, *(first + l)); 
+        l++;
+     }
+    while (n < range_size)
     {
-       ptr[i + 1] = ptr[i];
-       i--;
-    }
-    while (first < last)
-    {
+        int  j = pos - cbegin();//!!!!!!!!!!!!!
+        int i = size_v -1;
+        std::cout<<"-------->"<< *cbegin()<<std::endl;
+        while (i >= j){
+            ptr[i + 1] = ptr[i];
+            i--;
+        }
         size_v++;
-        ptr[j++] = std::move(first++);
-    }
+        ptr[j] = std::move(*(ptr_tmp + n));
+        n++;
+   }
     return (ptr);
    }
    
