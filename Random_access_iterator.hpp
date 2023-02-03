@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/31 19:26:29 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 15:55:34 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@
      Random_access_iterator operator+(const int n){
           return (ptr + n);
      }
-     Random_access_iterator& operator-(const int n){
+     Random_access_iterator operator-(const int n){
           return (ptr - n);
      }
     int operator-(const Random_access_iterator& other){
