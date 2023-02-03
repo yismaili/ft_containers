@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 16:04:06 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:48:09 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,13 +196,13 @@ public:
     iterator begin(){
         return (iterator(ptr));
     }
-    const_iterator cbegin() const{
+    const_iterator begin() const{
         return (const_iterator(ptr)); 
     }
     iterator end(){
         return (iterator(ptr + size_v));
     }
-    const_iterator cend() const{
+    const_iterator end() const{
         return (const_iterator(ptr + size_v)); 
     }
     // reverse_iterator rbegin(){
@@ -253,7 +253,7 @@ public:
     while (l < count)
     {
         int i = size_v;
-        int  j = pos - cbegin();
+        int  j = pos - begin();
         while (i >= j){
             ptr[i + 1] = ptr[i];
             i--;
@@ -266,24 +266,21 @@ public:
    }
    
    template< class InputIt >
-    iterator insert( const_iterator pos, InputIt first, InputIt last ){
+    iterator insertt( iterator pos, InputIt first, InputIt last ){
     if (capacity_v == size_v){
         reserve(capacity_v * 2);
-    }else{
-        capacity_v *= 2;   //!!!!!!!!!
     }
-      difference_type n = 1;
-     difference_type range_size = last - first;
-     pointer ptr_tmp;
-     ptr_tmp = alloc.allocate(capacity_v);
-     size_type l = 0;
-     while (l++ <= size()){
+    difference_type n = 1;
+    difference_type range_size = last - first;
+    pointer ptr_tmp;
+    ptr_tmp = alloc.allocate(capacity_v);
+    size_type l = 0;
+    while (l++ <= size()){
         alloc.construct(ptr_tmp + l, *(last - l)); 
-        std::cout<<"-------->"<< *(ptr_tmp + l)<<std::endl;
      }
     while (n <= range_size)
     {
-        int  j = pos - cbegin();//!!!!!!!!!!!!!
+        int  j = pos - begin();
         int i = size_v -1;
         while (i >= j){
             ptr[i + 1] = ptr[i];
@@ -293,6 +290,7 @@ public:
         ptr[j] = std::move(*(ptr_tmp + n));
         n++;
    }
+    reserve(capacity_v * 2);
     return (ptr);
    }
    
