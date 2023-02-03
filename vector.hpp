@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 19:02:27 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 19:48:51 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ public:
     // typedef is defining a new type for use in your code, like a shorthand
     typedef allocator allocator_type;
     // typename here is letting the compiler know that value_type is a type and not a static member of _MyBase
-    typedef typename 	allocator_type::reference reference; 
+    typedef typename 	allocator_type::reference       reference; 
     typedef typename 	allocator_type::const_reference const_reference;
-    typedef typename 	allocator_type::pointer pointer;
-    typedef typename 	allocator_type::const_pointer const_pointer;
+    typedef typename 	allocator_type::pointer         pointer;
+    typedef typename 	allocator_type::const_pointer   const_pointer;
     // the ft:: is the scope of the type
-    typedef ft::Random_access_iterator<T>    iterator;
-    typedef ft::Random_access_iterator<const T>    const_iterator;
-    typedef ft::reverse_iterator<T>    reverse_iterator;
-    typedef ft::reverse_iterator<const T>    const_reverse_iterator;
-    typedef typename allocator_type::difference_type difference_type;
-    typedef typename allocator_type::size_type       size_type;
+    typedef ft::Random_access_iterator<T>               iterator;
+    typedef ft::Random_access_iterator<const T>         const_iterator;
+    typedef ft::reverse_iterator<T>                     reverse_iterator;
+    typedef ft::reverse_iterator<const T>               const_reverse_iterator;
+    typedef typename allocator_type::difference_type    difference_type;
+    typedef typename allocator_type::size_type          size_type;
     
     vector(const allocator_type & alloc = allocator_type()){
         size_v = 0;
