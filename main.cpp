@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 17:40:39 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 19:02:44 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int main ()
 {try
 {
-      //std::vector<int> myvector;
+        // std::vector<int> myvector;
      ft::vector<int> myvector;
    int j = 11;
    while (j > 0)
@@ -38,13 +38,15 @@ int main ()
   for (int i=0;i < (int )myvector.size();i++)
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
-   myvector.erase(myvector.begin(), myvector.end());
+  //  myvector.insert(myvector.end(), myvector.begin() ,myvector.end());
  // ft::vector<int>vctor(myvector.begin(), myvector.end());
-  std::cout<< "size "<< myvector.size() << std::endl;
-  std::cout<< "capasity "<< myvector.capacity() << std::endl;
-  std::cout << "myvector contains:\n";
-  for (int i=0;i < (int )myvector.size();i++)
-    std::cout << ' ' << myvector[i];
+ std::cout << *myvector.rbegin()<<std::endl;
+  std::cout << *myvector.rend()<<std::endl;
+  // std::cout<< "size "<< myvector.size() << std::endl;
+  // std::cout<< "capasity "<< myvector.capacity() << std::endl;
+  // std::cout << "myvector contains:\n";
+  // for (int i=0;i < (int )myvector.size();i++)
+  //   std::cout << ' ' << myvector[i];
   std::cout << '\n';
   }
   catch(const std::exception& e){

@@ -6,13 +6,11 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:26:20 by yismaili          #+#    #+#             */
-/*   Updated: 2023/01/31 19:29:21 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:56:04 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-
-namespace ft {
+ namespace ft {
   template <typename T> class reverse_iterator
    {
    private:
@@ -56,27 +54,27 @@ namespace ft {
      pointer operator->(){
           return (&*ptr);
      }
-     reverse_iterator& operator++(){
-          ++ptr;
-          return (*this);
-     }
      reverse_iterator& operator--(){
           --ptr;
           return (*this);
      }
-     reverse_iterator operator++(int){ //!!!!!!
+     reverse_iterator& operator++(){
+          ++ptr;
+          return (*this);
+     }
+     reverse_iterator operator--(int){
           
-          ptr++;
+          ptr--;
           return (ptr);
      }
-     reverse_iterator& operator--(int){
-          ptr--;
+     reverse_iterator operator++(int){
+          ptr++;
           return (ptr);
      }
      reverse_iterator operator+(const int n){
           return (ptr + n);
      }
-     reverse_iterator& operator-(const int n){
+     reverse_iterator operator-(const int n){
           return (ptr - n);
      }
     int operator-(const reverse_iterator& other){
