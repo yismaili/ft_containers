@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   traits.hpp                                         :+:      :+:    :+:   */
+/*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/02 13:37:43 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 22:04:24 by yismaili         ###   ########.fr       */
+/*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
+/*   Updated: 2023/02/03 23:59:33 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TRAITS_HPP
-# define TRAITS_HPP
-
-namespace ft{
-    // enable_if
-    template <bool B, class T = void>struct enable_if{};
-    template <class T> struct enable_if<true, T> {typedef T type;};
-    // is_the_same
-    template <class T, class U>struct is_the_same {static const bool value = false; };
-    template <class T>struct is_the_same <T, T> {static const bool value = true; };
+#include <iostream>
+#include <map>
+namespace ft {
+template<class Key,class T,class Compare = std::less<Key>,class Allocator = std::allocator<std::pair<const Key, T> >
+class map
+{
+    public:
+        key_type key Key;
+        mapped_type T map_type;
+        value_type std::pair<const Key, T> value_compare;
+        
 }
-
-#endif
+}
