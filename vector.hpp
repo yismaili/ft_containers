@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 16:48:09 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:40:09 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ public:
     
     template <class InputIterator>
     vector (InputIterator first, InputIterator last, const allocator_type& allocc = allocator_type(), 
-    typename ft::enable_if<!ft::is_the_same<InputIterator, int>::value>::type* = 0)
+    typename ft::enable_if<!ft::is_the_same<InputIterator, int>::value>::type* = NULL)
     {
         size_v = last - first;
         capacity_v =  last - first;
@@ -166,7 +166,7 @@ public:
     return (alloc.max_size());
    }
    
-   size_type capacity() const{ // is it not correct 
+   size_type capacity() const{ 
     return (capacity_v);
    }
 
@@ -266,7 +266,7 @@ public:
    }
    
    template< class InputIt >
-    iterator insertt( iterator pos, InputIt first, InputIt last ){
+    iterator insert( iterator pos, InputIt first, InputIt last ){
     if (capacity_v == size_v){
         reserve(capacity_v * 2);
     }
@@ -352,11 +352,8 @@ iterator erase( iterator pos ){
 }
 
 iterator erase( iterator first, iterator last ){
-    size_type dstnce = last - first;
-    while(dstnce < 0)
-    {
-        erase(first);
-        dstnce--;
+    while(first < last){
+        erase(first++);
     }
     return (first);
 }
@@ -367,6 +364,5 @@ private:
     pointer ptr;
     size_type capacity_v;
 };
-
 }
 

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 16:42:22 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:40:39 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 int main ()
 {try
 {
-      //ft::vector<int> myvector;
-      ft::vector<int> myvector;
+      //std::vector<int> myvector;
+     ft::vector<int> myvector;
    int j = 11;
    while (j > 0)
    {
@@ -38,7 +38,7 @@ int main ()
   for (int i=0;i < (int )myvector.size();i++)
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
-   myvector.insertt(myvector.begin(), myvector.begin(), myvector.end());
+   myvector.erase(myvector.begin(), myvector.end());
  // ft::vector<int>vctor(myvector.begin(), myvector.end());
   std::cout<< "size "<< myvector.size() << std::endl;
   std::cout<< "capasity "<< myvector.capacity() << std::endl;
