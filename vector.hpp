@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 17:40:09 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 19:02:27 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdexcept>
 #include <iterator>
 #include "traits.hpp"
+#include "reverse_iterator.hpp"
  namespace ft {
 template<typename T, class allocator = std::allocator<T> >
 class vector
@@ -32,8 +33,8 @@ public:
     // the ft:: is the scope of the type
     typedef ft::Random_access_iterator<T>    iterator;
     typedef ft::Random_access_iterator<const T>    const_iterator;
-    typedef ft::Random_access_iterator<T>    reverse_iterator;
-    typedef ft::Random_access_iterator<T>    const_reverse_iterator;
+    typedef ft::reverse_iterator<T>    reverse_iterator;
+    typedef ft::reverse_iterator<const T>    const_reverse_iterator;
     typedef typename allocator_type::difference_type difference_type;
     typedef typename allocator_type::size_type       size_type;
     
@@ -205,18 +206,18 @@ public:
     const_iterator end() const{
         return (const_iterator(ptr + size_v)); 
     }
-    // reverse_iterator rbegin(){
-    //     return (ptr[size() - 1]);  
-    // }
-    // const_reverse_iterator rbegin() const{
-    //     return (ptr[size() - 1]);  
-    // }
-    // reverse_iterator rend(){
-    //     return (ptr);  
-    // }
-    // const_reverse_iterator rend() const{
-    //     return (ptr); 
-    // }
+    reverse_iterator rbegin(){
+        return (reverse_iterator(ptr + (size_v - 1)));  
+    }
+    const_reverse_iterator rbegin() const{
+        return (const_reverse_iterator(ptr + (size_v - 1)));  
+    }
+    reverse_iterator rend(){
+        return (reverse_iterator(ptr - 1));  
+    }
+    const_reverse_iterator rend() const{
+        return (const_reverse_iterator(ptr - 1)); 
+    }
     
    /*-------------- Modifiers ------------------*/
 
