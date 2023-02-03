@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 15:48:12 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:04:06 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,21 +272,19 @@ public:
     }else{
         capacity_v *= 2;   //!!!!!!!!!
     }
-      difference_type n = 0;
+      difference_type n = 1;
      difference_type range_size = last - first;
      pointer ptr_tmp;
      ptr_tmp = alloc.allocate(capacity_v);
      size_type l = 0;
-     while (l < size())
-     {
-        alloc.construct(ptr_tmp + l, *(first + l)); 
-        l++;
+     while (l++ <= size()){
+        alloc.construct(ptr_tmp + l, *(last - l)); 
+        std::cout<<"-------->"<< *(ptr_tmp + l)<<std::endl;
      }
-    while (n < range_size)
+    while (n <= range_size)
     {
         int  j = pos - cbegin();//!!!!!!!!!!!!!
         int i = size_v -1;
-        std::cout<<"-------->"<< *cbegin()<<std::endl;
         while (i >= j){
             ptr[i + 1] = ptr[i];
             i--;
