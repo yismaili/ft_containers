@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/05 17:23:59 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/05 17:54:57 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,35 @@
             return (node);
         }
         
-        size_t getHeight(avl *nude){
+        size_t getHeight(avl *node){
             if (node == NULL){
                 return (0);
             }
             return (node->height);
+        }
+        
+        avl *rightRotate(avl *y){
+            avl *x;
+            avl *z;
+            x = y->left;
+            z = x->right;
+            x->right = y;
+            y->left = z;
+            y->height = std::max(getHeight(y->left), getHeight(y->right)) + 1;
+            x->height = std::max(getHeight(x->left), getHeight(x->right)) + 1;
+            return(x);
+        }
+        
+         avl *leftRotate(avl *x){
+            avl *y;
+            avl *z;
+            y = x->left;
+            z = y->right;
+            y->right = x;
+            x->left = z;
+            x->height = std::max(getHeight(x->left), getHeight(x->right)) + 1;
+            y->height = std::max(getHeight(y->left), getHeight(y->right)) + 1;
+            return(y);
         }
         
         avl *insert_node(avl *node, size_t key){
