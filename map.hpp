@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/05 18:10:58 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:34:53 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,15 @@
             }
             return (node);
         }
-
+        
+        avl *minValue(avl *node){
+            avl *min = node;
+            while (min->left != NULL){
+               min = min->left;
+            }
+            return (min);
+        }
+        
         avl *delete_node(avl *node){
             if (node == NULL){
                 return (NULL);
@@ -104,6 +112,25 @@
                 node->left = delete_node(node->left, key);
             }else if (key > node->key){
                 node->right = delete_node(node->right, key);
+            }else{
+                avl *tmp;
+                if (node->right == NULL || node->left == NULL){
+                    if(node->right){
+                       tmp = node->right; 
+                    }else{
+                         tmp = node->left; 
+                    }
+                    if (temp == NULL){
+                        temp = node;
+                        node = NULL;
+                    }else{
+                        *node = *tmp;
+                    }
+                }else {
+                    tmp = minValue(node->right);
+                    node->key = tmp->key;
+                    node->right = delete_node(node->right, tmp->key);
+                }
             }
             node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
             size_t balanceFactor = getHeight(node->left) + getHeight(node->right);
