@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/05 17:54:57 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/05 18:10:58 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,36 @@
                 }
             }
             if (balanceFactor < -1){
+                if (key > node->right){
+                    return (leftRotate(node));
+                }else if (key < node->right){
+                    node->right = rightRotate(node->right);
+                    return (leftRotate(node));
+                }
+            }
+            return (node);
+        }
+
+        avl *delete_node(avl *node){
+            if (node == NULL){
+                return (NULL);
+            }
+            if (key < node->key){
+                node->left = delete_node(node->left, key);
+            }else if (key > node->key){
+                node->right = delete_node(node->right, key);
+            }
+            node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
+            size_t balanceFactor = getHeight(node->left) + getHeight(node->right);
+            if (balanceFactor >= 0){
+                if (key < node->left->key){
+                    return (rightRotate(node));
+                }else if (key > node->left->key){
+                    node->left = leftRotate(node->left);
+                    return (rightRotate(node));
+                }
+            }
+            if (balanceFactor <= 0){
                 if (key > node->right){
                     return (leftRotate(node));
                 }else if (key < node->right){
