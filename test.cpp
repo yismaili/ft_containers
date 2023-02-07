@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:40:44 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/07 22:39:51 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/07 23:09:52 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,53 +152,62 @@ struct avlTree {
             return (getBalanceTree(node, key));
         }
         
-        avlTree *findInorderPredecessor(avlTree *root, int key){
+        avlTree *findPredecessor(avlTree *root, int key){
             if (root == NULL){
                 return(0);
             }
-            avlTree *predecessor = NULL;
+            avlTree *prev = NULL;
             while (1)
             {
                if (key < root->key){
                 root = root->left;
                }
                else if (key > root->key){
-                predecessor = root;
+                prev = root;
                 root = root->right;
                }
                else{
                 if (root->left){
-                    predecessor = maxValue(root->left);
+                    prev = maxValue(root->left);
                 }
                 break;
                }
                if (root == NULL){
-                return(predecessor);
+                return(prev);
                }
             }
-           return (predecessor); 
+           return (prev); 
         }
-       avlTree* getLeftMostNode(avlTree* root)
+        
+        avlTree* findSuccessor(avlTree* root, int key)
         {
-            if(root == NULL)
-                return NULL;
+            // base case
+            if (root == nullptr) {
+                return nullptr;
+            }
+            avlTree* next = nullptr;
+            while (1)
+            {
+                if (key < root->key){
+                    next = root;
+                    root = root->left;
+                }
+                else if (key > root->key) {
+                    root = root->right;
+                }
+                else {
+                    if (root->right){
+                        next = minValue(root->right);
+                    }
+                    break;
+                }
+                if (!root) {
+                    return next;
+                }
+            }
+            return next;
+        }
 
-            avlTree* left = getLeftMostNode(root->left);
-            if(left)
-                return left;
-            return root;
-        }
-        avlTree *findInorderSuccessor(avlTree *root, int key){
-             if (root == NULL){
-                return(0);
-            }
-            if (root->right){
-               return(getLeftMostNode(root->left));
-            }
-            else{
-                return (root);    
-            }
-        }
 // Print the tree
 void printTree(avlTree *root, std::string indent, bool last) {
   if (root != nullptr) {
@@ -218,7 +227,7 @@ void printTree(avlTree *root, std::string indent, bool last) {
 
 int main()
 {
-    int keys[] = { 33,13,53,9,21,61,8,11,443,113,513,91,211,611,81,111,3,1,5,6,7,10,2};
+    int keys[] = { 33,13,53,9,21,61,8,11,443,113,513,91,211,611,81,111,3,1,5,6,7,10,2,12};
 
    avlTree* root = nullptr;
     for (int key: keys) {
@@ -231,7 +240,7 @@ int main()
     int key = 8;
     // for (int key: keys)
     // {
-       avlTree* prec = findInorderSuccessor(root, key);
+       avlTree* prec = findSuccessor(root,key);
  
         if (prec != nullptr) {
             std::cout << "The predecessor of node " << key << " is " << prec->key << std::endl;
