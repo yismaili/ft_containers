@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/07 17:21:37 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/07 23:10:50 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,26 +62,15 @@
             y->height = std::max(getHeight(y->left), getHeight(y->right)) + 1;
             return(y);
         }
+        
         int getBalance(avlTree *node){
             if (node != NULL) {return (0);}
             else {return (getHeight(node->left) - getHeight(node->right));}
         }
         
-        avlTree *insert_node(avlTree *node, int key){
-            if (node == NULL){
-                // node->root = insert_node(node->root, key);
-                 return (createNode(key));
-            }
-            if (node->key < key){
-                node->right = insert_node(node->right, key);
-            }
-            else if (node->key > key){
-                node->left = insert_node(node->left, key);
-            }
-            else{
-                return(node);
-            }
-            node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
+        avlTree *getBalanceTree(avlTree *node, int key){
+            
+            node->height = std::max(getHeight(node->left), getHeight(node->right));
             int balanceFactor = getBalance(node);
             if (balanceFactor > 1 && key < node->left->key){
                     return (rightRotate(node));
@@ -96,8 +85,24 @@
             if (balanceFactor < -1 && key < node->right->key){
                     node->right = rightRotate(node->right);
                     return (leftRotate(node));
-                }
+            }
             return (node);
+        }
+        avlTree *insert_node(avlTree *node, int key){
+            if (node == NULL){
+                // node->root = insert_node(node->root, key);
+                 return (createNode(key));
+            }
+            if (node->key < key){
+                node->right = insert_node(node->right, key);
+            }
+            else if (node->key > key){
+                node->left = insert_node(node->left, key);
+            }
+            else{
+                return(node);
+            }
+            return (getBalanceTree(node, key));
         }
         
         avlTree *minValue(avlTree *node){
@@ -108,6 +113,13 @@
             return (min);
         }
         
+        avlTree *maxValue(avlTree *node){
+            avlTree *max = node;
+            while (max->right != NULL){
+               max = max->right;
+            }
+            return (max);
+        }
         
         avlTree *delete_node(avlTree *node, int key){
             if (node == NULL){
@@ -140,29 +152,63 @@
             if (node == NULL){
                 return(node);
             }
-            node->height = std::max(getHeight(node->left), getHeight(node->right));
-            int balanceFactor = getBalance(node);
-            if (balanceFactor > 1 && key < node->left->key){
-                    return (rightRotate(node));
-                }
-            if (balanceFactor > 1 && key > node->left->key){
-                    node->left = leftRotate(node->left);
-                    return (rightRotate(node));
-                }
-            if (balanceFactor < -1 && key > node->right->key){
-                    return (leftRotate(node));
-                }
-            if (balanceFactor < -1 && key < node->right->key){
-                    node->right = rightRotate(node->right);
-                    return (leftRotate(node));
-                }
-            return (node);
+            return (getBalanceTree(node, key));
         }
-        avlTree *inorderPredecessor(avlTree *root){
-            
+        
+        avlTree *findPredecessor(avlTree *root, int key){
+            if (root == NULL){
+                return(0);
+            }
+            avlTree *prev = NULL;
+            while (1)
+            {
+               if (key < root->key){
+                root = root->left;
+               }
+               else if (key > root->key){
+                prev = root;
+                root = root->right;
+               }
+               else{
+                if (root->left){
+                    prev = maxValue(root->left);
+                }
+                break;
+               }
+               if (root == NULL){
+                return(prev);
+               }
+            }
+           return (prev); 
         }
-        avlTree *inorderSuccessor(avlTree *root){
-            
+        
+        avlTree* findSuccessor(avlTree* root, int key)
+        {
+            // base case
+            if (root == nullptr) {
+                return nullptr;
+            }
+            avlTree* next = nullptr;
+            while (1)
+            {
+                if (key < root->key){
+                    next = root;
+                    root = root->left;
+                }
+                else if (key > root->key) {
+                    root = root->right;
+                }
+                else {
+                    if (root->right){
+                        next = minValue(root->right);
+                    }
+                    break;
+                }
+                if (!root) {
+                    return next;
+                }
+            }
+            return next;
         }
     };
  };

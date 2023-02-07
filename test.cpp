@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:40:44 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/07 19:01:02 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/07 23:09:52 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,35 +152,62 @@ struct avlTree {
             return (getBalanceTree(node, key));
         }
         
-        avlTree *findInorderPredecessor(avlTree *root, int key){
+        avlTree *findPredecessor(avlTree *root, int key){
             if (root == NULL){
                 return(0);
             }
-            avlTree *predecessor = NULL;
+            avlTree *prev = NULL;
             while (1)
             {
                if (key < root->key){
                 root = root->left;
                }
                else if (key > root->key){
-                predecessor = root;
+                prev = root;
                 root = root->right;
                }
                else{
                 if (root->left){
-                    predecessor = maxValue(root->left);
+                    prev = maxValue(root->left);
                 }
                 break;
                }
                if (root == NULL){
-                return(predecessor);
+                return(prev);
                }
             }
-           return (predecessor); 
+           return (prev); 
         }
-        // avlTree *findInorderSuccessor(avlTree *root){
-            
-        // }
+        
+        avlTree* findSuccessor(avlTree* root, int key)
+        {
+            // base case
+            if (root == nullptr) {
+                return nullptr;
+            }
+            avlTree* next = nullptr;
+            while (1)
+            {
+                if (key < root->key){
+                    next = root;
+                    root = root->left;
+                }
+                else if (key > root->key) {
+                    root = root->right;
+                }
+                else {
+                    if (root->right){
+                        next = minValue(root->right);
+                    }
+                    break;
+                }
+                if (!root) {
+                    return next;
+                }
+            }
+            return next;
+        }
+
 // Print the tree
 void printTree(avlTree *root, std::string indent, bool last) {
   if (root != nullptr) {
@@ -200,17 +227,20 @@ void printTree(avlTree *root, std::string indent, bool last) {
 
 int main()
 {
-    int keys[] = { 33,13,53,9,21,61,8,11,443,113,513,91,211,611,81,111,3,1,5,6,7,10,2};
+    int keys[] = { 33,13,53,9,21,61,8,11,443,113,513,91,211,611,81,111,3,1,5,6,7,10,2,12};
 
    avlTree* root = nullptr;
     for (int key: keys) {
         root = insert_node(root, key);
     }
- 
-    // find inorder predecessor for each key
-    for (int key: keys)
-    {
-       avlTree* prec = findInorderPredecessor(root, key);
+//  printTree(root, "", true);
+//   root = delete_node(root, 13);
+//   std::cout << "After deleting " << std::endl;
+//   printTree(root, "", true);
+    int key = 8;
+    // for (int key: keys)
+    // {
+       avlTree* prec = findSuccessor(root,key);
  
         if (prec != nullptr) {
             std::cout << "The predecessor of node " << key << " is " << prec->key << std::endl;
@@ -218,44 +248,7 @@ int main()
         else {
             std::cout << "The predecessor doesn't exist for " << key << std::endl;
         }
-    }
+    // }
  
     return 0;
 }
-// int main() {
-//  avlTree *root = NULL;
-//   root = insert_node(root, 33);
-//   root = insert_node(root, 13);
-//   root = insert_node(root, 53);
-//   root = insert_node(root, 9);
-//   root = insert_node(root, 21);
-//   root = insert_node(root, 61);
-//   root = insert_node(root, 8);
-//   root = insert_node(root, 11);
-//   /*---*/
-//   root = insert_node(root, 443);
-//   root = insert_node(root, 113);
-//   root = insert_node(root, 513);
-//   root = insert_node(root, 91);
-//   root = insert_node(root, 211);
-//   root = insert_node(root, 611);
-//   root = insert_node(root, 81);
-//   root = insert_node(root, 111);
-//   /*----*/
-//   root = insert_node(root, 3);
-//   root = insert_node(root, 1);
-//   root = insert_node(root, 5);
-//   root = insert_node(root, 6);
-//   root = insert_node(root, 7);
-//   root = insert_node(root, 10);
-//   root = insert_node(root, 2);
- 
-//   printTree(root, "", true);
-//   root = delete_node(root, 13);
-//   std::cout << "After deleting " << std::endl;
-//   printTree(root, "", true);
-// //   avlTree *node = findInorderPredecessor(root, 1);
-//    std::cout << "The predecessor " << findInorderPredecessor(root, 1)->key << std::endl;
-// }
-
-
