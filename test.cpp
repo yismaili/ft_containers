@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:40:44 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/07 19:01:02 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/07 22:39:51 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,9 +178,27 @@ struct avlTree {
             }
            return (predecessor); 
         }
-        // avlTree *findInorderSuccessor(avlTree *root){
-            
-        // }
+       avlTree* getLeftMostNode(avlTree* root)
+        {
+            if(root == NULL)
+                return NULL;
+
+            avlTree* left = getLeftMostNode(root->left);
+            if(left)
+                return left;
+            return root;
+        }
+        avlTree *findInorderSuccessor(avlTree *root, int key){
+             if (root == NULL){
+                return(0);
+            }
+            if (root->right){
+               return(getLeftMostNode(root->left));
+            }
+            else{
+                return (root);    
+            }
+        }
 // Print the tree
 void printTree(avlTree *root, std::string indent, bool last) {
   if (root != nullptr) {
@@ -206,11 +224,14 @@ int main()
     for (int key: keys) {
         root = insert_node(root, key);
     }
- 
-    // find inorder predecessor for each key
-    for (int key: keys)
-    {
-       avlTree* prec = findInorderPredecessor(root, key);
+//  printTree(root, "", true);
+//   root = delete_node(root, 13);
+//   std::cout << "After deleting " << std::endl;
+//   printTree(root, "", true);
+    int key = 8;
+    // for (int key: keys)
+    // {
+       avlTree* prec = findInorderSuccessor(root, key);
  
         if (prec != nullptr) {
             std::cout << "The predecessor of node " << key << " is " << prec->key << std::endl;
@@ -218,44 +239,7 @@ int main()
         else {
             std::cout << "The predecessor doesn't exist for " << key << std::endl;
         }
-    }
+    // }
  
     return 0;
 }
-// int main() {
-//  avlTree *root = NULL;
-//   root = insert_node(root, 33);
-//   root = insert_node(root, 13);
-//   root = insert_node(root, 53);
-//   root = insert_node(root, 9);
-//   root = insert_node(root, 21);
-//   root = insert_node(root, 61);
-//   root = insert_node(root, 8);
-//   root = insert_node(root, 11);
-//   /*---*/
-//   root = insert_node(root, 443);
-//   root = insert_node(root, 113);
-//   root = insert_node(root, 513);
-//   root = insert_node(root, 91);
-//   root = insert_node(root, 211);
-//   root = insert_node(root, 611);
-//   root = insert_node(root, 81);
-//   root = insert_node(root, 111);
-//   /*----*/
-//   root = insert_node(root, 3);
-//   root = insert_node(root, 1);
-//   root = insert_node(root, 5);
-//   root = insert_node(root, 6);
-//   root = insert_node(root, 7);
-//   root = insert_node(root, 10);
-//   root = insert_node(root, 2);
- 
-//   printTree(root, "", true);
-//   root = delete_node(root, 13);
-//   std::cout << "After deleting " << std::endl;
-//   printTree(root, "", true);
-// //   avlTree *node = findInorderPredecessor(root, 1);
-//    std::cout << "The predecessor " << findInorderPredecessor(root, 1)->key << std::endl;
-// }
-
-
