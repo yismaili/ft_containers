@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 23:22:39 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:16:15 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int main ()
   for (int i=0;i < (int )myvector.size();i++)
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
-  //  myvector.insert(myvector.end(), myvector.begin() ,myvector.end());
+    myvector.insert(myvector.end(), myvector.begin() ,myvector.end());
  // ft::vector<int>vctor(myvector.begin(), myvector.end());
   std::cout << *(myvector.rbegin() - 3)<<std::endl;
   std::cout << *(myvector.rend() + 3)<<std::endl;

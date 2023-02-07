@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   avlTree.hpp                                        :+:      :+:    :+:   */
+/*   test.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/07 17:21:37 by yismaili         ###   ########.fr       */
+/*   Created: 2023/02/06 23:40:44 by yismaili          #+#    #+#             */
+/*   Updated: 2023/02/07 17:21:08 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include <memory>
- namespace ft {
-        template < class Key,class T, class Compare = std::less<Key>,class Alloc = std::allocator<std::pair<const Key,T> > > 
-            struct avlTree {
-                Key key;
+struct avlTree {
+                int key;
                 avlTree *left;
                 avlTree *right;
                 avlTree *parent;
                 avlTree *root;
-                size_t height;
-        
-             avlTree *createNode(int key){
+                int height;
+ };
+        avlTree *createNode(int key){
             avlTree *node = new avlTree();
             node->height = 1;
             node->key = key;
@@ -158,11 +155,53 @@
                 }
             return (node);
         }
-        avlTree *inorderPredecessor(avlTree *root){
-            
-        }
-        avlTree *inorderSuccessor(avlTree *root){
-            
-        }
-    };
- };
+// Print the tree
+void printTree(avlTree *root, std::string indent, bool last) {
+  if (root != nullptr) {
+   std:: cout << indent;
+    if (last) {
+      std::cout << "R----";
+      indent += "   ";
+    } else {
+     std::cout << "L----";
+      indent += "|| ";
+    }
+    std::cout << root->key << std::endl;
+    printTree(root->left, indent, false);
+    printTree(root->right, indent, true);
+  }
+}
+
+int main() {
+ avlTree *root = NULL;
+  root = insert_node(root, 33);
+  root = insert_node(root, 13);
+  root = insert_node(root, 53);
+  root = insert_node(root, 9);
+  root = insert_node(root, 21);
+  root = insert_node(root, 61);
+  root = insert_node(root, 8);
+  root = insert_node(root, 11);
+  /*---*/
+  root = insert_node(root, 443);
+  root = insert_node(root, 113);
+  root = insert_node(root, 513);
+  root = insert_node(root, 91);
+  root = insert_node(root, 211);
+  root = insert_node(root, 611);
+  root = insert_node(root, 81);
+  root = insert_node(root, 111);
+  /*----*/
+  root = insert_node(root, 3);
+  root = insert_node(root, 1);
+  root = insert_node(root, 5);
+  root = insert_node(root, 6);
+  root = insert_node(root, 7);
+  root = insert_node(root, 10);
+  root = insert_node(root, 2);
+ 
+  printTree(root, "", true);
+  root = delete_node(root, 13);
+  std::cout << "After deleting " << std::endl;
+  printTree(root, "", true);
+}
