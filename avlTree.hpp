@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/07 23:10:50 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:01:41 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
                 avlTree *root;
                 size_t height;
         
-             avlTree *createNode(int key){
+          avlTree *createNode(int key){
             avlTree *node = new avlTree();
             node->height = 1;
             node->key = key;
@@ -184,7 +184,6 @@
         
         avlTree* findSuccessor(avlTree* root, int key)
         {
-            // base case
             if (root == nullptr) {
                 return nullptr;
             }
@@ -210,5 +209,50 @@
             }
             return next;
         }
-    };
- };
+    avlTree* findNode(avlTree* root, int key)
+    {
+        avlTree* next = nullptr;
+        while (root != nullptr)
+        {
+            if (key < root->key){
+                root = root->left;
+                next = root;
+            }
+            else if (key > root->key) {
+                root = root->right;
+                next = root;
+            }
+            if (key == root->key){
+                return (next);
+            }
+            if ((key > root->key && root->right == NULL) || ( key < root->key && root->left == NULL)){
+                return nullptr;
+            }
+        }
+        return next;
+    }
+    
+    avlTree* findParent(avlTree* root, int key)
+    {
+        avlTree* next = nullptr;
+        while (root != nullptr)
+        {
+            if (key < root->key){
+                next = root;
+                root = root->left;
+            }
+            else if (key > root->key) {
+                next = root;
+                root = root->right;
+            }
+            if (key == root->key || key == root->key){
+                return (next);
+            }
+            if ((key > root->key && root->right == NULL) || ( key < root->key && root->left == NULL)){
+                return nullptr;
+            }
+        }
+        return next;
+    }
+};
+};

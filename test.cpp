@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:40:44 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/08 19:48:16 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/08 20:07:01 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ struct avlTree {
             }
             if (node->key < key){
                 node->right = insert_node(node->right, key);
+                 std::cout<<"i am heir broww\n";
             }
             else if (node->key > key){
                 node->left = insert_node(node->left, key);
@@ -253,7 +254,6 @@ struct avlTree {
         return next;
     }
     
-// Print the tree
 void printTree(avlTree *root, std::string indent, bool last) {
   if (root != nullptr) {
    std:: cout << indent;
