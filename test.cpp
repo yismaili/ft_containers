@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:40:44 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/08 18:38:37 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/08 19:48:16 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,32 +208,51 @@ struct avlTree {
             return next;
         }
     avlTree* findNode(avlTree* root, int key)
+    {
+        avlTree* next = nullptr;
+        while (root != nullptr)
         {
-            // base case
-            // if (root == nullptr) {
-            //     return nullptr;
-            // }
-            avlTree* next = nullptr;
-            while (root != nullptr)
-            {
-                if (key < root->key){
-                    root = root->left;
-                    next = root;
-                }
-                else if (key > root->key) {
-                    root = root->right;
-                    next = root;
-                }
-                if (key == root->key){
-                    return (next);
-                }
-                if ((key > root->key && root->right == NULL) || ( key < root->key && root->left == NULL)){
-                     return nullptr;
-                }
-                 std::cout << "i am heir\n";
+            if (key < root->key){
+                root = root->left;
+                next = root;
             }
-            return next;
+            else if (key > root->key) {
+                root = root->right;
+                next = root;
+            }
+            if (key == root->key){
+                return (next);
+            }
+            if ((key > root->key && root->right == NULL) || ( key < root->key && root->left == NULL)){
+                return nullptr;
+            }
         }
+        return next;
+    }
+    
+    avlTree* findParent(avlTree* root, int key)
+    {
+        avlTree* next = nullptr;
+        while (root != nullptr)
+        {
+            if (key < root->key){
+                next = root;
+                root = root->left;
+            }
+            else if (key > root->key) {
+                next = root;
+                root = root->right;
+            }
+            if (key == root->key || key == root->key){
+                return (next);
+            }
+            if ((key > root->key && root->right == NULL) || ( key < root->key && root->left == NULL)){
+                return nullptr;
+            }
+        }
+        return next;
+    }
+    
 // Print the tree
 void printTree(avlTree *root, std::string indent, bool last) {
   if (root != nullptr) {
@@ -263,8 +282,8 @@ int main()
 //   root = delete_node(root, 13);
 //   std::cout << "After deleting " << std::endl;
 //   printTree(root, "", true);
-    int key = -1000000;
-       avlTree* prec = findNode(root,key);
+    int key = 113;
+       avlTree* prec = findParent(root,key);
     // for (int key: keys)
     // {
  
