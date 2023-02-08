@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:40:44 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/07 23:09:52 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:38:37 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,33 @@ struct avlTree {
             }
             return next;
         }
-
+    avlTree* findNode(avlTree* root, int key)
+        {
+            // base case
+            // if (root == nullptr) {
+            //     return nullptr;
+            // }
+            avlTree* next = nullptr;
+            while (root != nullptr)
+            {
+                if (key < root->key){
+                    root = root->left;
+                    next = root;
+                }
+                else if (key > root->key) {
+                    root = root->right;
+                    next = root;
+                }
+                if (key == root->key){
+                    return (next);
+                }
+                if ((key > root->key && root->right == NULL) || ( key < root->key && root->left == NULL)){
+                     return nullptr;
+                }
+                 std::cout << "i am heir\n";
+            }
+            return next;
+        }
 // Print the tree
 void printTree(avlTree *root, std::string indent, bool last) {
   if (root != nullptr) {
@@ -233,20 +259,20 @@ int main()
     for (int key: keys) {
         root = insert_node(root, key);
     }
-//  printTree(root, "", true);
+ printTree(root, "", true);
 //   root = delete_node(root, 13);
 //   std::cout << "After deleting " << std::endl;
 //   printTree(root, "", true);
-    int key = 8;
+    int key = -1000000;
+       avlTree* prec = findNode(root,key);
     // for (int key: keys)
     // {
-       avlTree* prec = findSuccessor(root,key);
  
         if (prec != nullptr) {
-            std::cout << "The predecessor of node " << key << " is " << prec->key << std::endl;
+            std::cout << "The value of node " << key << " is " << prec->key << std::endl;
         }
         else {
-            std::cout << "The predecessor doesn't exist for " << key << std::endl;
+            std::cout << "The value doesn't exist " << key << std::endl;
         }
     // }
  
