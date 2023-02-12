@@ -6,16 +6,15 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/12 20:34:23 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/12 21:48:19 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <memory>
  namespace ft {
-        template < class Key,class T, class Compare = std::less<Key>,class Alloc = std::allocator<std::pair<const Key,T> > > 
-            struct avlTree {
-                   int data;
+        template < class Key > struct avlTree {
+                key      data;
                 avlTree *left;
                 avlTree *right;
                 avlTree *parent;
@@ -30,7 +29,7 @@ int getHeight(avlTree *Node) {
 }
 
 // New node creation
-avlTree *creatNode(int key) {
+avlTree *creatNode(Key key) {
   avlTree *node = new avlTree();
   node->data = key;
   node->left = NULL;
@@ -78,7 +77,7 @@ int getBalance(avlTree *node) {
   }
 }
 
- int key_compare(int newKey, int oldKey){
+ int key_compare(key newKey, key oldKey){
   if (newKey < oldKey){ 
      return (-1);
    }
@@ -104,7 +103,7 @@ int getBalance(avlTree *node) {
   return(root);
  }
  
- avlTree *rebalance_left(avlTree *root, int key){
+ avlTree *rebalance_left(avlTree *root, Key key){
     //update height of node 
     fix_height(root);
    // ckeck balance of tree
@@ -120,7 +119,7 @@ int getBalance(avlTree *node) {
  }
  
 // Insert a node
-avlTree *avl_insert(avlTree *node, int key) {
+avlTree *avl_insert(avlTree *node, key key) {
   // insert the node
   if (node == NULL){
     return (creatNode(key)); 
@@ -180,7 +179,7 @@ avlTree *balanceTree(avlTree *root){
   }
   return root;
 }
-avlTree * deleteNode(avlTree * root, int val_to_delete) 
+avlTree * deleteNode(avlTree * root, key val_to_delete) 
   {
     if (root == NULL){
       return NULL;
@@ -190,7 +189,6 @@ avlTree * deleteNode(avlTree * root, int val_to_delete)
       {
         if (root->left == NULL && root->right == NULL) 
         {
-          std::cout<<"hhhhhhhhh"<<root->data<<std::endl;
           delete root;
           return NULL;
         } 
@@ -236,7 +234,7 @@ avlTree * deleteNode(avlTree * root, int val_to_delete)
     }
   }
 
-  avlTree *findPredecessor(avlTree *root, int key){
+  avlTree *findPredecessor(avlTree *root, key key){
     if (root == NULL){
       return(0);
     }
@@ -263,7 +261,7 @@ avlTree * deleteNode(avlTree * root, int val_to_delete)
 }
 
         
-        avlTree* findSuccessor(avlTree* root, int key)
+        avlTree* findSuccessor(avlTree* root, key key)
         {
             // base case
             if (root == nullptr) {
@@ -291,7 +289,7 @@ avlTree * deleteNode(avlTree * root, int val_to_delete)
             }
             return next;
         }
-    avlTree* findNode(avlTree* root, int key)
+    avlTree* findNode(avlTree* root, key key)
     {
         avlTree* next = nullptr;
         while (root != nullptr)
@@ -314,7 +312,7 @@ avlTree * deleteNode(avlTree * root, int val_to_delete)
         return next;
     }
     
-    avlTree* findParent(avlTree* root, int key)
+    avlTree* findParent(avlTree* root, key key)
     {
         avlTree* next = nullptr;
         while (root != nullptr)
