@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/11 22:37:30 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/12 20:34:23 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,42 +158,11 @@ avlTree *maxValue(avlTree *node) {
 }
 
 // Delete a node
-avlTree *deleteNode(avlTree *root, int key) {
-  if (root == NULL)
-    return root;
-  if (key < root->data)
-    root->left = deleteNode(root->left, key);
-  else if (key > root->data)
-    root->right = deleteNode(root->right, key);
- else if (key == root->data){
-    if ((root->left == NULL) || (root->right == NULL)) {
-     avlTree *temp;
-     if (root->left){
-      temp = root->left;
-     }else{
-      temp = root->right;
-     }
-      if (temp == NULL) {
-        temp = root;
-        root = NULL;
-      } else
-        *root = *temp;
-      temp = nullptr;
-    } else {
-     avlTree *temp = minValue(root->right);
-      root->data = temp->data;
-      root->right = deleteNode(root->right, temp->data);
-    }
-  }
-
-  if (root == NULL)
-    return root;
-
-  // Update the balance factor of each node and
+avlTree *balanceTree(avlTree *root){
   // balance the tree
-  root->height = 1+ std::max(getHeight(root->left), getHeight(root->right));
-  int balanceFactor = getBalance(root);
-  if (balanceFactor > 1) {
+  root->height = 1 + std::max(getHeight(root->left), getHeight(root->right));
+  int balance = getBalance(root);
+  if (balance > 1) {
     if (getBalance(root->left) >= 0) {
       return rotate_right(root);
     } else {
@@ -201,7 +170,7 @@ avlTree *deleteNode(avlTree *root, int key) {
       return rotate_right(root);
     }
   }
-  if (balanceFactor < -1) {
+  if (balance < -1) {
     if (getBalance(root->right) <= 0) {
       return rotate_left(root);
     } else {
@@ -211,6 +180,61 @@ avlTree *deleteNode(avlTree *root, int key) {
   }
   return root;
 }
+avlTree * deleteNode(avlTree * root, int val_to_delete) 
+  {
+    if (root == NULL){
+      return NULL;
+    }else{
+      // node is found and needs to be deleted 
+      if(val_to_delete == root->data) 
+      {
+        if (root->left == NULL && root->right == NULL) 
+        {
+          std::cout<<"hhhhhhhhh"<<root->data<<std::endl;
+          delete root;
+          return NULL;
+        } 
+        else if(root->left == NULL)
+        {
+          avlTree * temp = root->right;
+          delete root;
+          return temp;
+        }
+        else if (root->right == NULL) 
+        {
+          avlTree * temp = root->left;
+          delete root;
+          return temp;
+        }
+        else 
+        {
+          // finding the minimum value in the right subtree
+          avlTree * min_right_subtree ; 
+          avlTree * current = root->right;
+          while (current->left != NULL) {
+            current = current->left;
+          }
+          min_right_subtree = current;
+          // switching the values 
+          root->data = min_right_subtree->data;
+          // Deleting the node with val_to_delete now as a leaf node
+          root->right = deleteNode(root->right, min_right_subtree->data);
+        }
+      }
+      // keep searching for node
+      else
+      {
+        if (val_to_delete < root->data){
+          root->left = deleteNode(root->left, val_to_delete);
+        }
+        else if (val_to_delete > root->data){
+          root->right = deleteNode(root->right, val_to_delete);
+        }
+      }
+        root = balanceTree(root);
+      return root ;
+    }
+  }
 
   avlTree *findPredecessor(avlTree *root, int key){
     if (root == NULL){
@@ -237,6 +261,7 @@ avlTree *deleteNode(avlTree *root, int key) {
     }
     return (prev); 
 }
+
         
         avlTree* findSuccessor(avlTree* root, int key)
         {
