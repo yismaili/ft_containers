@@ -6,7 +6,6 @@ using namespace ft;
 
 int main ()
 {
-
   std::cout << "char: " << is_integral < char >::value << std::endl;
   std::cout << "bool: " << is_integral < bool >::value << std::endl;
   std::cout << "int: " << is_integral < int >::value << std::endl;
