@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/11 00:20:12 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:00:48 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "Random_access_iterator.hpp"
 #include <stdexcept>
 #include <iterator>
-#include "traits.hpp"
+#include "utils.hpp"
 #include "reverse_iterator.hpp"
  namespace ft {
 template<typename T, class allocator = std::allocator<T> >
