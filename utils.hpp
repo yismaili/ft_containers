@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 13:37:43 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/13 17:03:37 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:41:33 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ template <> struct is_integral<unsigned long long> {
 template <> struct is_integral<bool> {
     static const bool value = true;
 };
+
 }
 #endif
