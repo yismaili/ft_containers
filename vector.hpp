@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/12 23:00:48 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:41:47 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ public:
     
     template <class InputIterator>
     vector (InputIterator first, InputIterator last, const allocator_type& allocc = allocator_type(), 
-    typename ft::enable_if<!ft::is_the_same<InputIterator, int>::value>::type* = NULL)
+    typename ft::enable_if<!ft::cmp<InputIterator, int>::value>::type* = NULL)
     {
         size_v = last - first;
         capacity_v =  last - first;
