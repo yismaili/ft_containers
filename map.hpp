@@ -6,13 +6,12 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/14 16:10:56 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/14 22:59:10 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "avlTree.hpp"
 #include <memory>
-#include <map>
 
  namespace ft {
     template < class Key,class T, class Compare = std::less<Key>,class Alloc = std::allocator<std::pair<const Key,T> > >    
@@ -34,6 +33,20 @@
             typedef ft::avlTree const_iterator;
             typedef ft::reverse_iterator<iterator> reverse_iterator;
             typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
-            
+            // compare value 
+            class value_compare {
+        
+    };
+            map(){
+                size_m = 0;
+                ptr = nullptr;
+            }
+            map( const Compare& comp, const Allocator& alloc = Allocator() ){
+                
+            }
+        private:
+            mapped_type  size_m;
+            allocator_type alloc;
+            pointer ptr;
     };
  };
