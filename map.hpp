@@ -6,12 +6,13 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/15 20:59:36 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:48:21 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "avlTree.hpp"
 #include <memory>
+#include <iostream>
 #include <functional>
 
  namespace ft {
@@ -53,13 +54,34 @@
                 (void)alloc;
                 comp = 0;
             }
-            map( const Compare& comp, const Allocator& alloc = Allocator() ){
-                
+            map( const Compare& comp, const Allocator& alloc = Allocator() );{
+                compare_m = comp;
+                size_m = 0;
+                (void)alloc;
+            }
+            template< class InputIt >
+            map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()){
+                compare_m = comp;
+                (void)allo_c;
+                size_m = std::distance(first, last);
+                ptr = alloc.allocator(size_m);
+                size_t i = 0;
+                while (first < last)
+                {
+                   alloc.contruct(ptr + i, *first);
+                   first++;
+                   i++;
+                }
+            }
+            map( const map& other ){
+                if (this != map){
+                    
+                }
             }
         private:
             mapped_type  size_m;
-            allocator_type alloc;
+            allocator_type allo_c;
             pointer ptr;
-            key_cpmare comp;
+            key_cpmare compare_m;
     };
  };
