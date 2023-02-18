@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/16 16:40:05 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/18 18:52:50 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,24 @@
                 compare_m = comp;
                 (void)allo_c;
                 size_m = std::distance(first, last);
-                ptr = alloc.allocator(size_m);
                 size_t i = 0;
                 while (first < last)
                 {
-                   alloc.contruct(ptr + i, *first);
-                   first++;
-                   i++;
+                    template<value_type, allocator_typ>avlTree *node;
+                    node.avl_insert(node, *first);
+                    first++;
+                    i++;
                 }
             }
             map( const map& other ){
                 if (this != map){
-                    
+                    *this = other;
                 }
+                return (this);
             }
         private:
             mapped_type  size_m;
-            allocator_type allo_c;
-            pointer ptr;
+            allocator_type alloc;
             key_cpmare compare_m;
     };
  };
