@@ -6,31 +6,44 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/12 21:48:19 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/18 18:32:53 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <memory>
- namespace ft {
-        template < class Key > struct avlTree {
-                key      data;
-                avlTree *left;
-                avlTree *right;
-                avlTree *parent;
-                avlTree *root;
-                int height;
- 
+#include "avlNode.hpp"
+
+namespace ft {
+template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
+class avlTree
+{
+private:
+  /* data */
+public:
+  avlNode<T, Alloc> *node;
+  Compare cmp;
+  Alloc alloc;
+  avlTree(){
+    node = NULL;
+  }
+  avlTree(avlTree &other){
+    *this = other;
+  }
+  avlTree &operator=(avlTree const &other){
+    node = other.node;
+    cmp = other.cmp;
+    return (this);
+  }
+  ~avlTree(){}
 // Calculate height
 int getHeight(avlTree *Node) {
   if (Node == NULL)
     return 0;
-  return Node->height;
+  return ( Node->height);
 }
 
 // New node creation
-avlTree *creatNode(Key key) {
-  avlTree *node = new avlTree();
+avlNode<T, Alloc> *creatNode(const T& key) {
+  avlNode <T, Alloc> *node = new avlTree();
   node->data = key;
   node->left = NULL;
   node->right = NULL;
@@ -39,7 +52,7 @@ avlTree *creatNode(Key key) {
 }
 
 // Rotate right
-void fix_height(avlTree *root){
+void fix_height(avlNode<T, Alloc> *root){
   int hl = getHeight(root->left);
   int hr = getHeight(root->right);
   if (hl > hr){
@@ -49,7 +62,7 @@ void fix_height(avlTree *root){
   }
 }
 
-avlTree *rotate_right(avlTree *root) {
+avlNode<T, Alloc> *rotate_right(avlNode<T, Alloc> *root) {
   avlTree* R = root->left;
   root->left = root->left->right;
   R->right = root;
@@ -59,7 +72,7 @@ avlTree *rotate_right(avlTree *root) {
 }
 
 // Rotate left
-avlTree *rotate_left(avlTree *root) {
+avlNode<T, Alloc> *rotate_left(avlNode<T, Alloc> *root) {
   avlTree* R = root->right;
   root->right = root->right->left;
   R->left = root;
@@ -69,7 +82,7 @@ avlTree *rotate_left(avlTree *root) {
 }
 
 // Get the balance factor of each node
-int getBalance(avlTree *node) {
+int getBalance(avlNode<T, Alloc> *node) {
   if (node == NULL)
     return 0;
   else{
@@ -77,7 +90,7 @@ int getBalance(avlTree *node) {
   }
 }
 
- int key_compare(key newKey, key oldKey){
+int key_compare(T& newKey, T& oldKey){
   if (newKey < oldKey){ 
      return (-1);
    }
@@ -88,7 +101,7 @@ int getBalance(avlTree *node) {
   }
  }
  
- avlTree *rebalance_right(avlTree *root){
+ avlNode<T, Alloc> *rebalance_right(avlNode<T, Alloc> *root){
   if (getHeight(root->right) - getHeight(root->left) == 2){
     if(getHeight(root->right->right) > getHeight(root->right->left)){
        root = rotate_left(root);
@@ -103,7 +116,7 @@ int getBalance(avlTree *node) {
   return(root);
  }
  
- avlTree *rebalance_left(avlTree *root, Key key){
+ avlNode<T, Alloc> *rebalance_left(avlNode<T, Alloc> *root, T& key){
     //update height of node 
     fix_height(root);
    // ckeck balance of tree
@@ -119,7 +132,7 @@ int getBalance(avlTree *node) {
  }
  
 // Insert a node
-avlTree *avl_insert(avlTree *node, key key) {
+avlNode<T, Alloc> *avl_insert(avlNode<T, Alloc> *node, T& key) {
   // insert the node
   if (node == NULL){
     return (creatNode(key)); 
@@ -141,23 +154,23 @@ avlTree *avl_insert(avlTree *node, key key) {
 }
 
 // Node with minimum value
-avlTree *minValue(avlTree *node) {
- avlTree *current = node;
+avlNode<T, Alloc> *minValue(avlNode<T, Alloc> *node) {
+ avlNode<T, Alloc> *current = node;
   while (current->left != NULL)
     current = current->left;
   return current;
 }
 
 // Node with maximum value
-avlTree *maxValue(avlTree *node) {
- avlTree *current = node;
+avlNode<T, Alloc> *maxValue(avlNode<T, Alloc> *node) {
+ avlNode<T, Alloc> *current = node;
   while (current->left != NULL)
     current = current->left;
   return current;
 }
 
 // Delete a node
-avlTree *balanceTree(avlTree *root){
+avlNode<T, Alloc> *balanceTree(avlNode<T, Alloc> *root){
   // balance the tree
   root->height = 1 + std::max(getHeight(root->left), getHeight(root->right));
   int balance = getBalance(root);
@@ -179,7 +192,7 @@ avlTree *balanceTree(avlTree *root){
   }
   return root;
 }
-avlTree * deleteNode(avlTree * root, key val_to_delete) 
+avlNode<T, Alloc> * deleteNode(avlNode<T, Alloc> * root, T& val_to_delete) 
   {
     if (root == NULL){
       return NULL;
@@ -194,21 +207,21 @@ avlTree * deleteNode(avlTree * root, key val_to_delete)
         } 
         else if(root->left == NULL)
         {
-          avlTree * temp = root->right;
+          avlNode<T, Alloc> * temp = root->right;
           delete root;
           return temp;
         }
         else if (root->right == NULL) 
         {
-          avlTree * temp = root->left;
+          avlNode<T, Alloc> * temp = root->left;
           delete root;
           return temp;
         }
         else 
         {
           // finding the minimum value in the right subtree
-          avlTree * min_right_subtree ; 
-          avlTree * current = root->right;
+          avlNode<T, Alloc> * min_right_subtree ; 
+          avlNode<T, Alloc> * current = root->right;
           while (current->left != NULL) {
             current = current->left;
           }
@@ -231,14 +244,14 @@ avlTree * deleteNode(avlTree * root, key val_to_delete)
       }
         root = balanceTree(root);
       return root ;
-    }
   }
+}
 
-  avlTree *findPredecessor(avlTree *root, key key){
+  avlNode<T, Alloc> *findPredecessor(avlNode<T, Alloc> *root, T& key){
     if (root == NULL){
       return(0);
     }
-    avlTree *prev = NULL;
+    avlNode<T, Alloc> *prev = NULL;
     while (1){
       if (key < root->data){
           root = root->left;
@@ -261,13 +274,13 @@ avlTree * deleteNode(avlTree * root, key val_to_delete)
 }
 
         
-        avlTree* findSuccessor(avlTree* root, key key)
+        avlNode<T, Alloc>* findSuccessor(avlNode<T, Alloc>* root, T& key)
         {
             // base case
             if (root == nullptr) {
                 return nullptr;
             }
-            avlTree* next = nullptr;
+            avlNode<T, Alloc>* next = nullptr;
             while (1)
             {
                 if (key < root->data){
@@ -289,9 +302,9 @@ avlTree * deleteNode(avlTree * root, key val_to_delete)
             }
             return next;
         }
-    avlTree* findNode(avlTree* root, key key)
+    avlNode<T, Alloc>* findNode(avlNode<T, Alloc>* root, T& key)
     {
-        avlTree* next = nullptr;
+        avlNode<T, Alloc>* next = nullptr;
         while (root != nullptr)
         {
             if (key < root->data){
@@ -312,9 +325,9 @@ avlTree * deleteNode(avlTree * root, key val_to_delete)
         return next;
     }
     
-    avlTree* findParent(avlTree* root, key key)
+    avlNode<T, Alloc>* findParent(avlNode<T, Alloc>* root, T& key)
     {
-        avlTree* next = nullptr;
+        avlNode<T, Alloc>* next = nullptr;
         while (root != nullptr)
         {
             if (key < root->data){
@@ -334,5 +347,25 @@ avlTree * deleteNode(avlTree * root, key val_to_delete)
         }
         return next;
     }
+    void printTree(avlNode<T, Alloc> *root, std::string indent, int last) {
+  if (root != nullptr) {
+   std:: cout << indent;
+    if (last == 2) {
+      std::cout << "ROOT----";
+      indent += "   ";
+    }
+    else if (last == 1) {
+      std::cout << "R----";
+      indent += "   ";
+    } else {
+     std::cout << "L----";
+      indent += "|   ";
+    }
+    std::cout << root->data << std::endl;
+    printTree(root->root, indent, 2);
+    printTree(root->left, indent, 0);
+    printTree(root->right, indent, 1);
+  }
+}
 };
 };
