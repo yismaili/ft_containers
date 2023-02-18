@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/18 18:52:50 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/18 19:29:09 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@
                 size_t i = 0;
                 while (first < last)
                 {
-                    template<value_type, allocator_typ>avlTree *node;
+                    avlTree<value_type, allocator_type>* node = node.
                     node.avl_insert(node, *first);
                     first++;
                     i++;
@@ -78,6 +78,9 @@
                     *this = other;
                 }
                 return (this);
+            }
+            ~map(){
+                
             }
         private:
             mapped_type  size_m;
