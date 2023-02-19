@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/19 22:08:06 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/19 22:32:02 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,9 @@
           return (ptr[n]);
      }
     };
-     template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
+
+    /*---------- bidirectional iterator----------*/
+    template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
     class bidirectional_iterator{
      private:
           avlTree<T, Compare, Alloc> nodeAvl;
@@ -153,8 +155,8 @@
           nodeAvl = node_avl;
           ptr = ptr_;
      }
-     ~Random_access_iterator(){}
-     bidirectional_iterator(const constbidirectional_iterator &obj)
+     ~bidirectional_iterator(){}
+     bidirectional_iterator(const bidirectional_iterator &obj)
      {
           ptr = obj.ptr;
           nodeAvl = obj.nodeAvl;
