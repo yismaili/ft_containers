@@ -6,11 +6,12 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/16 16:40:05 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/19 14:37:20 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "avlTree.hpp"
+#include "pair.hpp"
 #include <memory>
 #include <iostream>
 #include <functional>
@@ -21,23 +22,23 @@
         public:
         // define types of map container
             typedef T mapped_type;
-            typedef key key_type;
-            typedef Allocator allocator_type;
+            typedef Key key_type;
+            typedef Alloc alloc_type;
             typedef ft::pair<key_type, mapped_type> value_type;
             typedef Compare key_cpmare;
-            typedef typename allocator_type::reference reference;
-            typedef typename allocator_type::const_reference const_reference;
-            typedef typename allocater_type::pointer pointer; 
-            typedef typename allocater_type::const_pointer const_pointer;
-            typedef typename allocator_type::size_type size_type;
-            typedef typename allocater_type::difference_type difference_type;
-            typedef ft::avlTree iterator;
-            typedef ft::avlTree const_iterator;
-            typedef ft::reverse_iterator<iterator> reverse_iterator;
-            typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+            typedef typename alloc_type::reference reference;
+            typedef typename alloc_type::const_reference const_reference;
+            typedef typename alloc_type::pointer pointer; 
+            typedef typename alloc_type::const_pointer const_pointer;
+            typedef typename alloc_type::size_type size_type;
+            typedef typename alloc_type::difference_type difference_type;
+            // typedef std::avlTree iterator;
+            // typedef std::avlTree const_iterator;
+            // typedef std::reverse_iterator<iterator> reverse_iterator;
+            // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
             // compare value 
             class value_compare 
-                : std::public binary_function<value_type, value_type, bool>
+                : public std::binary_function<value_type, value_type, bool>
             {
                 protected:
                     key_cpmare comp;
@@ -50,39 +51,42 @@
             // constructs the map
             map(){
                 size_m = 0;
-                ptr = nullptr;
                 (void)alloc;
-                comp = 0;
+                cmpre = 0;
             }
-            map( const Compare& comp, const Allocator& alloc = Allocator() );{
-                compare_m = comp;
+            map( const Compare& comp, const Alloc& alloc = Alloc() ){
+                cmpre= comp;
                 size_m = 0;
                 (void)alloc;
             }
             template< class InputIt >
-            map( InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()){
-                compare_m = comp;
-                (void)allo_c;
+            map( InputIt first, InputIt last, const Compare& comp = Compare(), const Alloc& alloc = Alloc()){
+                cmpre = comp;
+                (void)alloc;
                 size_m = std::distance(first, last);
-                ptr = alloc.allocator(size_m);
                 size_t i = 0;
                 while (first < last)
                 {
-                   alloc.contruct(ptr + i, *first);
-                   first++;
-                   i++;
+                    avlTree<value_type, alloc_type>* node = avltree;
+                    avltree.avl_insert(node, *first);
+                    first++;
+                    i++;
                 }
             }
             map( const map& other ){
-                if (this != map){
-                    
+                if (this != other){
+                    *this = other;
                 }
+                return (this);
+            }
+            ~map(){
+                
             }
         private:
+            avlTree<ft::pair<const Key, T> , Compare, Alloc> avltree;
             mapped_type  size_m;
-            allocator_type allo_c;
-            pointer ptr;
-            key_cpmare compare_m;
+            alloc_type alloc;
+            key_cpmare cmpre;
     };
  };
  

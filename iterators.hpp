@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Random_access_iterator.hpp                         :+:      :+:    :+:   */
+/*   iterators.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/04 12:46:56 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/19 22:08:06 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-// #include <cstddef>
+#include "avlTree.hpp"
      
  namespace ft {
+     // ----------- Random_access_iterator -----------//
   template <typename T> class Random_access_iterator
    {
    private:
@@ -133,6 +134,98 @@
       Random_access_iterator& operator[](const int n){
           return (ptr[n]);
      }
+    };
+     template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
+    class bidirectional_iterator{
+     private:
+          avlTree<T, Compare, Alloc> nodeAvl;
+          T* ptr;
+          
+     public:
+          typedef T& reference;
+          typedef T* pointer;
+          typedef std::ptrdiff_t difference_type;    
+     bidirectional_iterator(){
+          ptr = NULL;
+          nodeAvl = NULL;
+     }
+     bidirectional_iterator(T *ptr_, avlTree<T, Compare, Alloc> node_avl){
+          nodeAvl = node_avl;
+          ptr = ptr_;
+     }
+     ~Random_access_iterator(){}
+     bidirectional_iterator(const constbidirectional_iterator &obj)
+     {
+          ptr = obj.ptr;
+          nodeAvl = obj.nodeAvl;
+     }
+     bidirectional_iterator & operator=(const bidirectional_iterator &obj)
+     {
+          if (this != obj){
+               ptr = obj.ptr;
+               nodeAvl = obj.nodeAvl; 
+          }
+          return (*this);
+     }
+     reference operator*(){
+          return (*ptr);
+     }
+     pointer operator->(){
+          return (&*ptr);
+     }
+     bool operator == (const bidirectional_iterator &opj) {
+          if ((ptr == opj.ptr) && (nodeAvl == opj.nodeAvl)){
+               return (true);
+          }else {
+               return (false);
+          }
+       } 
+     bool operator != (const bidirectional_iterator &opj) {
+          if ((ptr != opj.ptr) && (nodeAvl != opj.nodeAvl)){
+               return (true);
+          }else {
+               return (false);
+          }
+       }
+       
+     bidirectional_iterator operator++(int){
+        bidirectional_iterator temp = *this;
+        ++(*this);
+        return (temp);
+     }
+     
+     bidirectional_iterator &operator++(){
+          avlTree<T, Alloc> node = nodeAvl.findNode(nodeAvl.node, *ptr);
+          if (node){
+               avlTree<T, Alloc> next = nodeAvl.findSuccessor(*ptr);
+               if (next){
+                    ptr = next->data;
+               }
+               else{
+                    ptr = nullptr;
+               }
+          }
+          return (*this);
+          }
+     bidirectional_iterator operator--(int){
+        bidirectional_iterator temp = *this;
+        --(*this);
+        return (temp);
+     }
+     
+     bidirectional_iterator &operator--(){
+          avlTree<T, Alloc> node = nodeAvl.findNode(nodeAvl.node, *ptr);
+          if (node){
+               avlTree<T, Alloc> next = nodeAvl.findPredecessor(*ptr);
+               if (next){
+                    ptr = next->data;
+               }
+               else{
+                    ptr = nullptr;
+               }
+          }
+          return (*this);
+          }
     };
  };
  
