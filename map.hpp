@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/19 14:37:20 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/20 00:06:42 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@
             typedef typename alloc_type::const_pointer const_pointer;
             typedef typename alloc_type::size_type size_type;
             typedef typename alloc_type::difference_type difference_type;
-            // typedef std::avlTree iterator;
-            // typedef std::avlTree const_iterator;
-            // typedef std::reverse_iterator<iterator> reverse_iterator;
-            // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+            typedef ft::bidirectional_iterator<T, Compare, Alloc> iterator;
+            typedef ft::bidirectional_iterator<const T, Compare, Alloc> const_iterator;
+            typedef ft::bidirectional_iterator<T, Compare, Alloc> reverse_iterator;
+            typedef ft::bidirectional_iterator<const T, Compare, Alloc> const_reverse_iterator;
             // compare value 
             class value_compare 
                 : public std::binary_function<value_type, value_type, bool>
@@ -79,9 +79,84 @@
                 }
                 return (this);
             }
-            ~map(){
-                
+            ~map(){   
             }
+        /*--------Element access-----------*/ 
+        T& at( const Key& key ){
+            avlTree<value_type, Alloc>*	node = avltree.search( avltree.node, ft::make_pair(key, mapped_type()));
+           if (!node){
+            throw std::out_of_range("Out of range");
+           }
+           else {
+            return (node->node->data);
+           }
+        }
+
+        const T& at( const Key& key ) const{
+            avlTree<value_type, Alloc>*	node = avltree.search( avltree.node, ft::make_pair(key, mapped_type()));
+           if (!node){
+            throw std::out_of_range("Out of range");
+           }
+           else {
+            return (node->node->data);
+           }
+        }
+        T& operator[]( const Key& key ){
+            avlTree<value_type, Alloc>*	node = avltree.search( avltree.node, ft::make_pair(key, mapped_type()));
+             return (node->node->data);
+        }
+        /*-------- Iterators --------*/
+        iterator begin(){
+             avlTree<value_type, Alloc>*	node = avltree.minValue(avltree.node);
+             return (node->node->data);
+        }
+        const_iterator begin() const{
+             avlTree<value_type, Alloc>*	node = avltree.minValue(avltree.node);
+             return (node->node->data);
+        }
+        iterator end() {
+            avlTree<value_type, Alloc>*	node = avltree.maxValue(avltree.node);
+            return (node->node->data);
+        }
+        const_iterator end() const{
+            avlTree<value_type, Alloc>*	node = avltree.maxValue(avltree.node);
+            return (node->node->data); 
+        }
+        reverse_iterator rbegin(){
+            avlTree<value_type, Alloc>*	node = avltree.maxValue(avltree.node);
+            return (node->node->data);
+        }
+        const_reverse_iterator rbegin() const{
+            avlTree<value_type, Alloc>*	node = avltree.maxValue(avltree.node);
+            return (node->node->data);
+        }
+        reverse_iterator rend(){
+             avlTree<value_type, Alloc>*	node = avltree.minValue(avltree.node);
+             return (node->node->data);
+        }
+        const_reverse_iterator rend() const{
+            avlTree<value_type, Alloc>*	node = avltree.minValue(avltree.node);
+             return (node->node->data);
+        }
+        /*------Capacity--------*/
+        bool empty() const{
+            avlTree<value_type, Alloc>*	node = avltree.node;
+            if (!node){
+                return (true);
+            }
+            else {
+                return (false);
+            }
+        }
+        
+        size_type size() const{
+            return (size_m);
+        }
+        
+        size_type max_size() const{
+            return (alloc.max_size());
+        }
+        /*--------Modifiers----------*/
         private:
             avlTree<ft::pair<const Key, T> , Compare, Alloc> avltree;
             mapped_type  size_m;

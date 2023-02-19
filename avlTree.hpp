@@ -6,9 +6,12 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/18 19:44:02 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/19 23:54:31 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef AVLTREE_HPP
+#define AVLTREE_HPP
 
 #include <iostream>
 #include <memory>
@@ -17,37 +20,37 @@ namespace ft {
 template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
 class avlTree
 {
-private:
-    struct avlNode {
-    typedef Alloc allocator_type;
-      T      *data;
-      avlNode *left;
-      avlNode *right;
-      avlNode *parent;
-      avlNode *root;
-      size_t    height;
-      allocator_type alloc;
-      
-      avlNode(){
-        data = NULL;
-        left = NULL;
-        right = NULL;
-        parent = NULL;
-        root = NULL;
-        height = 0;
+  private:
+      struct avlNode {
+      typedef Alloc allocator_type;
+        T      *data;
+        avlNode *left;
+        avlNode *right;
+        avlNode *parent;
+        avlNode *root;
+        size_t    height;
+        allocator_type alloc;
         
-      }
-      
-      avlNode (const T & data_){
-        data = alloc.allocate(1);
-        alloc.consttruct(data, data_);
-        left = NULL;
-        right = NULL;
-        parent = NULL;
-        root = NULL;
-        height = 1;
-      }
-      
+        avlNode(){
+          data = NULL;
+          left = NULL;
+          right = NULL;
+          parent = NULL;
+          root = NULL;
+          height = 0;
+          
+        }
+        
+        avlNode (const T & data_){
+          data = alloc.allocate(1);
+          alloc.consttruct(data, data_);
+          left = NULL;
+          right = NULL;
+          parent = NULL;
+          root = NULL;
+          height = 1;
+        }
+        
       avlNode operator=(avlNode const &other){
       if (this != other){  
         if (data){
@@ -415,3 +418,4 @@ avlNode* findNode(avlNode* root, T& key)
 }
 };
 };
+#endif
