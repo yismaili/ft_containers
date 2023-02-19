@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/19 17:49:21 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/19 22:08:06 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@
           ptr = obj.ptr;
           nodeAvl = obj.nodeAvl;
      }
-     bidirectional_iterator & operator=(constbidirectional_iterator &obj)
+     bidirectional_iterator & operator=(const bidirectional_iterator &obj)
      {
           if (this != obj){
                ptr = obj.ptr;
@@ -173,7 +173,59 @@
      pointer operator->(){
           return (&*ptr);
      }
+     bool operator == (const bidirectional_iterator &opj) {
+          if ((ptr == opj.ptr) && (nodeAvl == opj.nodeAvl)){
+               return (true);
+          }else {
+               return (false);
+          }
+       } 
+     bool operator != (const bidirectional_iterator &opj) {
+          if ((ptr != opj.ptr) && (nodeAvl != opj.nodeAvl)){
+               return (true);
+          }else {
+               return (false);
+          }
+       }
+       
+     bidirectional_iterator operator++(int){
+        bidirectional_iterator temp = *this;
+        ++(*this);
+        return (temp);
+     }
      
+     bidirectional_iterator &operator++(){
+          avlTree<T, Alloc> node = nodeAvl.findNode(nodeAvl.node, *ptr);
+          if (node){
+               avlTree<T, Alloc> next = nodeAvl.findSuccessor(*ptr);
+               if (next){
+                    ptr = next->data;
+               }
+               else{
+                    ptr = nullptr;
+               }
+          }
+          return (*this);
+          }
+     bidirectional_iterator operator--(int){
+        bidirectional_iterator temp = *this;
+        --(*this);
+        return (temp);
+     }
+     
+     bidirectional_iterator &operator--(){
+          avlTree<T, Alloc> node = nodeAvl.findNode(nodeAvl.node, *ptr);
+          if (node){
+               avlTree<T, Alloc> next = nodeAvl.findPredecessor(*ptr);
+               if (next){
+                    ptr = next->data;
+               }
+               else{
+                    ptr = nullptr;
+               }
+          }
+          return (*this);
+          }
     };
  };
  
