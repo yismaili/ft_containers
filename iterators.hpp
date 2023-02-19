@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Random_access_iterator.hpp                         :+:      :+:    :+:   */
+/*   iterators.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/04 12:46:56 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/19 17:49:21 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-// #include <cstddef>
+#include "avlTree.hpp"
      
  namespace ft {
+     // ----------- Random_access_iterator -----------//
   template <typename T> class Random_access_iterator
    {
    private:
@@ -133,6 +134,46 @@
       Random_access_iterator& operator[](const int n){
           return (ptr[n]);
      }
+    };
+     template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
+    class bidirectional_iterator{
+     private:
+          avlTree<T, Compare, Alloc> nodeAvl;
+          T* ptr;
+          
+     public:
+          typedef T& reference;
+          typedef T* pointer;
+          typedef std::ptrdiff_t difference_type;    
+     bidirectional_iterator(){
+          ptr = NULL;
+          nodeAvl = NULL;
+     }
+     bidirectional_iterator(T *ptr_, avlTree<T, Compare, Alloc> node_avl){
+          nodeAvl = node_avl;
+          ptr = ptr_;
+     }
+     ~Random_access_iterator(){}
+     bidirectional_iterator(const constbidirectional_iterator &obj)
+     {
+          ptr = obj.ptr;
+          nodeAvl = obj.nodeAvl;
+     }
+     bidirectional_iterator & operator=(constbidirectional_iterator &obj)
+     {
+          if (this != obj){
+               ptr = obj.ptr;
+               nodeAvl = obj.nodeAvl; 
+          }
+          return (*this);
+     }
+     reference operator*(){
+          return (*ptr);
+     }
+     pointer operator->(){
+          return (&*ptr);
+     }
+     
     };
  };
  
