@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/18 19:37:42 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/18 19:44:02 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> 
 class avlTree
 {
 private:
-    struct avlNode
-    {
-      typedef Alloc allocator_type;
+    struct avlNode {
+    typedef Alloc allocator_type;
       T      *data;
       avlNode *left;
       avlNode *right;
@@ -62,12 +61,8 @@ private:
           root = other.root;
         }
       }
-      }
-      ~avlNode(){
-            alloc.destroy(data);
-            alloc.deallocate(data, 1);
-      }
-    };
+    }
+  };
 public:
   avlNode *node;
   Compare cmp;
@@ -242,6 +237,7 @@ avlNode *balanceTree(avlNode *root){
   }
   return root;
 }
+
 avlNode * deleteNode(avlNode * root, T& val_to_delete) 
   {
     if (root == NULL){
@@ -297,7 +293,7 @@ avlNode * deleteNode(avlNode * root, T& val_to_delete)
   }
 }
 
-  avlNode *findPredecessor(avlNode *root, T& key){
+avlNode *findPredecessor(avlNode *root, T& key){
     if (root == NULL){
       return(0);
     }
@@ -324,13 +320,13 @@ avlNode * deleteNode(avlNode * root, T& val_to_delete)
 }
 
         
-        avlNode* findSuccessor(avlNode* root, T& key)
-        {
-            // base case
-            if (root == nullptr) {
-                return nullptr;
-            }
-            avlNode* next = nullptr;
+avlNode* findSuccessor(avlNode* root, T& key)
+   {
+      // base case
+      if (root == nullptr) {
+          return nullptr;
+      }
+       avlNode* next = nullptr;
             while (1)
             {
                 if (key < root->data){
@@ -352,7 +348,7 @@ avlNode * deleteNode(avlNode * root, T& val_to_delete)
             }
             return next;
         }
-    avlNode* findNode(avlNode* root, T& key)
+avlNode* findNode(avlNode* root, T& key)
     {
         avlNode* next = nullptr;
         while (root != nullptr)
@@ -397,7 +393,7 @@ avlNode * deleteNode(avlNode * root, T& val_to_delete)
         }
         return next;
     }
-    void printTree(avlNode *root, std::string indent, int last) {
+  void printTree(avlNode *root, std::string indent, int last) {
   if (root != nullptr) {
    std:: cout << indent;
     if (last == 2) {
