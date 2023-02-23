@@ -6,9 +6,12 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:41:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/19 13:33:12 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/23 20:01:18 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PAIR_HPP
+#define PAIR_HPP
 
 #include <iostream>
 #include<map>
@@ -24,15 +27,14 @@ class pair{
                 this->first = 0;
                 this->second = 0;
             }
-            pair( const T1& x, const T2& y ){
-                first  = x;
-                second = y;
+            pair( const T1& x, const T2& y ): first(x), second(y){
+                // first  = x;
+                // second = y;
             }
             template< class U1, class U2 >
-            pair( const pair<U1, U2>& p ){
-                first=(U1)p.first;
-                second=(U2)p.second;
+            pair( const pair<U1, U2>& p ) : first(p.first), second(p.second) {
             }
+                 
             pair& operator=( const pair& other ){
                 if (this != other){
                     first = other.first;
@@ -88,3 +90,5 @@ class pair{
         }
     }
 }
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/19 23:54:31 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/23 19:14:07 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,92 +15,49 @@
 
 #include <iostream>
 #include <memory>
+#include "avlNode.hpp"
 
 namespace ft {
 template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
 class avlTree
-{
-  private:
-      struct avlNode {
-      typedef Alloc allocator_type;
-        T      *data;
-        avlNode *left;
-        avlNode *right;
-        avlNode *parent;
-        avlNode *root;
-        size_t    height;
-        allocator_type alloc;
-        
-        avlNode(){
-          data = NULL;
-          left = NULL;
-          right = NULL;
-          parent = NULL;
-          root = NULL;
-          height = 0;
-          
-        }
-        
-        avlNode (const T & data_){
-          data = alloc.allocate(1);
-          alloc.consttruct(data, data_);
-          left = NULL;
-          right = NULL;
-          parent = NULL;
-          root = NULL;
-          height = 1;
-        }
-        
-      avlNode operator=(avlNode const &other){
-      if (this != other){  
-        if (data){
-          alloc.deallcate(data, 1);
-        }else{
-          data = alloc.allocate(1);
-          alloc.construct(data, *(other.data));
-          left = other.left;
-          right = other. right;
-          parent = other.parent;
-          root = other.root;
-        }
-      }
-    }
-  };
+{   
 public:
-  avlNode *node;
-  Compare cmp;
+  node_avl<T, Alloc> *node;
+  Compare compare;
   Alloc alloc;
+  typename Alloc::template rebind<node_avl<T, Alloc> >::other	node_alloc;
   avlTree(){
     node = NULL;
   }
-  avlTree(avlTree &other){
+  avlTree(avlTree const &other){
     *this = other;
   }
   avlTree &operator=(avlTree const &other){
     node = other.node;
-    cmp = other.cmp;
+    compare = other.compare;
     return (this);
   }
   ~avlTree(){}
 // Calculate height
-int getHeight(avlTree *Node) {
+int getHeight(node_avl<T, Alloc> *Node) {
   if (Node == NULL)
     return 0;
-  return ( Node->height);
+  return (Node->height);
 }
 
 // New node creation
-avlNode *creatNode(const T& key) {
-  avlNode  *node = new avlTree();
-  node->data = key;
-  node->left = NULL;
-  node->right = NULL;
-  node->height = 1;
+node_avl<T, Alloc> *creatNode(const T& key) {
+  node_avl<T, Alloc>  *node =  node_alloc.allocate(1);
+  node_alloc.construct(node, key);
+  // node->data = key;
+  // node->left = NULL;
+  // node->right = NULL;
+  // node->height = 1;
   return (node);
 }
 
 // Rotate right
-void fix_height(avlNode *root){
+void fix_height(node_avl<T, Alloc> *root){
   int hl = getHeight(root->left);
   int hr = getHeight(root->right);
   if (hl > hr){
@@ -110,8 +67,8 @@ void fix_height(avlNode *root){
   }
 }
 
-avlNode *rotate_right(avlNode *root) {
-  avlTree* R = root->left;
+node_avl<T, Alloc> *rotate_right(node_avl<T, Alloc> *root) {
+  node_avl<T, Alloc>* R = root->left;
   root->left = root->left->right;
   R->right = root;
   fix_height(root);
@@ -120,8 +77,8 @@ avlNode *rotate_right(avlNode *root) {
 }
 
 // Rotate left
-avlNode *rotate_left(avlNode *root) {
-  avlTree* R = root->right;
+node_avl<T, Alloc> *rotate_left(node_avl<T, Alloc> *root) {
+  node_avl<T, Alloc>* R = root->right;
   root->right = root->right->left;
   R->left = root;
   fix_height(root);
@@ -130,7 +87,7 @@ avlNode *rotate_left(avlNode *root) {
 }
 
 // Get the balance factor of each node
-int getBalance(avlNode *node) {
+int getBalance(node_avl<T, Alloc> *node) {
   if (node == NULL)
     return 0;
   else{
@@ -149,7 +106,7 @@ int key_compare(T& newKey, T& oldKey){
   }
  }
  
- avlNode *rebalance_right(avlNode *root){
+ node_avl<T, Alloc> *rebalance_right(node_avl<T, Alloc> *root){
   if (getHeight(root->right) - getHeight(root->left) == 2){
     if(getHeight(root->right->right) > getHeight(root->right->left)){
        root = rotate_left(root);
@@ -164,15 +121,15 @@ int key_compare(T& newKey, T& oldKey){
   return(root);
  }
  
- avlNode *rebalance_left(avlNode *root, T& key){
+ node_avl<T, Alloc> *rebalance_left(node_avl<T, Alloc> *root, const T& key){
     //update height of node 
     fix_height(root);
    // ckeck balance of tree
     int cmp = getBalance(root);
-    if ((cmp > 1) && (key < root->left->data)) {
+    if ((cmp > 1) && (compare(key.first, root->left->data->first))) {
       return rotate_right(root);
     } 
-    else if ((cmp > 1) && ( key > root->left->data)) {
+    else if ((cmp > 1) && ( compare(root->left->data->first, key.first))) {
       root->left = rotate_left(root->left);
       return rotate_right(root);
     }
@@ -180,45 +137,44 @@ int key_compare(T& newKey, T& oldKey){
  }
  
 // Insert a node
-avlNode *avl_insert(avlNode *node, T& key) {
+node_avl<T, Alloc> *avl_insert(node_avl<T, Alloc> *node, const T& key) {
   // insert the node
   if (node == NULL){
     return (creatNode(key)); 
   }
     // Find the correct postion 
-  int cmp = key_compare(key, node->data);
-  if (cmp == 0){ // Found
-      node->data = key;
-   }
-  else if (cmp < 0){ // Go left
+  if (compare(key.first, node->data->first)){ // Go left
     node->left = avl_insert(node->left, key);
     node = rebalance_left(node, key);
     }
-  else if (cmp > 0){ // Go right
+  else if (compare(node->data->first, key.first)){ // Go right
     node->right = avl_insert(node->right, key);
     node = rebalance_right(node);
+    }
+    else{
+      return(node);
     }
   return (node);
 }
 
 // Node with minimum value
-avlNode *minValue(avlNode *node) {
- avlNode *current = node;
+node_avl<T, Alloc> *minValue(node_avl<T, Alloc> *node) {
+ node_avl<T, Alloc> *current = node;
   while (current->left != NULL)
     current = current->left;
   return current;
 }
 
 // Node with maximum value
-avlNode *maxValue(avlNode *node) {
- avlNode *current = node;
+node_avl<T, Alloc> *maxValue(node_avl<T, Alloc> *node) {
+ node_avl<T, Alloc> *current = node;
   while (current->left != NULL)
     current = current->left;
   return current;
 }
 
 // Delete a node
-avlNode *balanceTree(avlNode *root){
+node_avl<T, Alloc> *balanceTree(node_avl<T, Alloc> *root){
   // balance the tree
   root->height = 1 + std::max(getHeight(root->left), getHeight(root->right));
   int balance = getBalance(root);
@@ -241,7 +197,7 @@ avlNode *balanceTree(avlNode *root){
   return root;
 }
 
-avlNode * deleteNode(avlNode * root, T& val_to_delete) 
+node_avl<T, Alloc> * deleteNode(node_avl<T, Alloc> * root, T& val_to_delete) 
   {
     if (root == NULL){
       return NULL;
@@ -256,21 +212,21 @@ avlNode * deleteNode(avlNode * root, T& val_to_delete)
         } 
         else if(root->left == NULL)
         {
-          avlNode * temp = root->right;
+          node_avl<T, Alloc> * temp = root->right;
           delete root;
           return temp;
         }
         else if (root->right == NULL) 
         {
-          avlNode * temp = root->left;
+          node_avl<T, Alloc> * temp = root->left;
           delete root;
           return temp;
         }
         else 
         {
           // finding the minimum value in the right subtree
-          avlNode * min_right_subtree ; 
-          avlNode * current = root->right;
+          node_avl<T, Alloc> * min_right_subtree ; 
+          node_avl<T, Alloc> * current = root->right;
           while (current->left != NULL) {
             current = current->left;
           }
@@ -296,11 +252,11 @@ avlNode * deleteNode(avlNode * root, T& val_to_delete)
   }
 }
 
-avlNode *findPredecessor(avlNode *root, T& key){
+node_avl<T, Alloc> *findPredecessor(node_avl<T, Alloc> *root, T& key){
     if (root == NULL){
       return(0);
     }
-    avlNode *prev = NULL;
+    node_avl<T, Alloc> *prev = NULL;
     while (1){
       if (key < root->data){
           root = root->left;
@@ -323,13 +279,13 @@ avlNode *findPredecessor(avlNode *root, T& key){
 }
 
         
-avlNode* findSuccessor(avlNode* root, T& key)
+node_avl<T, Alloc>* findSuccessor(node_avl<T, Alloc>* root, T& key)
    {
       // base case
       if (root == nullptr) {
           return nullptr;
       }
-       avlNode* next = nullptr;
+       node_avl<T, Alloc>* next = nullptr;
             while (1)
             {
                 if (key < root->data){
@@ -351,32 +307,31 @@ avlNode* findSuccessor(avlNode* root, T& key)
             }
             return next;
         }
-avlNode* findNode(avlNode* root, T& key)
-    {
-        avlNode* next = nullptr;
+  node_avl<T, Alloc>  *findNode(node_avl<T, Alloc> *root, const T& key) {
+        node_avl<T, Alloc>* next = nullptr;
         while (root != nullptr)
         {
-            if (key < root->data){
+            if (compare(key.first, root->data->first)){
                 root = root->left;
                 next = root;
             }
-            else if (key > root->data) {
+            else if (compare(root->data->first, key.first)) {
                 root = root->right;
                 next = root;
             }
-            if (key == root->data){
+            if (key.first == root->data->first){
                 return (next);
             }
-            if ((key > root->data && root->right == NULL) || ( key < root->data && root->left == NULL)){
+            if ((compare(key.first, root->data->first) && root->right == NULL) || (compare(key.first, root->data->first) && root->left == NULL)){
                 return nullptr;
             }
         }
         return next;
     }
     
-    avlNode* findParent(avlNode* root, T& key)
+    node_avl<T, Alloc>* findParent(node_avl<T, Alloc>* root, T& key)
     {
-        avlNode* next = nullptr;
+        node_avl<T, Alloc>* next = nullptr;
         while (root != nullptr)
         {
             if (key < root->data){
@@ -396,7 +351,7 @@ avlNode* findNode(avlNode* root, T& key)
         }
         return next;
     }
-  void printTree(avlNode *root, std::string indent, int last) {
+  void printTree(node_avl<T, Alloc> *root, std::string indent, int last) {
   if (root != nullptr) {
    std:: cout << indent;
     if (last == 2) {

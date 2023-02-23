@@ -6,141 +6,134 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/20 00:06:42 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/23 23:02:01 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "avlTree.hpp"
+
 #include "pair.hpp"
 #include <memory>
 #include <iostream>
 #include <functional>
 
  namespace ft {
-    template < class Key,class T, class Compare = std::less<Key>,class Alloc = std::allocator<std::pair<const Key,T> > >    
-    class map{
-        public:
-        // define types of map container
-            typedef T mapped_type;
-            typedef Key key_type;
-            typedef Alloc alloc_type;
-            typedef ft::pair<key_type, mapped_type> value_type;
-            typedef Compare key_cpmare;
-            typedef typename alloc_type::reference reference;
-            typedef typename alloc_type::const_reference const_reference;
-            typedef typename alloc_type::pointer pointer; 
-            typedef typename alloc_type::const_pointer const_pointer;
-            typedef typename alloc_type::size_type size_type;
-            typedef typename alloc_type::difference_type difference_type;
-            typedef ft::bidirectional_iterator<T, Compare, Alloc> iterator;
-            typedef ft::bidirectional_iterator<const T, Compare, Alloc> const_iterator;
-            typedef ft::bidirectional_iterator<T, Compare, Alloc> reverse_iterator;
-            typedef ft::bidirectional_iterator<const T, Compare, Alloc> const_reverse_iterator;
-            // compare value 
-            class value_compare 
+
+	template< class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > > class map {
+		public:
+			typedef Key																			key_type;
+			typedef T																			mapped_type;
+			typedef ft::pair<const key_type, mapped_type>										value_type;
+			typedef std::size_t																	size_type;
+			typedef std::ptrdiff_t																difference_type;
+			typedef Compare																		key_compare;
+			typedef Allocator																	allocator_type;
+			typedef value_type&																	reference;
+			typedef const value_type&															const_reference;
+			typedef typename Allocator::pointer													pointer;
+			typedef typename Allocator::const_pointer											const_pointer;
+			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>			iterator;
+			typedef typename ft::bidirectional_iterator<const value_type, Compare, Allocator>	const_iterator;
+			typedef typename ft::reverse_iterator<iterator>										reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>								const_reverse_iterator;
+
+			 class value_compare 
                 : public std::binary_function<value_type, value_type, bool>
             {
                 protected:
-                    key_cpmare comp;
-                    value_compare(const key_cpmare& c) : comp(c){}
+                    key_compare comp;
+                    value_compare(const key_compare& c) : comp(c){}
                 public:
                     bool operator()(const value_type&lt,const value_type&rt) const{
                         return (comp(lt.first, rt.first));    
                     }
             };
-            // constructs the map
-            map(){
-                size_m = 0;
-                (void)alloc;
-                cmpre = 0;
+			/*---------------------> Member functions */
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+				: alloc_m(alloc), compare_m(comp), size_m(0) {}
+			template <class InputIterator> map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
+				const allocator_type& alloc = allocator_type()) {
+				compare_m = comp;
+				alloc_m = alloc;
+				size_m = static_cast<size_type>(std::distance(first, last));
+				for (; first != last; ++first) {
+					node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree.node, *first);
+					if (!node)
+						avl_tree.insert(*first);
+				}
+			}
+			map (const map& x) {*this = x;}
+			// map& operator=( const map& other ) {
+			// 	clear();
+			// 	avl_tree.clone(other.avl_tree.node);
+			// 	_size = other.size();
+			// 	return *this;
+			// }
+			~map() {}
+			allocator_type get_allocator() const {return alloc_m;}
+			/*---------------------> Element access */
+			T& at( const Key& key ) {
+				node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree.node, ft::make_pair(key, mapped_type()));
+				if (node)
+					return node->data->second;
+				else
+					throw std::out_of_range("Element not found");
+			}
+			const T& at( const Key& key ) const {
+				node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree.node, ft::make_pair(key, mapped_type()));
+				if (node)
+					return node->data->second;
+				else
+			
+            		throw std::out_of_range("Element not found");
+			}
+			T& operator[]( const Key& key ) {
+				value_type	p = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
+				node_avl<value_type, Allocator>* node = avl_tree.search(avl_tree.node, p);
+				if (!node) {
+					node = avl_tree.insert(p);
+					size_m++;
+					return (avl_tree.search(avl_tree.node, p))->data->second;
+				}
+				return node->data->second;
+			}
+            
+			/*---------------------> Iterators */
+			iterator begin(){
+                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree.node);
+                return (node->data->second);
             }
-            map( const Compare& comp, const Alloc& alloc = Alloc() ){
-                cmpre= comp;
-                size_m = 0;
-                (void)alloc;
+            const_iterator begin() const{
+                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree.node);
+                return (node->data->second);
             }
-            template< class InputIt >
-            map( InputIt first, InputIt last, const Compare& comp = Compare(), const Alloc& alloc = Alloc()){
-                cmpre = comp;
-                (void)alloc;
-                size_m = std::distance(first, last);
-                size_t i = 0;
-                while (first < last)
-                {
-                    avlTree<value_type, alloc_type>* node = avltree;
-                    avltree.avl_insert(node, *first);
-                    first++;
-                    i++;
-                }
+            iterator end() {
+                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree.node);
+                return (node->data->second);
             }
-            map( const map& other ){
-                if (this != other){
-                    *this = other;
-                }
-                return (this);
+            const_iterator end() const{
+                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree.node);
+                return (node->data->second); 
             }
-            ~map(){   
+            reverse_iterator rbegin(){
+                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree.node);
+                return (node->data->second);
             }
-        /*--------Element access-----------*/ 
-        T& at( const Key& key ){
-            avlTree<value_type, Alloc>*	node = avltree.search( avltree.node, ft::make_pair(key, mapped_type()));
-           if (!node){
-            throw std::out_of_range("Out of range");
-           }
-           else {
-            return (node->node->data);
-           }
-        }
-
-        const T& at( const Key& key ) const{
-            avlTree<value_type, Alloc>*	node = avltree.search( avltree.node, ft::make_pair(key, mapped_type()));
-           if (!node){
-            throw std::out_of_range("Out of range");
-           }
-           else {
-            return (node->node->data);
-           }
-        }
-        T& operator[]( const Key& key ){
-            avlTree<value_type, Alloc>*	node = avltree.search( avltree.node, ft::make_pair(key, mapped_type()));
-             return (node->node->data);
-        }
-        /*-------- Iterators --------*/
-        iterator begin(){
-             avlTree<value_type, Alloc>*	node = avltree.minValue(avltree.node);
-             return (node->node->data);
-        }
-        const_iterator begin() const{
-             avlTree<value_type, Alloc>*	node = avltree.minValue(avltree.node);
-             return (node->node->data);
-        }
-        iterator end() {
-            avlTree<value_type, Alloc>*	node = avltree.maxValue(avltree.node);
-            return (node->node->data);
-        }
-        const_iterator end() const{
-            avlTree<value_type, Alloc>*	node = avltree.maxValue(avltree.node);
-            return (node->node->data); 
-        }
-        reverse_iterator rbegin(){
-            avlTree<value_type, Alloc>*	node = avltree.maxValue(avltree.node);
-            return (node->node->data);
-        }
-        const_reverse_iterator rbegin() const{
-            avlTree<value_type, Alloc>*	node = avltree.maxValue(avltree.node);
-            return (node->node->data);
-        }
-        reverse_iterator rend(){
-             avlTree<value_type, Alloc>*	node = avltree.minValue(avltree.node);
-             return (node->node->data);
-        }
-        const_reverse_iterator rend() const{
-            avlTree<value_type, Alloc>*	node = avltree.minValue(avltree.node);
-             return (node->node->data);
-        }
-        /*------Capacity--------*/
+            const_reverse_iterator rbegin() const{
+                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree.node);
+                return (node->data->second);
+            }
+            reverse_iterator rend(){
+                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree.node);
+                return (node->data->second);
+            }
+            const_reverse_iterator rend() const{
+                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree.node);
+                return (node->node->data);
+            }
+            /*------Capacity--------*/
         bool empty() const{
-            avlTree<value_type, Alloc>*	node = avltree.node;
+            node_avl<value_type, Allocator>*	node = avl_tree.node;
             if (!node){
                 return (true);
             }
@@ -154,14 +147,37 @@
         }
         
         size_type max_size() const{
-            return (alloc.max_size());
+            return (alloc_m.max_size());
         }
         /*--------Modifiers----------*/
+        void clear(){
+             node_avl<T, Allocator>  *node = avl_tree.node;
+            if (node){
+                while (size_m > 0)
+                {
+                avl_tree.deleteNode(avl_tree.node, *(avl_tree.node + size_m));
+                size_m--;
+                }
+            }
+        }
+		ft::pair<iterator, bool> insert( const value_type& value ) {
+				node_avl<value_type, Allocator>* node = avl_tree.findNode(avl_tree.node, value);
+				bool nodeNotFound = false;
+				if (!node) {
+					nodeNotFound = true;
+					node = avl_tree.avl_insert(node, value);
+					size_m++;
+				}
+				return ft::pair<iterator, bool>(iterator(node->data, &avl_tree), nodeNotFound);
+			}
+			iterator insert( iterator pos, const value_type& value ) {
+				(void) pos;
+				return insert(value).first;
+			}
         private:
-            avlTree<ft::pair<const Key, T> , Compare, Alloc> avltree;
-            mapped_type  size_m;
-            alloc_type alloc;
-            key_cpmare cmpre;
-    };
- };
- 
+			avlTree<ft::pair<const Key, T> , Compare, Allocator>		avl_tree;
+			Allocator												alloc_m;
+			Compare												    compare_m;
+			std::size_t												size_m;
+        };
+}

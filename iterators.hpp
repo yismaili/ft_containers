@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/19 22:32:02 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/23 20:15:16 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@
     template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
     class bidirectional_iterator{
      private:
-          avlTree<T, Compare, Alloc> nodeAvl;
+          const avlTree<T, Compare, Alloc> *nodeAvl;
           T* ptr;
           
      public:
@@ -151,7 +151,7 @@
           ptr = NULL;
           nodeAvl = NULL;
      }
-     bidirectional_iterator(T *ptr_, avlTree<T, Compare, Alloc> node_avl){
+     bidirectional_iterator(pointer ptr_, const avlTree<T, Compare, Alloc> *node_avl = NULL){
           nodeAvl = node_avl;
           ptr = ptr_;
      }
@@ -197,9 +197,9 @@
      }
      
      bidirectional_iterator &operator++(){
-          avlTree<T, Alloc> node = nodeAvl.findNode(nodeAvl.node, *ptr);
+          avlTree<T, Alloc> node = nodeAvl->findNode(nodeAvl->node, *ptr);
           if (node){
-               avlTree<T, Alloc> next = nodeAvl.findSuccessor(*ptr);
+               avlTree<T, Alloc> next = nodeAvl->findSuccessor(*ptr);
                if (next){
                     ptr = next->data;
                }
@@ -216,9 +216,9 @@
      }
      
      bidirectional_iterator &operator--(){
-          avlTree<T, Alloc> node = nodeAvl.findNode(nodeAvl.node, *ptr);
+          avlTree<T, Alloc> node = nodeAvl->findNode(nodeAvl->node, *ptr);
           if (node){
-               avlTree<T, Alloc> next = nodeAvl.findPredecessor(*ptr);
+               avlTree<T, Alloc> next = nodeAvl->findPredecessor(*ptr);
                if (next){
                     ptr = next->data;
                }
