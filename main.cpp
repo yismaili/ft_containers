@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/23 21:53:10 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:41:43 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int main ()
   // first insert function version (single parameter):
   mymap.insert ( ft::pair<char,int>('a',100) );
   mymap.insert ( ft::pair<char,int>('z',200) );
-
+   std::cout<<"------------hey------------"<< mymap.avl_tree._node->data->second<<std::endl;
+  				 std::cout<<"------------hey------------"<< mymap.avl_tree._node->right->data->second<<std::endl;
 //   std::pair<std::map<char,int>::iterator,bool> ret;
 //   ret = mymap.insert ( std::pair<char,int>('z',500) );
 //   if (ret.second==false) {

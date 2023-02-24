@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/23 19:14:07 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:39:29 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> 
 class avlTree
 {   
 public:
-  node_avl<T, Alloc> *node;
+  node_avl<T, Alloc> *_node;
   Compare compare;
   Alloc alloc;
   typename Alloc::template rebind<node_avl<T, Alloc> >::other	node_alloc;
   avlTree(){
-    node = NULL;
+    _node = NULL;
   }
   avlTree(avlTree const &other){
     *this = other;
   }
   avlTree &operator=(avlTree const &other){
-    node = other.node;
+    _node = other._node;
     compare = other.compare;
     return (this);
   }
@@ -47,13 +47,13 @@ int getHeight(node_avl<T, Alloc> *Node) {
 
 // New node creation
 node_avl<T, Alloc> *creatNode(const T& key) {
-  node_avl<T, Alloc>  *node =  node_alloc.allocate(1);
-  node_alloc.construct(node, key);
+  node_avl<T, Alloc>  *newNode =  node_alloc.allocate(1);
+  node_alloc.construct(newNode, key);
   // node->data = key;
   // node->left = NULL;
   // node->right = NULL;
   // node->height = 1;
-  return (node);
+  return (newNode);
 }
 
 // Rotate right
@@ -137,18 +137,18 @@ int key_compare(T& newKey, T& oldKey){
  }
  
 // Insert a node
-node_avl<T, Alloc> *avl_insert(node_avl<T, Alloc> *node, const T& key) {
+node_avl<T, Alloc> *avl_insert(node_avl<T, Alloc> *node, const T& value) {
   // insert the node
   if (node == NULL){
-    return (creatNode(key)); 
+    return (creatNode(value)); 
   }
     // Find the correct postion 
-  if (compare(key.first, node->data->first)){ // Go left
-    node->left = avl_insert(node->left, key);
-    node = rebalance_left(node, key);
+  if (compare(value.first, node->data->first)){ // Go left
+    node->left = avl_insert(node->left, value);
+    node = rebalance_left(node, value);
     }
-  else if (compare(node->data->first, key.first)){ // Go right
-    node->right = avl_insert(node->right, key);
+  else if (compare(node->data->first, value.first)){ // Go right
+    node->right = avl_insert(node->right, value);
     node = rebalance_right(node);
     }
     else{
@@ -156,7 +156,10 @@ node_avl<T, Alloc> *avl_insert(node_avl<T, Alloc> *node, const T& key) {
     }
   return (node);
 }
-
+node_avl<T, Alloc> * insert(const T& value){
+  _node = avl_insert(_node, value);
+  return (_node);
+}
 // Node with minimum value
 node_avl<T, Alloc> *minValue(node_avl<T, Alloc> *node) {
  node_avl<T, Alloc> *current = node;
@@ -316,16 +319,18 @@ node_avl<T, Alloc>* findSuccessor(node_avl<T, Alloc>* root, T& key)
                 next = root;
             }
             else if (compare(root->data->first, key.first)) {
+           //  std::cout<<"------------hey i am find node------------"<<std::endl;
                 root = root->right;
                 next = root;
             }
-            if (key.first == root->data->first){
+            else{
                 return (next);
             }
-            if ((compare(key.first, root->data->first) && root->right == NULL) || (compare(key.first, root->data->first) && root->left == NULL)){
-                return nullptr;
-            }
+            // if ((compare(key.first, root->data->first) && root->right == NULL) || (compare(key.first, root->data->first) && root->left == NULL)){
+            //     return nullptr;
+            // }
         }
+                    // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
         return next;
     }
     

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/23 23:02:01 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:40:03 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 	template< class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > > class map {
 		public:
+			avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
 			typedef Key																			key_type;
 			typedef T																			mapped_type;
 			typedef ft::pair<const key_type, mapped_type>										value_type;
@@ -57,7 +58,7 @@
 				alloc_m = alloc;
 				size_m = static_cast<size_type>(std::distance(first, last));
 				for (; first != last; ++first) {
-					node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree.node, *first);
+					node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree._node, *first);
 					if (!node)
 						avl_tree.insert(*first);
 				}
@@ -73,14 +74,14 @@
 			allocator_type get_allocator() const {return alloc_m;}
 			/*---------------------> Element access */
 			T& at( const Key& key ) {
-				node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree.node, ft::make_pair(key, mapped_type()));
+				node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree._node, ft::make_pair(key, mapped_type()));
 				if (node)
 					return node->data->second;
 				else
 					throw std::out_of_range("Element not found");
 			}
 			const T& at( const Key& key ) const {
-				node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree.node, ft::make_pair(key, mapped_type()));
+				node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree._node, ft::make_pair(key, mapped_type()));
 				if (node)
 					return node->data->second;
 				else
@@ -89,51 +90,51 @@
 			}
 			T& operator[]( const Key& key ) {
 				value_type	p = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
-				node_avl<value_type, Allocator>* node = avl_tree.search(avl_tree.node, p);
+				node_avl<value_type, Allocator>* node = avl_tree.search(avl_tree._node, p);
 				if (!node) {
 					node = avl_tree.insert(p);
 					size_m++;
-					return (avl_tree.search(avl_tree.node, p))->data->second;
+					return (avl_tree.search(avl_tree._node, p))->data->second;
 				}
 				return node->data->second;
 			}
             
 			/*---------------------> Iterators */
 			iterator begin(){
-                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree.node);
+                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree._node);
                 return (node->data->second);
             }
             const_iterator begin() const{
-                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree.node);
+                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree._node);
                 return (node->data->second);
             }
             iterator end() {
-                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree.node);
+                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
                 return (node->data->second);
             }
             const_iterator end() const{
-                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree.node);
+                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
                 return (node->data->second); 
             }
             reverse_iterator rbegin(){
-                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree.node);
+                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
                 return (node->data->second);
             }
             const_reverse_iterator rbegin() const{
-                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree.node);
+                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
                 return (node->data->second);
             }
             reverse_iterator rend(){
-                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree.node);
+                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree._node);
                 return (node->data->second);
             }
             const_reverse_iterator rend() const{
-                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree.node);
+                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree._node);
                 return (node->node->data);
             }
             /*------Capacity--------*/
         bool empty() const{
-            node_avl<value_type, Allocator>*	node = avl_tree.node;
+            node_avl<value_type, Allocator>*	node = avl_tree._node;
             if (!node){
                 return (true);
             }
@@ -151,31 +152,31 @@
         }
         /*--------Modifiers----------*/
         void clear(){
-             node_avl<T, Allocator>  *node = avl_tree.node;
+             node_avl<T, Allocator>  *node = avl_tree._node;
             if (node){
                 while (size_m > 0)
                 {
-                avl_tree.deleteNode(avl_tree.node, *(avl_tree.node + size_m));
+                avl_tree.deleteNode(avl_tree._node, *(avl_tree._node + size_m));
                 size_m--;
                 }
             }
         }
 		ft::pair<iterator, bool> insert( const value_type& value ) {
-				node_avl<value_type, Allocator>* node = avl_tree.findNode(avl_tree.node, value);
-				bool nodeNotFound = false;
+				node_avl<value_type, Allocator>* node = avl_tree.findNode(avl_tree._node, value);
+				bool check = false;
 				if (!node) {
-					nodeNotFound = true;
-					node = avl_tree.avl_insert(node, value);
+					check = true;
+					node = avl_tree.insert(value);
 					size_m++;
 				}
-				return ft::pair<iterator, bool>(iterator(node->data, &avl_tree), nodeNotFound);
+				return ft::pair<iterator, bool>(iterator(node->data, &avl_tree), check);
 			}
 			iterator insert( iterator pos, const value_type& value ) {
 				(void) pos;
 				return insert(value).first;
 			}
         private:
-			avlTree<ft::pair<const Key, T> , Compare, Allocator>		avl_tree;
+			// avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
 			Allocator												alloc_m;
 			Compare												    compare_m;
 			std::size_t												size_m;

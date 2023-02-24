@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/23 20:15:16 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:04:21 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@
      }
      
      bidirectional_iterator &operator++(){
-          avlTree<T, Alloc> node = nodeAvl->findNode(nodeAvl->node, *ptr);
+          avlTree<T, Alloc> node = nodeAvl->findNode(nodeAvl->_node, *ptr);
           if (node){
                avlTree<T, Alloc> next = nodeAvl->findSuccessor(*ptr);
                if (next){
@@ -216,7 +216,7 @@
      }
      
      bidirectional_iterator &operator--(){
-          avlTree<T, Alloc> node = nodeAvl->findNode(nodeAvl->node, *ptr);
+          avlTree<T, Alloc> node = nodeAvl->findNode(nodeAvl->_node, *ptr);
           if (node){
                avlTree<T, Alloc> next = nodeAvl->findPredecessor(*ptr);
                if (next){

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 22:45:39 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/23 18:19:03 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 13:19:02 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class node_avl
 {
   public:
     typedef Allocator allocator_type;
-    T      *data;
+    T       *data;
     node_avl *left;
     node_avl *right;
     node_avl *parent;
