@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 19:21:02 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 23:19:36 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,14 @@ int main ()
   mymap.insert (ft::pair<char,int>('d',4));
   mymap.insert (ft::pair<char,int>('e',5));
   mymap.insert (ft::pair<char,int>('f',6));
-   mymap.insert (ft::pair<char,int>('g',7));
-    mymap.insert (ft::pair<char,int>('k',8));
-     mymap.insert (ft::pair<char,int>('l',9));
-      mymap.insert (ft::pair<char,int>('m',10));
+  mymap.insert (ft::pair<char,int>('g',7));
+  mymap.insert (ft::pair<char,int>('k',8));
+  mymap.insert (ft::pair<char,int>('l',9));
+  mymap.insert (ft::pair<char,int>('m',10));
+  // mymap['a'] = 56;
   mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 2);
+  std::cout<<"size -->"<<mymap.size()<<std::endl;
+  mymap.clear();
   std::cout<<"size -->"<<mymap.size()<<std::endl;
   // std::pair<std::map<char,int>::iterator,bool> ret;
   // ret = mymap.insert ( std::pair<char,int>('z',500) );
