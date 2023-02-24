@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 19:12:52 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 23:21:56 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@
 				const allocator_type& alloc = allocator_type()) {
 				compare_m = comp;
 				alloc_m = alloc;
-				size_m = static_cast<size_type>(std::distance(first, last));
-				for (; first != last; ++first) {
-					node_avl<value_type, Allocator>*	node = avl_tree.search(avl_tree._node, *first);
-					if (!node)
-						avl_tree.insert(*first);
+				size_m = std::distance(first, last);
+				while (first < last)
+				{
+						avl_tree.insert_element(avl_tree._node, *first);
+						first++;
 				}
 			}
 			map (const map& x) {*this = x;}
@@ -90,13 +90,13 @@
 			}
 			T& operator[]( const Key& key ) {
 				value_type	p = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
-				node_avl<value_type, Allocator>* node = avl_tree.search(avl_tree._node, p);
+				node_avl<value_type, Allocator>* node = avl_tree.find_element(avl_tree._node, p);
 				if (!node) {
-					node = avl_tree.insert(p);
+					avl_tree._node = avl_tree.insert_element(avl_tree._node, p);
 					size_m++;
-					return (avl_tree.search(avl_tree._node, p))->data->second;
+					return (avl_tree.find_element(avl_tree._node, p))->data->second;
 				}
-				return node->data->second;
+				return avl_tree._node->data->second;
 			}
             
 			/*---------------------> Iterators */
@@ -152,22 +152,21 @@
         }
         /*--------Modifiers----------*/
         void clear(){
-             node_avl<T, Allocator>  *node = avl_tree._node;
-            if (node){
+            if (avl_tree._node){
                 while (size_m > 0)
-                {
-                avl_tree.delete_element(avl_tree._node, *(avl_tree._node + size_m));
-                size_m--;
+                {	node_avl<value_type, Allocator> *delnode = avl_tree.maxValue(avl_tree._node);
+					avl_tree.delete_element(avl_tree._node, *(delnode->data));
+					// exit(1);
+					size_m--;
                 }
             }
         }
 		ft::pair<iterator, bool> insert( const value_type& value ) {
-				// node_avl<value_type, Allocator>* node = avl_tree.findNode(avl_tree._node, value);
-				avl_tree._node = avl_tree.insert_element(avl_tree._node, value);
-				size_m++;
-				// exit(1);
-				return ft::pair<iterator, bool>(iterator(avl_tree._node->data, &avl_tree), true);
-			}
+			avl_tree.check = false;
+			avl_tree._node = avl_tree.insert_element(avl_tree._node, value);
+			size_m++;
+			return ft::pair<iterator, bool>(iterator(avl_tree._node->data, &avl_tree), avl_tree.check);
+		}
 			iterator insert( iterator pos, const value_type& value ) {
 				(void) pos;
 				return insert(value).first;
