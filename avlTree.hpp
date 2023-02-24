@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 19:26:49 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 19:40:18 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,6 @@ int getHeight(node_avl<T, Alloc> *Node) {
 node_avl<T, Alloc> *creatNode(const T& key) {
   node_avl<T, Alloc>  *newNode =  node_alloc.allocate(1);
   node_alloc.construct(newNode, key);
-  // node->data = key;
-  // node->left = NULL;
-  // node->right = NULL;
-  // node->height = 1;
   return (newNode);
 }
 
@@ -95,11 +91,11 @@ int getBalance(node_avl<T, Alloc> *node) {
   }
 }
 
-int key_compare(T& newKey, T& oldKey){
-  if (newKey < oldKey){ 
+int key_compare(node_avl<T, Alloc> *root, const T& key){
+  if (compare(key.first, root->data->first)){ 
      return (-1);
    }
-    else if (newKey > oldKey){ 
+  else if (compare(root->data->first, key.first)){ 
    return(1); 
   }else {
     return (0);
@@ -137,22 +133,23 @@ int key_compare(T& newKey, T& oldKey){
  }
  
 // Insert a node
-node_avl<T, Alloc> *insert_element(node_avl<T, Alloc> *node, const T& value) {
-  node_avl<T, Alloc>* find = find_element(node, value);
+node_avl<T, Alloc> *insert_element(node_avl<T, Alloc> *node, const T& key) {
+  node_avl<T, Alloc>* find = find_element(node, key);
   if (!find){
     if (node == NULL){
-      return (creatNode(value)); 
+      return (creatNode(key)); 
     }
-      // Find the correct postion 
-    if (compare(value.first, node->data->first)){ // Go left
-      node->left = insert_element(node->left, value);
-      node = rebalance_left(node, value);
+    // Find the correct postion 
+    int cmp= key_compare(node, key);
+    if (cmp < 0){ // Go left
+      node->left = insert_element(node->left, key);
+      node = rebalance_left(node, key);
       }
-    else if (compare(node->data->first, value.first)){ // Go right
-      node->right = insert_element(node->right, value);
+    else if (cmp > 0){ // Go right
+      node->right = insert_element(node->right, key);
       node = rebalance_right(node);
       }
-      else{
+    else{
         return(node);
       }
   }
