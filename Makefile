@@ -1,9 +1,9 @@
 
 NAME = containers
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 # -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -std=c++98  -g -fsanitize=address
 SRCS = main.cpp 
-HDR = vector.hpp iterators.hpp reverse_iterator.hpp  map.hpp algorithm.hpp avlTree.hpp utils.hpp 
+HDR = vector.hpp iterators.hpp reverse_iterator.hpp  map.hpp algorithm.hpp avlTree.hpp utils.hpp avlNode.hpp
 OBJS = $(SRCS:.cpp=.o)
 
 BGreen=\033[1;32m

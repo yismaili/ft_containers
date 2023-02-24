@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/19 22:42:29 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:41:43 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,39 @@
 #include "map.hpp"
 #include <string>
 
-int main() {
-    // create a map with strings as keys and ints as values
-    std::map<std::string, int> myMap;
+int main ()
+{
+  ft::map<char,int> mymap;
 
-    // insert some key-value pairs
-    myMap.insert(std::make_pair("Alice", 25));
-    myMap.insert(std::make_pair("Bob", 30));
-    myMap.insert(std::make_pair("Charlie", 35));
+  // first insert function version (single parameter):
+  mymap.insert ( ft::pair<char,int>('a',100) );
+  mymap.insert ( ft::pair<char,int>('z',200) );
+   std::cout<<"------------hey------------"<< mymap.avl_tree._node->data->second<<std::endl;
+  				 std::cout<<"------------hey------------"<< mymap.avl_tree._node->right->data->second<<std::endl;
+//   std::pair<std::map<char,int>::iterator,bool> ret;
+//   ret = mymap.insert ( std::pair<char,int>('z',500) );
+//   if (ret.second==false) {
+//     std::cout << "element 'z' already existed";
+//     std::cout << " with a value of " << ret.first->second << '\n';
+//   }
 
-    // access values using keys
-    std::cout << "Alice is " << myMap["Alice"] << " years old." << std::endl;
-    std::cout << "Bob is " << myMap["Bob"] << " years old." << std::endl;
-    std::cout << "Charlie is " << myMap["Charlie"] << " years old." << std::endl;
+//   // second insert function version (with hint position):
+//   std::map<char,int>::iterator it = mymap.begin();
+//   mymap.insert (it, std::pair<char,int>('b',300));  // max efficiency inserting
+//   mymap.insert (it, std::pair<char,int>('c',400));  // no max efficiency inserting
 
-    // iterate over the map
-    // for (auto it = myMap.begin(); it != myMap.end(); ++it) {
-    //     std::cout << it->first << " is " << it->second << " years old." << std::endl;
-    // }
+//   // third insert function version (range insertion):
+//   std::map<char,int> anothermap;
+//   anothermap.insert(mymap.begin(),mymap.find('c'));
 
-    return 0;
+//   showing contents: 
+//   std::cout << "mymap contains:\n";
+//   for (it=mymap.begin(); it!=mymap.end(); ++it)
+//     std::cout << it->first << " => " << it->second << '\n';
+
+//   std::cout << "anothermap contains:\n";
+//   for (it=anothermap.begin(); it!=anothermap.end(); ++it)
+//     std::cout << it->first << " => " << it->second << '\n';
+
+  return 0;
 }
