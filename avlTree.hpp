@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 18:04:21 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 19:26:49 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int key_compare(T& newKey, T& oldKey){
     if ((cmp > 1) && (compare(key.first, root->left->data->first))) {
       return rotate_right(root);
     } 
-    else if ((cmp > 1) && ( compare(root->left->data->first, key.first))) {
+    else if ((cmp > 1) && (compare(root->left->data->first, key.first))) {
       root->left = rotate_left(root->left);
       return rotate_right(root);
     }
@@ -137,19 +137,19 @@ int key_compare(T& newKey, T& oldKey){
  }
  
 // Insert a node
-node_avl<T, Alloc> *avl_insert(node_avl<T, Alloc> *node, const T& value) {
-  node_avl<T, Alloc>* find = findNode(node, value);
+node_avl<T, Alloc> *insert_element(node_avl<T, Alloc> *node, const T& value) {
+  node_avl<T, Alloc>* find = find_element(node, value);
   if (!find){
     if (node == NULL){
       return (creatNode(value)); 
     }
       // Find the correct postion 
     if (compare(value.first, node->data->first)){ // Go left
-      node->left = avl_insert(node->left, value);
+      node->left = insert_element(node->left, value);
       node = rebalance_left(node, value);
       }
     else if (compare(node->data->first, value.first)){ // Go right
-      node->right = avl_insert(node->right, value);
+      node->right = insert_element(node->right, value);
       node = rebalance_right(node);
       }
       else{
@@ -170,8 +170,8 @@ node_avl<T, Alloc> *minValue(node_avl<T, Alloc> *node) {
 // Node with maximum value
 node_avl<T, Alloc> *maxValue(node_avl<T, Alloc> *node) {
  node_avl<T, Alloc> *current = node;
-  while (current->left != NULL)
-    current = current->left;
+  while (current->right != NULL)
+    current = current->right;
   return current;
 }
 
@@ -199,7 +199,7 @@ node_avl<T, Alloc> *balanceTree(node_avl<T, Alloc> *root){
   return root;
 }
 
-node_avl<T, Alloc> * deleteNode(node_avl<T, Alloc> * root, T& val_to_delete) 
+node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, T& val_to_delete) 
   {
     if (root == NULL){
       return NULL;
@@ -236,17 +236,17 @@ node_avl<T, Alloc> * deleteNode(node_avl<T, Alloc> * root, T& val_to_delete)
           // switching the values 
           root->data = min_right_subtree->data;
           // Deleting the node with val_to_delete now as a leaf node
-          root->right = deleteNode(root->right, min_right_subtree->data);
+          root->right = delete_element(root->right, min_right_subtree->data);
         }
       }
       // keep searching for node
       else
       {
         if (val_to_delete < root->data){
-          root->left = deleteNode(root->left, val_to_delete);
+          root->left = delete_element(root->left, val_to_delete);
         }
         else if (val_to_delete > root->data){
-          root->right = deleteNode(root->right, val_to_delete);
+          root->right = delete_element(root->right, val_to_delete);
         }
       }
         root = balanceTree(root);
@@ -309,7 +309,7 @@ node_avl<T, Alloc>* findSuccessor(node_avl<T, Alloc>* root, T& key)
             }
             return next;
         }
-  node_avl<T, Alloc>  *findNode(node_avl<T, Alloc> *root, const T& key) {
+  node_avl<T, Alloc>  *find_element(node_avl<T, Alloc> *root, const T& key) {
         node_avl<T, Alloc>* next = nullptr;
         while (root != nullptr)
         {
@@ -366,7 +366,7 @@ node_avl<T, Alloc>* findSuccessor(node_avl<T, Alloc>* root, T& key)
      std::cout << "L----";
       indent += "|   ";
     }
-    std::cout << root->data << std::endl;
+    std::cout << root->data->second << std::endl;
     printTree(root->root, indent, 2);
     printTree(root->left, indent, 0);
     printTree(root->right, indent, 1);

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 17:12:31 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/24 19:12:52 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,14 +156,14 @@
             if (node){
                 while (size_m > 0)
                 {
-                avl_tree.deleteNode(avl_tree._node, *(avl_tree._node + size_m));
+                avl_tree.delete_element(avl_tree._node, *(avl_tree._node + size_m));
                 size_m--;
                 }
             }
         }
 		ft::pair<iterator, bool> insert( const value_type& value ) {
 				// node_avl<value_type, Allocator>* node = avl_tree.findNode(avl_tree._node, value);
-				avl_tree._node = avl_tree.avl_insert(avl_tree._node, value);
+				avl_tree._node = avl_tree.insert_element(avl_tree._node, value);
 				size_m++;
 				// exit(1);
 				return ft::pair<iterator, bool>(iterator(avl_tree._node->data, &avl_tree), true);
