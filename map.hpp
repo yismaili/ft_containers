@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 23:21:56 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:57:53 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,8 @@
 			}
 			T& operator[]( const Key& key ) {
 				value_type	p = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
-				node_avl<value_type, Allocator>* node = avl_tree.find_element(avl_tree._node, p);
-				if (!node) {
-					avl_tree._node = avl_tree.insert_element(avl_tree._node, p);
-					size_m++;
-					return (avl_tree.find_element(avl_tree._node, p))->data->second;
-				}
+				avl_tree._node = avl_tree.insert_element(avl_tree._node, p);
+				size_m++;
 				return avl_tree._node->data->second;
 			}
             
@@ -134,13 +130,10 @@
             }
             /*------Capacity--------*/
         bool empty() const{
-            node_avl<value_type, Allocator>*	node = avl_tree._node;
-            if (!node){
+            if (size_m == 0)
                 return (true);
-            }
-            else {
+            else
                 return (false);
-            }
         }
         
         size_type size() const{
@@ -152,14 +145,8 @@
         }
         /*--------Modifiers----------*/
         void clear(){
-            if (avl_tree._node){
-                while (size_m > 0)
-                {	node_avl<value_type, Allocator> *delnode = avl_tree.maxValue(avl_tree._node);
-					avl_tree.delete_element(avl_tree._node, *(delnode->data));
-					// exit(1);
-					size_m--;
-                }
-            }
+           avl_tree.clearAll();
+		   size_m = 0;
         }
 		ft::pair<iterator, bool> insert( const value_type& value ) {
 			avl_tree.check = false;
