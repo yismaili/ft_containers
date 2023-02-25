@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 22:34:51 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/25 15:37:01 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,34 +195,61 @@ public:
     return root;
   }
   
-  // void deleteAll(node_avl<T, Alloc> * root, const T& val_to_delete){
-  //   delete_element(_node, )
-  // }
+  void clearAll(){
+    _node = clear(_node);
+  }
+  
+node_avl<T, Alloc> *  clear(node_avl<T, Alloc>* root){
+    if(root != NULL) {
+          clear(root->left);
+          alloc.deallocate(root->data, 1);
+          clear(root->right);
+          node_alloc.deallocate(root, 1);
+          root = NULL;
+    }
+    return (root);
+}
   
   node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, const T& val_to_delete) 
     {
-      std::cout<<val_to_delete.first<<std::endl;
+      	    std::cout<<"--------------"<<val_to_delete.second<<std::endl;
       if (root == NULL){
         return NULL;
-      }else{
+      }
+      if (compare(val_to_delete.first, root->data->first)){
+            root->left = delete_element(root->left, val_to_delete);
+        }
+      else if (compare(root->data->first, val_to_delete.first)){
+            root->right = delete_element(root->right, val_to_delete);
+      }
+      else{
         // node is found and needs to be deleted 
-        if(val_to_delete.first == root->data->first) 
-        {
+        // if(val_to_delete.first == root->data->first) 
+        // {
           if (root->left == NULL && root->right == NULL) 
           {
-            delete root;
+            alloc.destroy(root->data);
+            alloc.deallocate(root->data, 1);
+            node_alloc.destroy(root);
+            node_alloc.deallocate(root, 1);
             return NULL;
           } 
           else if(root->left == NULL)
           {
             node_avl<T, Alloc> * temp = root->right;
-            delete root;
+            alloc.destroy(root->data);
+            alloc.deallocate(root->data, 1);
+            node_alloc.destroy(root);
+            node_alloc.deallocate(root, 1);
             return temp;
           }
           else if (root->right == NULL) 
           {
             node_avl<T, Alloc> * temp = root->left;
-            delete root;
+            alloc.destroy(root->data);
+            alloc.deallocate(root->data, 1);
+            node_alloc.destroy(root);
+            node_alloc.deallocate(root, 1);
             return temp;
           }
           else 
@@ -236,24 +263,24 @@ public:
             min_right_subtree = current;
             // switching the values 
             root->data = min_right_subtree->data;
+            alloc.construct(root->data, *(min_right_subtree->data));
             // Deleting the node with val_to_delete now as a leaf node
             root->right = delete_element(root->right, *(min_right_subtree->data));
           }
-        }
+        // }
         // keep searching for node
-        else
-        {
-          if (compare(val_to_delete.first, root->data->first)){
-            root->left = delete_element(root->left, val_to_delete);
-          }
-          else if (compare(root->data->first, val_to_delete.first)){
-            root->right = delete_element(root->right, val_to_delete);
-          }
-        }
+        // else
+        // {
+        //   if (compare(val_to_delete.first, root->data->first)){
+        //     root->left = delete_element(root->left, val_to_delete);
+        //   }
+        //   else if (compare(root->data->first, val_to_delete.first)){
+        //     root->right = delete_element(root->right, val_to_delete);
+        //   }
+         }
           root = balanceTree(root);
         return root ;
     }
-  }
 
   node_avl<T, Alloc> *findPredecessor(node_avl<T, Alloc> *root, T& key){
       if (root == NULL){
