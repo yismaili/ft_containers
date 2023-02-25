@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 18:23:17 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/25 18:31:43 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@
     template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
     class bidirectional_iterator{
      private:
-          const avlTree<T, Compare, Alloc> *nodeAvl;
+          const avlTree<T, Compare, Alloc> *nodeAvl;// !!!
           T* ptr;
           
      public:

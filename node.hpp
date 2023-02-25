@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 22:45:39 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 19:52:01 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/25 17:27:31 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,7 @@ class node_avl
             }
           }
           }
-          
-          ~node_avl(){
-                alloc.destroy(data);
-                alloc.deallocate(data, 1);
-          }
+          ~node_avl(){}
     private:
            Allocator alloc;
 };

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/25 15:58:49 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/25 22:08:17 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,39 @@ int main ()
   try
   {
      ft::map<char,int> mymap;
-      mymap.insert (ft::pair<char,int>('a',1));
       mymap.insert (ft::pair<char,int>('b',2));
       mymap.insert (ft::pair<char,int>('c',3));
       mymap.insert (ft::pair<char,int>('d',4));
+      mymap.insert (ft::pair<char,int>('a',1));
       mymap.insert (ft::pair<char,int>('e',5));
       mymap.insert (ft::pair<char,int>('f',6));
-      mymap.insert (ft::pair<char,int>('g',7));
+      mymap.insert (ft::pair<char,int>('y',7));
+      mymap.insert (ft::pair<char,int>('m',10));
       mymap.insert (ft::pair<char,int>('k',8));
       mymap.insert (ft::pair<char,int>('l',9));
-      mymap.insert (ft::pair<char,int>('m',10));
+      mymap.insert (ft::pair<char,int>('h',45));
       mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 2);
-      std::cout<<"size -->"<<mymap.size()<<std::endl;
-      mymap.clear();
-      mymap['p'] = 56;
-      std::cout<<"size -->"<<mymap.size()<<std::endl;
-       mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 2);
+      //std::cout<<"size -->"<<mymap.size()<<std::endl;
+     // mymap.clear();
+      //  mymap['o']=56;
+      // std::cout<<"size -->"<<mymap.size()<<std::endl;
+     // std::cout<<"max size -->"<<mymap.max_size()<<std::endl;
+      // std::cout<<"at -->"<<mymap.at('a')<<std::endl;
+      // if (mymap.empty()){
+      //     std::cout<<"is empty "<<std::endl;
+      // }else{
+      //     std::cout<<"is not emty"<<std::endl;
+      // }
+      
+      // std::cout<<"begin -->"<< mymap.begin()->second +15<<std::endl;
+      // std::cout<<"end -->"<< mymap.end()->second - 9<<std::endl; //!!!!
+      //  mymap.insert (mymap.begin(), ft::pair<char,int>('p',22222));
+      mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 2);
+        std::cout << "m['a'] = " << mymap['a'] << std::endl;  
+        std::cout << "m['b'] = " << mymap['b'] << std::endl;  
+        std::cout << "m['c'] = " << mymap['c'] << std::endl;  
+        std::cout << "m['d'] = " << mymap['d'] << std::endl;  
+        std::cout << "m['e'] = " << mymap['e'] << std::endl;  
       // std::pair<std::map<char,int>::iterator,bool> ret;
       // ret = mymap.insert ( std::pair<char,int>('z',500) );
       // if (ret.second==false) {

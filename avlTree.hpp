@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/25 15:37:01 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/25 21:18:04 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,23 +210,23 @@ node_avl<T, Alloc> *  clear(node_avl<T, Alloc>* root){
     return (root);
 }
   
-  node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, const T& val_to_delete) 
-    {
+node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, const T& val_to_delete) 
+  {
       	    std::cout<<"--------------"<<val_to_delete.second<<std::endl;
-      if (root == NULL){
-        return NULL;
-      }
-      if (compare(val_to_delete.first, root->data->first)){
-            root->left = delete_element(root->left, val_to_delete);
-        }
-      else if (compare(root->data->first, val_to_delete.first)){
-            root->right = delete_element(root->right, val_to_delete);
-      }
-      else{
-        // node is found and needs to be deleted 
-        // if(val_to_delete.first == root->data->first) 
-        // {
-          if (root->left == NULL && root->right == NULL) 
+    if (root == NULL){
+      return NULL;
+    }
+    if (compare(val_to_delete.first, root->data->first)){
+      root->left = delete_element(root->left, val_to_delete);
+    }
+    else if (compare(root->data->first, val_to_delete.first)){
+      root->right = delete_element(root->right, val_to_delete);
+    }
+    else{
+    // node is found and needs to be deleted 
+    // if(val_to_delete.first == root->data->first) 
+    // {
+        if (root->left == NULL && root->right == NULL) 
           {
             alloc.destroy(root->data);
             alloc.deallocate(root->data, 1);
@@ -278,7 +278,7 @@ node_avl<T, Alloc> *  clear(node_avl<T, Alloc>* root){
         //     root->right = delete_element(root->right, val_to_delete);
         //   }
          }
-          root = balanceTree(root);
+        root = balanceTree(root);
         return root ;
     }
 
@@ -307,71 +307,75 @@ node_avl<T, Alloc> *  clear(node_avl<T, Alloc>* root){
       }
       return (prev); 
   }
-
-          
-  node_avl<T, Alloc>* findSuccessor(node_avl<T, Alloc>* root, T& key)
-    {
-        // base case
-        if (root == nullptr) {
-            return nullptr;
-        }
-        node_avl<T, Alloc>* next = nullptr;
-              while (1)
-              {
-                  if (key < root->data){
-                      next = root;
-                      root = root->left;
-                  }
-                  else if (key > root->data) {
-                      root = root->right;
-                  }
-                  else {
-                      if (root->right){
-                          next = minValue(root->right);
-                      }
-                      break;
-                  }
-                  if (!root) {
-                      return next;
-                  }
-              }
-              return next;
-      }
-  node_avl<T, Alloc>  *find_element(node_avl<T, Alloc> *root, const T& key) {
-     node_avl<T, Alloc>* next = nullptr;
-    while (root != nullptr)
-      {
-          if (compare(key.first, root->data->first)){
-              root = root->left;
-              next = root;
-          }
-          else if (compare(root->data->first, key.first)) {
-            //  std::cout<<"------------hey i am find node------------"<<std::endl;
-              root = root->right;
-              next = root;
-          }
-          else{
-              return (next);
-          }
-        }
-        // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
-      return next;
+       
+  node_avl<T, Alloc>* findSuccessor(node_avl<T, Alloc>* root, T& key){
+    if (root == nullptr) {
+        return nullptr;
     }
+    node_avl<T, Alloc>* next = nullptr;
+    while (1){
+      if (key < root->data){
+          next = root;
+          root = root->left;
+      }
+      else if (key > root->data) {
+          root = root->right;
+      }
+      else {
+          if (root->right){
+            next = minValue(root->right);
+          }
+          break;
+      }
+      if (!root) {
+        return next;
+      }
+      }
+      return next;
+  }
+  
+  node_avl<T, Alloc>  *find_element(node_avl<T, Alloc> *root, const T& key) {
+    //  node_avl<T, Alloc>* next = nullptr;
+    // while (root != nullptr){
+    //   if (compare(key.first, root->data->first)){
+    //     root = root->left;
+    //     next = root;
+    //   }
+    //   else if (compare(root->data->first, key.first)) {
+    // //  std::cout<<"------------hey i am find node------------"<<std::endl;
+    //     root = root->right;
+    //     next = root;
+    //   }
+    //   else{
+    //     return (next);
+    //   }
+    // }
+    //  // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
+    // return next;
+    if (root == NULL){
+      return (NULL);
+    }
+    if (compare(key.first, root->data->first)){
+      return (find_element(root->left, key));
+    }
+    else if (compare(root->data->first, key.first)) {
+      return (find_element(root->right, key));
+    }
+    return (root);
+}
       
-  node_avl<T, Alloc>* findParent(node_avl<T, Alloc>* root, T& key)
-    {
-          node_avl<T, Alloc>* next = nullptr;
-          while (root != nullptr)
-          {
-              if (key < root->data){
-                  next = root;
-                  root = root->left;
-              }
-              else if (key > root->data) {
-                  next = root;
-                  root = root->right;
-              }
-              if (key == root->data || key == root->data){
+  node_avl<T, Alloc>* findParent(node_avl<T, Alloc>* root, T& key){
+    node_avl<T, Alloc>* next = nullptr;
+    while (root != nullptr){
+      if (key < root->data){
+          next = root;
+          root = root->left;
+      }
+      else if (key > root->data) {
+          next = root;
+          root = root->right;
+      }
+      if (key == root->data || key == root->data){
                   return (next);
               }
               if ((key > root->data && root->right == NULL) || ( key < root->data && root->left == NULL)){
@@ -379,7 +383,8 @@ node_avl<T, Alloc> *  clear(node_avl<T, Alloc>* root){
               }
           }
           return next;
-     }
+}
+     
   void printTree(node_avl<T, Alloc> *root, std::string indent, int last) {
     if (root != nullptr) {
     std:: cout << indent;
@@ -394,7 +399,7 @@ node_avl<T, Alloc> *  clear(node_avl<T, Alloc>* root){
       std::cout << "L----";
         indent += "|   ";
       }
-      std::cout << root->data->second << std::endl;
+      std::cout << root->data->first << std::endl;
       printTree(root->root, indent, 2);
       printTree(root->left, indent, 0);
       printTree(root->right, indent, 1);
