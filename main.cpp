@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/25 22:08:17 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/26 15:31:35 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int main ()
       mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 2);
       //std::cout<<"size -->"<<mymap.size()<<std::endl;
      // mymap.clear();
-      //  mymap['o']=56;
+        mymap['u']=56;
       // std::cout<<"size -->"<<mymap.size()<<std::endl;
      // std::cout<<"max size -->"<<mymap.max_size()<<std::endl;
       // std::cout<<"at -->"<<mymap.at('a')<<std::endl;
@@ -95,11 +95,7 @@ int main ()
       // std::cout<<"end -->"<< mymap.end()->second - 9<<std::endl; //!!!!
       //  mymap.insert (mymap.begin(), ft::pair<char,int>('p',22222));
       mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 2);
-        std::cout << "m['a'] = " << mymap['a'] << std::endl;  
-        std::cout << "m['b'] = " << mymap['b'] << std::endl;  
-        std::cout << "m['c'] = " << mymap['c'] << std::endl;  
-        std::cout << "m['d'] = " << mymap['d'] << std::endl;  
-        std::cout << "m['e'] = " << mymap['e'] << std::endl;  
+      std::cout << "m['a'] = " << mymap['u'] << std::endl;  
       // std::pair<std::map<char,int>::iterator,bool> ret;
       // ret = mymap.insert ( std::pair<char,int>('z',500) );
       // if (ret.second==false) {

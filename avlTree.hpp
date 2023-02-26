@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/25 21:18:04 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/26 12:57:04 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,7 +399,7 @@ node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, const T& val_to_d
       std::cout << "L----";
         indent += "|   ";
       }
-      std::cout << root->data->first << std::endl;
+      std::cout << root->data->second << std::endl;
       printTree(root->root, indent, 2);
       printTree(root->left, indent, 0);
       printTree(root->right, indent, 1);

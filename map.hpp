@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/25 21:18:50 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/26 15:30:15 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@
 			map (const map& x) {*this = x;}
 			// map& operator=( const map& other ) {
 			// 	clear();
-			// 	avl_tree.clone(other.avl_tree.node);
-			// 	_size = other.size();
+			// 	avl_tree.clonne(other.avl_tree.node);
+			// 	size_m = other.size();
 			// 	return *this;
 			// }
 			~map() {}
@@ -90,11 +90,14 @@
 				else
             		throw std::out_of_range("out of range\n");
 			}
-			T& operator[]( const Key& key ) {
-				value_type tmp = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
-				std::cout<<"-----*****> "<<tmp.second<<std::endl;
-				insert(tmp);
-				return (avl_tree._node->data->second);
+			
+			mapped_type& operator[]( const Key& key ) {
+				value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
+				//  std::cout<<"****find****> "<<node->data->second<<std::endl;
+				//  std::cout<<"****init****> "<<value.second<<std::endl;
+				insert(value);
+				node_avl<value_type, Allocator>*	node = avl_tree.find_element(avl_tree._node, value);
+				return (node->data->second);
 			}
             
 			/*---------------------> Iterators <---------------------------*/
