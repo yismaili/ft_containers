@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:41:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/23 20:01:18 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/26 16:42:04 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,42 +47,48 @@ class pair{
     template< class T1, class T2 > ft::pair<T1, T2> make_pair( T1 u1, T2 u2 ){
             return (ft::pair<T1,T2>(u1,u2));
     }
-    template< class T1, class T2 > bool operator==( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
+    
+    template< class T1, class T2 > bool operator==(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
         if (lhs.first == rhs.first && lhs.second == rhs.second){
             return (true);
         }else {
             return (false);
         }
     }
-    template< class T1, class T2 > bool operator!=( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
+    
+    template< class T1, class T2 > bool operator!=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
         if (lhs.first != rhs.first && lhs.second != rhs.second){
             return (true);
         }else {
             return (false);
         }
     }
-     template< class T1, class T2 > bool operator<( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
+    
+    template< class T1, class T2 > bool operator<(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
         if (lhs.first < rhs.first && lhs.second < rhs.second){
             return (true);
         }else {
             return (false);
         }
     }
-     template< class T1, class T2 > bool operator>( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
+    
+    template< class T1, class T2 > bool operator>(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
         if (lhs.first > rhs.first && lhs.second > rhs.second){
             return (true);
         }else {
             return (false);
         }
     }
-     template< class T1, class T2 > bool operator<=( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
+    
+    template< class T1, class T2 > bool operator<=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
         if (lhs.first <= rhs.first && lhs.second <= rhs.second){
             return (true);
         }else {
             return (false);
         }
     }
-     template< class T1, class T2 > bool operator>=( const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
+    
+    template< class T1, class T2 > bool operator>=(const ft::pair<T1, T2>& lhs, const ft::pair<T1, T2>& rhs ){
         if (lhs.first >= rhs.first && lhs.second >= rhs.second){
             return (true);
         }else {

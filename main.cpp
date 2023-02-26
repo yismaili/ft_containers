@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/26 15:31:35 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/26 20:18:20 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,46 +80,24 @@ int main ()
       mymap.insert (ft::pair<char,int>('h',45));
       mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 2);
       //std::cout<<"size -->"<<mymap.size()<<std::endl;
-     // mymap.clear();
-        mymap['u']=56;
-      // std::cout<<"size -->"<<mymap.size()<<std::endl;
-     // std::cout<<"max size -->"<<mymap.max_size()<<std::endl;
-      // std::cout<<"at -->"<<mymap.at('a')<<std::endl;
-      // if (mymap.empty()){
+      //mymap.clear();
+      //mymap['u']=56;
+      //std::cout<<"size -->"<<mymap.size()<<std::endl;
+      //std::cout<<"max size -->"<<mymap.max_size()<<std::endl;
+      //std::cout<<"at -->"<<mymap.at('a')<<std::endl;
+      //if (mymap.empty()){
       //     std::cout<<"is empty "<<std::endl;
       // }else{
       //     std::cout<<"is not emty"<<std::endl;
       // }
-      
       // std::cout<<"begin -->"<< mymap.begin()->second +15<<std::endl;
       // std::cout<<"end -->"<< mymap.end()->second - 9<<std::endl; //!!!!
       //  mymap.insert (mymap.begin(), ft::pair<char,int>('p',22222));
-      mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 2);
-      std::cout << "m['a'] = " << mymap['u'] << std::endl;  
-      // std::pair<std::map<char,int>::iterator,bool> ret;
-      // ret = mymap.insert ( std::pair<char,int>('z',500) );
-      // if (ret.second==false) {
-      //   std::cout << "element 'z' already existed";
-      //   std::cout << " with a value of " << ret.first->second << '\n';
-      // }
-
-      // second insert function version (with hint position):
-      //  std::map<char,int>::iterator it = mymap.begin();
-      // mymap.insert (it, std::pair<char,int>('b',300));  // max efficiency inserting
-      // mymap.insert (it, std::pair<char,int>('c',400));  // no max efficiency inserting
-
-      // third insert function version (range insertion):
-      // std::map<char,int> anothermap;
-      // anothermap.insert(mymap.begin(),mymap.find('c'));
-
-      // showing contents: 
-      // std::cout << "mymap contains:\n";
-      // for (it=mymap.begin(); it!=mymap.end(); ++it)
-      //   std::cout << it->first << " => " << it->second << '\n';
-
-      // std::cout << "anothermap contains:\n";
-      // for (it=anothermap.begin(); it!=anothermap.end(); ++it)
-      //   std::cout << it->first << " => " << it->second << '\n'; 
+      // std::cout << "m['a'] = " << mymap['u'] << std::endl;  
+      ft::map<char,int> secondmap;
+      secondmap.insert(mymap.begin(), mymap.end());
+      secondmap.avl_tree.printTree( secondmap.avl_tree._node, " ", 2);
+      
   }
   catch(const std::exception& e)
   {

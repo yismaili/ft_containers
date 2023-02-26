@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/26 15:30:15 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/26 21:44:40 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 			typedef const value_type&															const_reference;
 			typedef typename Allocator::pointer													pointer;
 			typedef typename Allocator::const_pointer											const_pointer;
-			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>			iterator;
-			typedef typename ft::bidirectional_iterator<const value_type, Compare, Allocator>	const_iterator;
+			typedef typename ft::bidirectional_iterator<mapped_type, value_type, Compare, Allocator>			iterator;
+			typedef typename ft::bidirectional_iterator<mapped_type, const value_type, Compare, Allocator>	const_iterator;
 			typedef typename ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef typename ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 
@@ -153,18 +153,31 @@
 			avl_tree.clearAll();
 			size_m = 0;
 			}
+			
 			ft::pair<iterator, bool> insert( const value_type& value ) {
 				avl_tree.check = false;
 				avl_tree._node = avl_tree.insert_element(avl_tree._node, value);
 				size_m++;
 				return ft::pair<iterator, bool>(iterator(avl_tree._node->data, &avl_tree), avl_tree.check);
 			}
+			
 			iterator insert( iterator pos, const value_type& value ) {
 				avl_tree.check = false;
 				avl_tree._node = avl_tree.insert_element(avl_tree._node, value);
 				size_m++;
 				(void)pos;
 				return((ft::pair<iterator, bool>(iterator(avl_tree._node->data, &avl_tree), avl_tree.check)).first);
+			}
+			
+			template< class InputIt >
+			void insert( InputIt first, InputIt last ){
+				int i = 0;
+				while (i < 10){
+					insert(*first);
+					std::cout<<"hey"<<std::endl;
+					first++;
+					i++;
+				}
 			}
 			
 			private:

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/26 12:57:04 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/26 22:05:32 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,8 @@ public:
   }
 
   // Node with minimum value
-  node_avl<T, Alloc> *minValue(node_avl<T, Alloc> *node) {
-  node_avl<T, Alloc> *current = node;
+  node_avl<T, Alloc> *minValue(node_avl<T, Alloc> *node)const {
+    node_avl<T, Alloc> *current = node;
     while (current->left != NULL)
       current = current->left;
     return current;
@@ -288,10 +288,10 @@ node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, const T& val_to_d
       }
       node_avl<T, Alloc> *prev = NULL;
       while (1){
-        if (key < root->data){
+        if (compare(key.first, root->data->first)){
             root = root->left;
         }
-        else if (key > root->data){
+        else if (compare(root->data->first, key.first)){
           prev = root;
           root = root->right;
         }
@@ -308,17 +308,18 @@ node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, const T& val_to_d
       return (prev); 
   }
        
-  node_avl<T, Alloc>* findSuccessor(node_avl<T, Alloc>* root, T& key){
+  node_avl<T, Alloc> *findSuccessor(node_avl<T, Alloc>* root, T& key)const{
+   
+    node_avl<T, Alloc> *next = find_element(root, key);
     if (root == nullptr) {
         return nullptr;
     }
-    node_avl<T, Alloc>* next = nullptr;
     while (1){
-      if (key < root->data){
+      if (compare(key.first, root->data->first)){
           next = root;
           root = root->left;
       }
-      else if (key > root->data) {
+      else if (compare(root->data->first, key.first)) {
           root = root->right;
       }
       else {
@@ -334,34 +335,35 @@ node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, const T& val_to_d
       return next;
   }
   
-  node_avl<T, Alloc>  *find_element(node_avl<T, Alloc> *root, const T& key) {
-    //  node_avl<T, Alloc>* next = nullptr;
-    // while (root != nullptr){
-    //   if (compare(key.first, root->data->first)){
-    //     root = root->left;
-    //     next = root;
-    //   }
-    //   else if (compare(root->data->first, key.first)) {
-    // //  std::cout<<"------------hey i am find node------------"<<std::endl;
-    //     root = root->right;
-    //     next = root;
-    //   }
-    //   else{
-    //     return (next);
-    //   }
+  node_avl<T, Alloc>  *find_element(node_avl<T, Alloc> *root, const T& key) const {
+    node_avl<T, Alloc>* next = nullptr;
+    while (root != nullptr){
+      if (compare(key.first, root->data->first)){
+        root = root->left;
+        next = root;
+      }
+      else if (compare(root->data->first, key.first)) {
+    //  std::cout<<"------------hey i am find node------------"<<std::endl;
+        root = root->right;
+        next = root;
+      }
+      else{
+        return (next);
+  
+      }
+    }
+     // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
+    return next;
+    // if (root == NULL){
+    //   return (NULL);
+    //  }
+    // if (compare(key.first, root->data->first)){
+    //   return (find_element(root->left, key));
     // }
-    //  // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
-    // return next;
-    if (root == NULL){
-      return (NULL);
-    }
-    if (compare(key.first, root->data->first)){
-      return (find_element(root->left, key));
-    }
-    else if (compare(root->data->first, key.first)) {
-      return (find_element(root->right, key));
-    }
-    return (root);
+    // else if (compare(root->data->first, key.first)) {
+    //   return (find_element(root->right, key));
+    // }
+    // return (root);
 }
       
   node_avl<T, Alloc>* findParent(node_avl<T, Alloc>* root, T& key){
