@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/26 21:44:40 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:21:20 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 			typedef const value_type&															const_reference;
 			typedef typename Allocator::pointer													pointer;
 			typedef typename Allocator::const_pointer											const_pointer;
-			typedef typename ft::bidirectional_iterator<mapped_type, value_type, Compare, Allocator>			iterator;
-			typedef typename ft::bidirectional_iterator<mapped_type, const value_type, Compare, Allocator>	const_iterator;
+			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>			iterator;
+			typedef typename ft::bidirectional_iterator<const value_type, Compare, Allocator>	const_iterator;
 			typedef typename ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef typename ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 
@@ -109,14 +109,16 @@
                 node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree._node);
                 return (node->data);
             }
-            iterator end() {
-                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
-                return (node->data);
-            }
-            const_iterator end() const{
-                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
-                return (node->data); 
-            }
+            // iterator end() {
+            //     node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
+            //     return (node->data);
+            // }
+            // const_iterator end() const{
+            //     node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
+            //     return (node->data); 
+            // }
+			iterator end() {return iterator(NULL, &avl_tree);}	
+			const_iterator end() const {return iterator(NULL, &avl_tree);}
             reverse_iterator rbegin(){
                 node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
                 return (node->data);
@@ -171,11 +173,11 @@
 			
 			template< class InputIt >
 			void insert( InputIt first, InputIt last ){
+				std::cout<<"hey"<<std::endl;
 				int i = 0;
 				while (i < 10){
 					insert(*first);
-					std::cout<<"hey"<<std::endl;
-					first++;
+					++first;
 					i++;
 				}
 			}

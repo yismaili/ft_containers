@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/26 21:49:55 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:10:25 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,10 @@
     };
 
     /*---------- bidirectional iterator----------*/
-    template < class Key, class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
+    template <class T, class Compare = std::less<T>,class Alloc = std::allocator<T> >  
     class bidirectional_iterator{
      private:
-          const avlTree<T, Compare, Alloc> *nodeAvl;// !!!
+          const avlTree<T, Compare, Alloc> *nodeAvl;
           T* ptr;
           
      public:
@@ -198,21 +198,17 @@
      }
      
      bidirectional_iterator &operator++(){
-               //  std::cout<<"--------------"<<std::endl;
-          node_avl<T, Alloc> *node = nodeAvl->find_element(nodeAvl->_node, *ptr);
+     node_avl<T, Alloc> *next = nodeAvl->findSuccessor(nodeAvl->_node, *ptr);
+     if (next){
           exit(1);
-          if (node){
-                node_avl<T, Alloc> *next = nodeAvl->findSuccessor(nodeAvl->_node, *ptr);
-               if (next){
-                exit(1);
-                    ptr = next->data;
-               }
-               else{
-                    ptr = nullptr;
-               }
-          }
-          return (*this);
+          ptr = next->data;
      }
+     else{
+          ptr = nullptr;
+     }
+     return (*this);
+     }
+     
      bidirectional_iterator operator--(int){
         bidirectional_iterator temp = *this;
         --(*this);
