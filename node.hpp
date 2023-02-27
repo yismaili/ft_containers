@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 22:45:39 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 19:52:01 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:16:53 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ class node_avl
           node_avl *left;
           node_avl *right;
           node_avl *parent;
-          node_avl *root;
           size_t    height;
 
           node_avl(){
@@ -32,7 +31,6 @@ class node_avl
             left = NULL;
             right = NULL;
             parent = NULL;
-            root = NULL;
             height = 0;
             
           }
@@ -43,7 +41,6 @@ class node_avl
             left = NULL;
             right = NULL;
             parent = NULL;
-            root = NULL;
             height = 1;
           }
           
@@ -57,15 +54,10 @@ class node_avl
               left = other.left;
               right = other. right;
               parent = other.parent;
-              root = other.root;
             }
           }
           }
-          
-          ~node_avl(){
-                alloc.destroy(data);
-                alloc.deallocate(data, 1);
-          }
+          ~node_avl(){}
     private:
            Allocator alloc;
 };

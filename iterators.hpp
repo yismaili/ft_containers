@@ -6,13 +6,14 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/24 18:23:17 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:10:25 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "avlTree.hpp"
-     
+#include "pair.hpp"
+   
  namespace ft {
      // ----------- Random_access_iterator -----------//
   template <typename T> class Random_access_iterator
@@ -44,14 +45,14 @@
           }else {
                return (false);
           }
-       } 
+     } 
      bool operator != (const Random_access_iterator &opj) {
           if (ptr != opj.ptr){
                return (true);
           }else {
                return (false);
           }
-       } 
+     }
      reference operator*(){
           return (*ptr);
      }
@@ -197,18 +198,17 @@
      }
      
      bidirectional_iterator &operator++(){
-          avlTree<T, Alloc> node = nodeAvl->find_element(nodeAvl->_node, *ptr);
-          if (node){
-               avlTree<T, Alloc> next = nodeAvl->findSuccessor(*ptr);
-               if (next){
-                    ptr = next->data;
-               }
-               else{
-                    ptr = nullptr;
-               }
-          }
-          return (*this);
-          }
+     node_avl<T, Alloc> *next = nodeAvl->findSuccessor(nodeAvl->_node, *ptr);
+     if (next){
+          exit(1);
+          ptr = next->data;
+     }
+     else{
+          ptr = nullptr;
+     }
+     return (*this);
+     }
+     
      bidirectional_iterator operator--(int){
         bidirectional_iterator temp = *this;
         --(*this);
@@ -216,9 +216,9 @@
      }
      
      bidirectional_iterator &operator--(){
-          avlTree<T, Alloc> node = nodeAvl->find_element(nodeAvl->_node, *ptr);
+           node_avl <T, Alloc> node = nodeAvl->find_element(nodeAvl->_node, *ptr);
           if (node){
-               avlTree<T, Alloc> next = nodeAvl->findPredecessor(*ptr);
+                node_avl <T, Alloc> next = nodeAvl->findPredecessor(*ptr);
                if (next){
                     ptr = next->data;
                }
