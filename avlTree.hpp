@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/27 19:11:20 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/27 21:11:34 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,22 +62,43 @@ public:
   }
 
   node_avl<T, Alloc> *rotate_right(node_avl<T, Alloc> *root) {
-    node_avl<T, Alloc>* R = root->left;
-    root->left = root->left->right;
-    R->right = root;
+    // node_avl<T, Alloc>* R = root->left;
+    // root->left = root->left->right;
+    // R->right = root;
+    	node_avl<T, Alloc> *newRoot = root->left;
+			if (!newRoot)
+				return root;
+			node_avl<T, Alloc> *tmpR = newRoot->right;
+			if (newRoot->right)
+				newRoot->right->parent = root;
+			newRoot->right = root;
+			root->left = tmpR;
+			newRoot->parent = root->parent;
+			root->parent = newRoot;
     fix_height(root);
-    fix_height(R);
-    return R;
+    fix_height(newRoot);
+    return newRoot;
   }
 
   // Rotate left
   node_avl<T, Alloc> *rotate_left(node_avl<T, Alloc> *root) {
-    node_avl<T, Alloc>* R = root->right;
-    root->right = root->right->left;
-    R->left = root;
-    fix_height(root);
-    fix_height(R);
-    return R;
+    // node_avl<T, Alloc>* R = root->right;
+    // root->right = root->right->left;
+    // R->left = root;
+    // fix_height(root);
+    // fix_height(R);
+    // return R;
+    node_avl<T, Alloc> *newRoot = root->right;
+			node_avl<T, Alloc> *tmpL = newRoot->left;
+			if (newRoot->left)
+				newRoot->left->parent = root;
+			newRoot->left = root;
+			root->right = tmpL;
+			newRoot->parent = root->parent;
+			root->parent = newRoot;
+      fix_height(root);
+      fix_height(newRoot);
+      return (newRoot);
   }
 
   // Get the balance factor of each node
@@ -132,28 +153,28 @@ public:
   
   // Insert a node
   node_avl<T, Alloc> *insert_element(node_avl<T, Alloc> *node, const T& key) {
-    node_avl<T, Alloc>* find = find_element(node, key);
-    if (!find){
+    // node_avl<T, Alloc>* find = find_element(node, key);
+    // if (!find){
       check = true;
       if (node == NULL){
         return (creatNode(key)); 
       }
       // Find the correct postion 
-      int cmp= key_compare(node, key);
-      if (cmp < 0){ // Go left
-        node->parent = node->left;
+     // int cmp= key_compare(node, key);
+      if (compare(key.first, node->data->first)){ // Go left
         node->left = insert_element(node->left, key);
+        node->left->parent = node;
         node = rebalance_left(node, key);
         }
-      else if (cmp > 0){ // Go right
-        node->parent = node->right;
+      else if (compare(node->data->first, key.first)){ // Go right
         node->right = insert_element(node->right, key);
+        node->right->parent = node;
         node = rebalance_right(node);
         }
       else{
           return(node);
         }
-    }
+    // }
     return (node);
   }
 
@@ -404,7 +425,6 @@ node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, const T& val_to_d
         indent += "|   ";
       }
       std::cout << root->data->second << std::endl;
-      // printTree(root->root, indent, 2);
       printTree(root->left, indent, 0);
       printTree(root->right, indent, 1);
     }
