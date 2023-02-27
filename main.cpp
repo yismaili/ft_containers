@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/27 16:22:07 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:48:55 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int main ()
       mymap.insert (ft::pair<char,int>('k',8));
       mymap.insert (ft::pair<char,int>('l',9));
       mymap.insert (ft::pair<char,int>('h',45));
-     // mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 2);
+      mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 1);
       //std::cout<<"size -->"<<mymap.size()<<std::endl;
       //mymap.clear();
       //mymap['u']=56;
@@ -90,15 +90,16 @@ int main ()
       // }else{
       //     std::cout<<"is not emty"<<std::endl;
       // }
-       std::cout<<"begin -->"<< mymap.begin()->second +15<<std::endl;
-        std::cout<<"end -->"<< mymap.end()->second <<std::endl;
-       mymap.end();
-      //  mymap.insert (mymap.begin(), ft::pair<char,int>('p',22222));
+      //  std::cout<<"begin -->"<< mymap.begin()->second <<std::endl;
+      // std::cout<<"end -->"<< mymap.end()->second <<std::endl;
+      //  mymap.end();
+      std::cout <<"prnt------->"<<mymap.avl_tree._node->left->parent->data->second<<std::endl;
+      std::cout <<"chld------->"<<mymap.avl_tree._node->left->data->second<<std::endl;
+      // mymap.insert (mymap.begin(), ft::pair<char,int>('p',22222));
       // std::cout << "m['a'] = " << mymap['u'] << std::endl;  
       // ft::map<char,int> secondmap;
       // secondmap.insert(mymap.begin(), mymap.end());
       // secondmap.avl_tree.printTree( secondmap.avl_tree._node, " ", 2);
-      
   }
   catch(const std::exception& e)
   {

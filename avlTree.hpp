@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/26 22:05:32 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/27 19:11:20 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,12 @@ public:
       // Find the correct postion 
       int cmp= key_compare(node, key);
       if (cmp < 0){ // Go left
+        node->parent = node->left;
         node->left = insert_element(node->left, key);
         node = rebalance_left(node, key);
         }
       else if (cmp > 0){ // Go right
+        node->parent = node->right;
         node->right = insert_element(node->right, key);
         node = rebalance_right(node);
         }
@@ -402,7 +404,7 @@ node_avl<T, Alloc> * delete_element(node_avl<T, Alloc> * root, const T& val_to_d
         indent += "|   ";
       }
       std::cout << root->data->second << std::endl;
-      printTree(root->root, indent, 2);
+      // printTree(root->root, indent, 2);
       printTree(root->left, indent, 0);
       printTree(root->right, indent, 1);
     }
