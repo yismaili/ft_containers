@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/27 21:09:32 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:16:47 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int main ()
   {
      ft::map<char,int> mymap;
       mymap.insert (ft::pair<char,int>('a',1));
+    
       mymap.insert (ft::pair<char,int>('b',2));
       mymap.insert (ft::pair<char,int>('c',3));
       mymap.insert (ft::pair<char,int>('d',4));
@@ -78,7 +79,7 @@ int main ()
       mymap.insert (ft::pair<char,int>('l',9));
       mymap.insert (ft::pair<char,int>('m',10));
       mymap.insert (ft::pair<char,int>('n',11));
-      mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 1);
+     // mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 1);
       //std::cout<<"size -->"<<mymap.size()<<std::endl;
       //mymap.clear();
       //mymap['u']=56;
@@ -93,10 +94,10 @@ int main ()
       //  std::cout<<"begin -->"<< mymap.begin()->second <<std::endl;
       // std::cout<<"end -->"<< mymap.end()->second <<std::endl;
       //  mymap.end();
-      std::cout <<"R_prnt------->"<<mymap.avl_tree._node->right->parent->data->second<<std::endl;
-      std::cout <<"R_chld------->"<<mymap.avl_tree._node->right->data->second<<std::endl;
-      std::cout <<"L_prnt------->"<<mymap.avl_tree._node->left->parent->data->second<<std::endl;
-      std::cout <<"L_chld------->"<<mymap.avl_tree._node->left->data->second<<std::endl;
+      // std::cout <<"R_prnt------->"<<mymap.avl_tree._node->right->parent->data->second<<std::endl;
+      // std::cout <<"R_chld------->"<<mymap.avl_tree._node->right->data->second<<std::endl;
+      // std::cout <<"L_prnt------->"<<mymap.avl_tree._node->left->parent->data->second<<std::endl;
+      // std::cout <<"L_chld------->"<<mymap.avl_tree._node->left->data->second<<std::endl;
       // mymap.insert (mymap.begin(), ft::pair<char,int>('p',22222));
       // std::cout << "m['a'] = " << mymap['u'] << std::endl;  
       // ft::map<char,int> secondmap;

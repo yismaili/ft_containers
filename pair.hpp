@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:41:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/26 16:42:04 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/28 19:37:28 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ class pair{
         typedef T2  types;
             T1 first;
             T2 second;
-            pair(){
-                this->first = 0;
-                this->second = 0;
+            pair(): first(0), second(0){
             }
             pair( const T1& x, const T2& y ): first(x), second(y){
                 // first  = x;
