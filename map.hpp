@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/27 16:21:20 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/02/28 22:26:14 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 	template< class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > > class map {
 		public:
-			avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
+			 avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
 			typedef Key																			key_type;
 			typedef T																			mapped_type;
 			typedef ft::pair<const key_type, mapped_type>										value_type;
@@ -53,7 +53,9 @@
 			/*---------------------> Member functions <--------------------*/
 			
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-				: alloc_m(alloc), compare_m(comp), size_m(0) {}
+				: alloc_m(alloc), compare_m(comp), size_m(0) {
+					    
+				}
 				
 			template <class InputIterator> map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type()) {
@@ -76,65 +78,65 @@
 			// }
 			~map() {}
 			/*---------------------> Element access <-----------------------*/
-			T& at( const Key& key ) {
-				node_avl<value_type, Allocator>*	node = avl_tree.find_element(avl_tree._node, ft::make_pair(key, mapped_type()));
-				if (node)
-					return node->data->second;
-				else
-					throw std::out_of_range("out of range\n");
-			}
-			const T& at( const Key& key ) const {
-				node_avl<value_type, Allocator>*	node = avl_tree.find_element(avl_tree._node, ft::make_pair(key, mapped_type()));
-				if (node)
-					return node->data->second;
-				else
-            		throw std::out_of_range("out of range\n");
-			}
+			// T& at( const Key& key ) {
+			// 	node_avl*	node = avl_tree.find_element(avl_tree._node, ft::make_pair(key, mapped_type()));
+			// 	if (node)
+			// 		return node->data->second;
+			// 	else
+			// 		throw std::out_of_range("out of range\n");
+			// }
+			// const T& at( const Key& key ) const {
+			// 	node_avl*	node = avl_tree.find_element(avl_tree._node, ft::make_pair(key, mapped_type()));
+			// 	if (node)
+			// 		return node->data->second;
+			// 	else
+            // 		throw std::out_of_range("out of range\n");
+			// }
 			
-			mapped_type& operator[]( const Key& key ) {
-				value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
-				//  std::cout<<"****find****> "<<node->data->second<<std::endl;
-				//  std::cout<<"****init****> "<<value.second<<std::endl;
-				insert(value);
-				node_avl<value_type, Allocator>*	node = avl_tree.find_element(avl_tree._node, value);
-				return (node->data->second);
-			}
+			// mapped_type& operator[]( const Key& key ) {
+			// 	value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
+			// 	//  std::cout<<"****find****> "<<node->data->second<<std::endl;
+			// 	//  std::cout<<"****init****> "<<value.second<<std::endl;
+			// 	insert(value);
+			// 	node_avl*	node = avl_tree.find_element(avl_tree._node, value);
+			// 	return (node->data->second);
+			// }
             
 			/*---------------------> Iterators <---------------------------*/
-			iterator begin(){
-                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree._node);
-                return (node->data);
-            }
-            const_iterator begin() const{
-                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree._node);
-                return (node->data);
-            }
-            // iterator end() {
-            //     node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
+			// iterator begin(){
+            //    node_avl* node = avl_tree.minValue(avl_tree._node);
             //     return (node->data);
             // }
-            // const_iterator end() const{
-            //     node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
-            //     return (node->data); 
+            // const_iterator begin() const{
+            //     node_avl*	node = avl_tree.minValue(avl_tree._node);
+            //     return (node->data);
             // }
-			iterator end() {return iterator(NULL, &avl_tree);}	
-			const_iterator end() const {return iterator(NULL, &avl_tree);}
-            reverse_iterator rbegin(){
-                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
-                return (node->data);
-            }
-            const_reverse_iterator rbegin() const{
-                node_avl<value_type, Allocator>*	node = avl_tree.maxValue(avl_tree._node);
-                return (node->data);
-            }
-            reverse_iterator rend(){
-                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree._node);
-                return (node->data);
-            }
-            const_reverse_iterator rend() const{
-                node_avl<value_type, Allocator>*	node = avl_tree.minValue(avl_tree._node);
-                return (node->node->data);
-            }
+            // // iterator end() {
+            // //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
+            // //     return (node->data);
+            // // }
+            // // const_iterator end() const{
+            // //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
+            // //     return (node->data); 
+            // // }
+			// iterator end() {return iterator(NULL, &avl_tree);}	
+			// const_iterator end() const {return iterator(NULL, &avl_tree);}
+            // reverse_iterator rbegin(){
+            //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
+            //     return (node->data);
+            // }
+            // const_reverse_iterator rbegin() const{
+            //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
+            //     return (node->data);
+            // }
+            // reverse_iterator rend(){
+            //     node_avl*	node = avl_tree.minValue(avl_tree._node);
+            //     return (node->data);
+            // }
+            // const_reverse_iterator rend() const{
+            //     node_avl*	node = avl_tree.minValue(avl_tree._node);
+            //     return (node->node->data);
+            // }
             /*-------------------------> Capacity <--------------------------*/
 			bool empty() const{
 				if (size_m == 0)
@@ -158,8 +160,10 @@
 			
 			ft::pair<iterator, bool> insert( const value_type& value ) {
 				avl_tree.check = false;
-				avl_tree._node = avl_tree.insert_element(avl_tree._node, value);
-				size_m++;
+				avl_tree._node = avl_tree.insert_endnode(avl_tree._node->left, value);
+				if (avl_tree.check){
+					size_m++;
+				}
 				return ft::pair<iterator, bool>(iterator(avl_tree._node->data, &avl_tree), avl_tree.check);
 			}
 			
