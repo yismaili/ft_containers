@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/28 22:22:15 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:33:04 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ class avlTree
 {   
    public:
     Compare compare;
+    bool                                              check;
+    typedef T						                              value_type;
+    typedef Alloc                                     alloc_type;
     struct node_avl
     {
           T        *data;
@@ -35,11 +38,10 @@ class avlTree
           node_avl(){
             data =  alloc_pairs.allocate(1);
             alloc_pairs.construct(data, value_type());
-            data = NULL;
             left = NULL;
             right = NULL;
             parent = NULL;
-            height = 1;
+            height = 0;
           }
           
           node_avl (const T& value){
@@ -52,20 +54,17 @@ class avlTree
           }
     };
     
-    bool                                              check;
-    typedef T						                              value_type;
-    typedef Alloc                                     alloc_type;
     typename alloc_type::template rebind<node_avl>::other	node_alloc;
-    node_avl                                          *_node;
+    node_avl                                          *root;
     avlTree(){
-      _node =  	node_alloc.allocate(1);
-     	node_alloc.construct(_node, node_avl());
+      root =  	node_alloc.allocate(1);
+     	node_alloc.construct(root, node_avl());
     }
     avlTree(avlTree const &other){
       *this = other;
     }
     avlTree &operator=(avlTree const &other){
-      _node = other._node;
+      root = other.root;
       compare = other.compare;
       return (this);
     }
@@ -83,55 +82,55 @@ class avlTree
     return (newNode);
   }
   // Rotate right
-  void fix_height(node_avl *root){
-    int hl = getHeight(root->left);
-    int hr = getHeight(root->right);
+  void fix_height(node_avl *node){
+    int hl = getHeight(node->left);
+    int hr = getHeight(node->right);
     if (hl > hr){
-      root->height = hl + 1;
+      node->height = hl + 1;
     }else{
-      root->height = hr + 1;
+      node->height = hr + 1;
     }
   }
 
-  node_avl *rotate_right(node_avl *root) {
-    // node_avl* R = root->left;
-    // root->left = root->left->right;
-    // R->right = root;
-    // fix_height(root);
+  node_avl *rotate_right(node_avl *node) {
+    // node_avl* R = node->left;
+    // node->left = node->left->right;
+    // R->right = node;
+    // fix_height(node);
     // fix_height(R);
     // return R;
-    	node_avl *newRoot = root->left;
+    	node_avl *newRoot = node->left;
 			if (!newRoot)
-				return root;
+				return node;
 			node_avl *tmpR = newRoot->right;
 			if (newRoot->right)
-				newRoot->right->parent = root;
-			newRoot->right = root;
-			root->left = tmpR;
-			newRoot->parent = root->parent;
-			root->parent = newRoot;
-    fix_height(root);
+				newRoot->right->parent = node;
+			newRoot->right = node;
+			node->left = tmpR;
+			newRoot->parent = node->parent;
+			node->parent = newRoot;
+    fix_height(node);
     fix_height(newRoot);
     return newRoot;
   }
 
   // Rotate left
-  node_avl *rotate_left(node_avl *root) {
-    // node_avl* R = root->right;
-    // root->right = root->right->left;
-    // R->left = root;
-    // fix_height(root);
+  node_avl *rotate_left(node_avl *node) {
+    // node_avl* R = node->right;
+    // node->right = node->right->left;
+    // R->left = node;
+    // fix_height(node);
     // fix_height(R);
     // return R;
-    node_avl *newRoot = root->right;
+    node_avl *newRoot = node->right;
 			node_avl *tmpL = newRoot->left;
 			if (newRoot->left)
-				newRoot->left->parent = root;
-			newRoot->left = root;
-			root->right = tmpL;
-			newRoot->parent = root->parent;
-			root->parent = newRoot;
-      fix_height(root);
+				newRoot->left->parent = node;
+			newRoot->left = node;
+			node->right = tmpL;
+			newRoot->parent = node->parent;
+			node->parent = newRoot;
+      fix_height(node);
       fix_height(newRoot);
       return (newRoot);
   }
@@ -145,76 +144,78 @@ class avlTree
     }
   }
 
-  int key_compare(node_avl *root, const T& key){
-    if (compare(key.first, root->data->first)){ 
+  int key_compare(node_avl *node, const T& key){
+    if (compare(key.first, node->data->first)){ 
       return (-1);
     }
-    else if (compare(root->data->first, key.first)){ 
+    else if (compare(node->data->first, key.first)){ 
         return(1); 
     }else {
       return (0);
     }
   }
   
-  node_avl *rebalance_right(node_avl *root){
-    if (getHeight(root->right) - getHeight(root->left) == 2){
-      if(getHeight(root->right->right) > getHeight(root->right->left)){
-        root = rotate_left(root);
+  node_avl *rebalance_right(node_avl *node){
+    if (getHeight(node->right) - getHeight(node->left) == 2){
+      if(getHeight(node->right->right) > getHeight(node->right->left)){
+        node = rotate_left(node);
       }
     else{
-      root->right = rotate_right(root->right);
-      root = rotate_left(root);
+      node->right = rotate_right(node->right);
+      node = rotate_left(node);
     }
     }else{
-      fix_height(root);
+      fix_height(node);
     }
-    return(root);
+    return(node);
   }
   
-  node_avl *rebalance_left(node_avl *root, const T& key){
+  node_avl *rebalance_left(node_avl *node, const T& key){
       //update height of node 
-      fix_height(root);
+      fix_height(node);
     // ckeck balance of tree
-      int cmp = getBalance(root);
-      if ((cmp > 1) && (compare(key.first, root->left->data->first))) {
-        return rotate_right(root);
+      int cmp = getBalance(node);
+      if ((cmp > 1) && (compare(key.first, node->left->data->first))) {
+        return rotate_right(node);
       } 
-      else if ((cmp > 1) && (compare(root->left->data->first, key.first))) {
-        root->left = rotate_left(root->left);
-        return rotate_right(root);
+      else if ((cmp > 1) && (compare(node->left->data->first, key.first))) {
+        node->left = rotate_left(node->left);
+        return rotate_right(node);
       }
     return root;
   }
   
   node_avl *insert_endnode(node_avl *node, const T& key){
-    node_avl* find = find_element(node, key);
-    if (!find){
-    std::cout<<"-----null---->\n"<< key.second<<std::endl;
+    node_avl* find = find_element(node->left, key);
+    if (find){
       check = false;
-      return(insert_element(node, key));
-    }
-    else{
-      check = true;
       return (find);
     }
+    check = true;
+    if (node){
+     // std::cout<<"******"<< node->data->second<<std::endl; 
+    }
+    node_avl* child = insert_element(node->left, key);
+    // child->parent = node;
+    return  (child);
   }
   
   // Insert a node
   node_avl *insert_element(node_avl *node, const T& key) {
       if (node == NULL){
-      std::cout<<"-----null---->\n"<< key.second<<std::endl;
+      // std::cout<<"-----null---->\n"<< key.second<<std::endl;
         return (creatNode(key)); 
       }
       // Find the correct postion 
       int cmp= key_compare(node, key);
       if (cmp == -1){ // Go left
-       std::cout<<"-----left---->\n";
+      //  std::cout<<"-----left---->\n";
         node->left = insert_element(node->left, key);
         node->left->parent = node;
         node = rebalance_left(node, key);
         }
       else if (cmp == 1){ // Go right
-        std::cout<<"-----right--->\n";
+        // std::cout<<"-----right--->\n";
         node->right = insert_element(node->right, key);
         node->right->parent = node;
         node = rebalance_right(node);
@@ -237,228 +238,243 @@ class avlTree
       current = current->right;
     return current;
   }
-
+  
+  node_avl* endNode(){
+    return (root);
+  }
+  
+   node_avl* atOfTree(const T& key){
+    node_avl*	node = find_element(root->left, key);
+		if (node)
+			return node;
+		else
+      throw std::out_of_range("out of range\n");
+  }
+  
+  node_avl* minNode(){
+    node_avl* node = minValue(root->left);
+    return (node);
+  }
   // Delete a node
-  node_avl *balanceTree(node_avl *root){
+  node_avl *balanceTree(node_avl *node){
     // balance the tree
-    root->height = 1 + std::max(getHeight(root->left), getHeight(root->right));
-    int balance = getBalance(root);
+    node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+    int balance = getBalance(node);
     if (balance > 1) {
-      if (getBalance(root->left) >= 0) {
-        return rotate_right(root);
+      if (getBalance(node->left) >= 0) {
+        return rotate_right(node);
       } else {
-        root->left = rotate_left(root->left);
-        return rotate_right(root);
+        node->left = rotate_left(node->left);
+        return rotate_right(node);
       }
     }
     if (balance < -1) {
-      if (getBalance(root->right) <= 0) {
-        return rotate_left(root);
+      if (getBalance(node->right) <= 0) {
+        return rotate_left(node);
       } else {
-        root->right = rotate_right(root->right);
-        return rotate_left(root);
+        node->right = rotate_right(node->right);
+        return rotate_left(node);
       }
     }
-    return root;
+    return node;
   }
   
   void clearAll(){
-    _node = clear(_node);
+    root->left = clear(root->left);
   }
   
-node_avl *  clear(node_avl* root){
-    if(root != NULL) {
-          clear(root->left);
-          node_alloc.deallocate(root->data, 1);
-          clear(root->right);
-          node_alloc.deallocate(root, 1);
-          root = NULL;
+node_avl *  clear(node_avl* node){
+    if(node != NULL) {
+          clear(node->left);
+          root->alloc_pairs.deallocate(node->data, 1);
+          clear(node->right);
+          node_alloc.deallocate(node, 1);
+          node = NULL;
     }
-    return (root);
+  return (node);
 }
   
-node_avl * delete_element(node_avl * root, const T& val_to_delete) 
+node_avl * delete_element(node_avl * node, const T& val_to_delete) 
   {
-      	    std::cout<<"--------------"<<val_to_delete.second<<std::endl;
-    if (root == NULL){
+  std::cout<<"--------------"<<val_to_delete.second<<std::endl;
+    if (node == NULL){
       return NULL;
     }
-    if (compare(val_to_delete.first, root->data->first)){
-      root->left = delete_element(root->left, val_to_delete);
+    if (compare(val_to_delete.first, node->data->first)){
+      node->left = delete_element(node->left, val_to_delete);
     }
-    else if (compare(root->data->first, val_to_delete.first)){
-      root->right = delete_element(root->right, val_to_delete);
+    else if (compare(node->data->first, val_to_delete.first)){
+      node->right = delete_element(node->right, val_to_delete);
     }
     else{
     // node is found and needs to be deleted 
-    // if(val_to_delete.first == root->data->first) 
+    // if(val_to_delete.first == node->data->first) 
     // {
-        if (root->left == NULL && root->right == NULL) 
+        if (node->left == NULL && node->right == NULL) 
           {
-          node_alloc.destroy(root->data);
-          node_alloc.deallocate(root->data, 1);
-          node_alloc.destroy(root);
-          node_alloc.deallocate(root, 1);
+          node_alloc.destroy(node->data);
+          node_alloc.deallocate(node->data, 1);
+          node_alloc.destroy(node);
+          node_alloc.deallocate(node, 1);
             return NULL;
           } 
-          else if(root->left == NULL)
+          else if(node->left == NULL)
           {
-            node_avl * temp = root->right;
-            node_alloc.destroy(root->data);
-            node_alloc.deallocate(root->data, 1);
-            node_alloc.destroy(root);
-            node_alloc.deallocate(root, 1);
+            node_avl * temp = node->right;
+            node_alloc.destroy(node->data);
+            node_alloc.deallocate(node->data, 1);
+            node_alloc.destroy(node);
+            node_alloc.deallocate(node, 1);
             return temp;
           }
-          else if (root->right == NULL) 
+          else if (node->right == NULL) 
           {
-            node_avl * temp = root->left;
-           node_alloc.destroy(root->data);
-           node_alloc.deallocate(root->data, 1);
-            node_alloc.destroy(root);
-            node_alloc.deallocate(root, 1);
+            node_avl * temp = node->left;
+           node_alloc.destroy(node->data);
+           node_alloc.deallocate(node->data, 1);
+            node_alloc.destroy(node);
+            node_alloc.deallocate(node, 1);
             return temp;
           }
           else 
           {
             // finding the minimum value in the right subtree
             node_avl * min_right_subtree ; 
-            node_avl * current = root->right;
+            node_avl * current = node->right;
             while (current->left != NULL) {
               current = current->left;
             }
             min_right_subtree = current;
             // switching the values 
-            root->data = min_right_subtree->data;
-           node_alloc.construct(root->data, *(min_right_subtree->data));
+            node->data = min_right_subtree->data;
+           node_alloc.construct(node->data, *(min_right_subtree->data));
             // Deleting the node with val_to_delete now as a leaf node
-            root->right = delete_element(root->right, *(min_right_subtree->data));
+            node->right = delete_element(node->right, *(min_right_subtree->data));
           }
         // }
         // keep searching for node
         // else
         // {
-        //   if (compare(val_to_delete.first, root->data->first)){
-        //     root->left = delete_element(root->left, val_to_delete);
+        //   if (compare(val_to_delete.first, node->data->first)){
+        //     node->left = delete_element(node->left, val_to_delete);
         //   }
-        //   else if (compare(root->data->first, val_to_delete.first)){
-        //     root->right = delete_element(root->right, val_to_delete);
+        //   else if (compare(node->data->first, val_to_delete.first)){
+        //     node->right = delete_element(node->right, val_to_delete);
         //   }
          }
-        root = balanceTree(root);
-        return root ;
+        node = balanceTree(node);
+        return node ;
     }
 
-  node_avl *findPredecessor(node_avl *root, T& key){
-      if (root == NULL){
+  node_avl *findPredecessor(node_avl *node, T& key){
+      if (node == NULL){
         return(0);
       }
       node_avl *prev = NULL;
       while (1){
-        if (compare(key.first, root->data->first)){
-            root = root->left;
+        if (compare(key.first, node->data->first)){
+            node = node->left;
         }
-        else if (compare(root->data->first, key.first)){
-          prev = root;
-          root = root->right;
+        else if (compare(node->data->first, key.first)){
+          prev = node;
+          node = node->right;
         }
         else{
-          if (root->left){
-            prev = maxValue(root->left);
+          if (node->left){
+            prev = maxValue(node->left);
           }
           break;
         }
-        if (root == NULL){
+        if (node == NULL){
           return(prev);
         }
       }
       return (prev); 
   }
        
-  node_avl *findSuccessor(node_avl* root, T& key)const{
+  node_avl *findSuccessor(node_avl* node, T& key)const{
    
-    node_avl *next = find_element(root, key);
-    if (root == nullptr) {
+    node_avl *next = find_element(node, key);
+    if (node == nullptr) {
         return nullptr;
     }
     while (1){
-      if (compare(key.first, root->data->first)){
-          next = root;
-          root = root->left;
+      if (compare(key.first, node->data->first)){
+          next = node;
+          node = node->left;
       }
-      else if (compare(root->data->first, key.first)) {
-          root = root->right;
+      else if (compare(node->data->first, key.first)) {
+          node = node->right;
       }
       else {
-          if (root->right){
-            next = minValue(root->right);
+          if (node->right){
+            next = minValue(node->right);
           }
           break;
       }
-      if (!root) {
+      if (!node) {
         return next;
       }
       }
       return next;
   }
   
-  node_avl  *find_element(node_avl *root, const T& key) const {
-    node_avl* next = nullptr;
-    while (root != nullptr){
-      if (compare(key.first, root->data->first)){
-        root = root->left;
-        next = root;
-      }
-      else if (compare(root->data->first, key.first)) {
-    //  std::cout<<"------------hey i am find node------------"<<std::endl;
-        root = root->right;
-        next = root;
-      }
-      else{
-        return (next);
-  
-      }
+  node_avl  *find_element(node_avl *node, const T& key) const {
+    // node_avl* next = nullptr;
+    // while (node != nullptr){
+    //   if (compare(key.first, node->data->first)){
+    //     node = node->left;
+    //     next = node;
+    //   }
+    //   else if (compare(node->data->first, key.first)) {
+    // //  std::cout<<"------------hey i am find node------------"<<std::endl;
+    //     node = node->right;
+    //     next = node;
+    //   }
+    //   else{
+    //     return (node);
+    //   }
+    // }
+    //  // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
+    // return next;
+    if (node == NULL){
+      return (NULL);
+     }
+    if (compare(key.first, node->data->first)){
+      return (find_element(node->left, key));
     }
-     // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
-    return next;
-    // if (root == NULL){
-    //   return (NULL);
-    //  }
-    // if (compare(key.first, root->data->first)){
-    //   return (find_element(root->left, key));
-    // }
-    // else if (compare(root->data->first, key.first)) {
-    //   return (find_element(root->right, key));
-    // }
-    // return (root);
+    else if (compare(node->data->first, key.first)) {
+      return (find_element(node->right, key));
+    }
+    return (node);
 }
       
-  node_avl* findParent(node_avl* root, T& key){
+  node_avl* findParent(node_avl* node, T& key){
     node_avl* next = nullptr;
-    while (root != nullptr){
-      if (key < root->data){
-          next = root;
-          root = root->left;
+    while (node != nullptr){
+      if (key < node->data){
+          next = node;
+          node = node->left;
       }
-      else if (key > root->data) {
-          next = root;
-          root = root->right;
+      else if (key > node->data) {
+          next = node;
+          node = node->right;
       }
-      if (key == root->data || key == root->data){
+      if (key == node->data || key == node->data){
                   return (next);
               }
-              if ((key > root->data && root->right == NULL) || ( key < root->data && root->left == NULL)){
+              if ((key > node->data && node->right == NULL) || ( key < node->data && node->left == NULL)){
                   return nullptr;
               }
           }
           return next;
 }
      
-  void printTree(node_avl *root, std::string indent, int last) {
-    if (root != nullptr) {
+  void printTree(node_avl *node, std::string indent, int last) {
+    if (node != nullptr) {
     std:: cout << indent;
       if (last == 2) {
-        std::cout << "ROOT----";
+        std::cout << "root----";
         indent += "   ";
       }
       else if (last == 1) {
@@ -468,9 +484,10 @@ node_avl * delete_element(node_avl * root, const T& val_to_delete)
       std::cout << "L----";
         indent += "|   ";
       }
-      std::cout << root->data->second << std::endl;
-      printTree(root->left, indent, 0);
-      printTree(root->right, indent, 1);
+      std::cout << node->data->second << std::endl;
+      printTree(node->left, indent, 0);
+      printTree(node->right, indent, 1);
+    // exit(1);
     }
   }
 };

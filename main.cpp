@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/28 21:16:47 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:43:24 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,27 +79,29 @@ int main ()
       mymap.insert (ft::pair<char,int>('l',9));
       mymap.insert (ft::pair<char,int>('m',10));
       mymap.insert (ft::pair<char,int>('n',11));
-     // mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 1);
-      //std::cout<<"size -->"<<mymap.size()<<std::endl;
-      //mymap.clear();
-      //mymap['u']=56;
-      //std::cout<<"size -->"<<mymap.size()<<std::endl;
-      //std::cout<<"max size -->"<<mymap.max_size()<<std::endl;
-      //std::cout<<"at -->"<<mymap.at('a')<<std::endl;
-      //if (mymap.empty()){
+       mymap.print(" ", 1);
+      // std::cout<<"size -->"<<mymap.size()<<std::endl;
+      //  mymap.clear();
+      // std::cout<<"size -->"<<mymap.size()<<std::endl;
+      // mymap['u']=56;
+      // std::cout<<"max size -->"<<mymap.max_size()<<std::endl;
+      // std::cout<<"at -->"<<mymap.at('u')<<std::endl;
+      // if (mymap.empty()){
       //     std::cout<<"is empty "<<std::endl;
       // }else{
       //     std::cout<<"is not emty"<<std::endl;
       // }
-      //  std::cout<<"begin -->"<< mymap.begin()->second <<std::endl;
-      // std::cout<<"end -->"<< mymap.end()->second <<std::endl;
-      //  mymap.end();
-      // std::cout <<"R_prnt------->"<<mymap.avl_tree._node->right->parent->data->second<<std::endl;
-      // std::cout <<"R_chld------->"<<mymap.avl_tree._node->right->data->second<<std::endl;
-      // std::cout <<"L_prnt------->"<<mymap.avl_tree._node->left->parent->data->second<<std::endl;
-      // std::cout <<"L_chld------->"<<mymap.avl_tree._node->left->data->second<<std::endl;
-      // mymap.insert (mymap.begin(), ft::pair<char,int>('p',22222));
-      // std::cout << "m['a'] = " << mymap['u'] << std::endl;  
+      // std::cout<<"begin -->"<< mymap.begin()->second <<std::endl;
+      // // mymap.end();
+      // std::cout<<"end -->"<< mymap.end()->second<<std::endl;
+      // mymap.print(" ", 1);
+      // std::cout <<"R_prnt------->"<<mymap.avl_tree.root->left->right->parent->data->second<<std::endl;
+      // std::cout <<"R_chld------->"<<mymap.avl_tree.root->left->right->data->second<<std::endl;
+      // std::cout <<"L_prnt------->"<<mymap.avl_tree.root->left->left->parent->data->second<<std::endl;
+      // std::cout <<"L_chld------->"<<mymap.avl_tree.root->left->left->data->second<<std::endl;
+       mymap.insert (mymap.begin(), ft::pair<char,int>('p',22222));
+         mymap.print(" ", 1);
+      // std::cout << "m['a'] = " << mymap['p'] << std::endl;  
       // ft::map<char,int> secondmap;
       // secondmap.insert(mymap.begin(), mymap.end());
       // secondmap.avl_tree.printTree( secondmap.avl_tree._node, " ", 2);
