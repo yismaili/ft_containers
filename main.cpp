@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/01 13:40:09 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:35:07 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int main ()
       //     std::cout<<"is not emty"<<std::endl;
       // }
       //  std::cout<<"begin -->"<< mymap.begin()->second <<std::endl;
-      // std::cout<<"end -->"<< mymap.end()->second <<std::endl;
+      // std::cout<<"end -->"<< mymap.end()->first <<std::endl;
       //  mymap.end();
       // std::cout <<"R_prnt------->"<<mymap.avl_tree._node->right->parent->data->second<<std::endl;
       // std::cout <<"R_chld------->"<<mymap.avl_tree._node->right->data->second<<std::endl;

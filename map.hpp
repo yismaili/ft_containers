@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/01 13:42:41 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:32:39 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@
 				size_m = std::distance(first, last);
 				while (first < last)
 				{
-						avl_tree.insert_element(avl_tree._node, *first);
+						avl_tree.insert_element(avl_tree.root, *first);
 						first++;
 				}
 			}
@@ -160,19 +160,19 @@
 			
 			ft::pair<iterator, bool> insert( const value_type& value ) {
 				avl_tree.check = false;
-				avl_tree._node->left = avl_tree.insert_endnode(avl_tree._node, value);
+				avl_tree.root->left = avl_tree.insert_endnode(avl_tree.root, value);
 				if (avl_tree.check){
 					size_m++;
 				}
-				return ft::pair<iterator, bool>(iterator(avl_tree._node->data, &avl_tree), avl_tree.check);
+				return ft::pair<iterator, bool>(iterator(avl_tree.root->data, &avl_tree), avl_tree.check);
 			}
 			
 			iterator insert( iterator pos, const value_type& value ) {
 				avl_tree.check = false;
-				avl_tree._node = avl_tree.insert_element(avl_tree._node, value);
+				avl_tree.root = avl_tree.insert_element(avl_tree.root, value);
 				size_m++;
 				(void)pos;
-				return((ft::pair<iterator, bool>(iterator(avl_tree._node->data, &avl_tree), avl_tree.check)).first);
+				return((ft::pair<iterator, bool>(iterator(avl_tree.root->data, &avl_tree), avl_tree.check)).first);
 			}
 			
 			template< class InputIt >
@@ -187,7 +187,7 @@
 			}
 			void print(std::string indent, int last)
 			{
-				avl_tree.printTree(avl_tree._node->left, indent, last);
+				avl_tree.printTree(avl_tree.root, indent, last);
 			} 
 			
 			private:
