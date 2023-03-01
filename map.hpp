@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/01 15:32:39 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:40:10 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,49 +78,34 @@
 			// }
 			~map() {}
 			/*---------------------> Element access <-----------------------*/
-			// T& at( const Key& key ) {
-			// 	node_avl*	node = avl_tree.find_element(avl_tree._node, ft::make_pair(key, mapped_type()));
-			// 	if (node)
-			// 		return node->data->second;
-			// 	else
-			// 		throw std::out_of_range("out of range\n");
-			// }
-			// const T& at( const Key& key ) const {
-			// 	node_avl*	node = avl_tree.find_element(avl_tree._node, ft::make_pair(key, mapped_type()));
-			// 	if (node)
-			// 		return node->data->second;
-			// 	else
-            // 		throw std::out_of_range("out of range\n");
-			// }
+			T& at( const Key& key ) {
+				value_type tmp = ft::make_pair(key, mapped_type());
+				return (avl_tree.atOfTree(tmp)->data->second);
+			}
+			const T& at( const Key& key ) const {
+				value_type tmp = ft::make_pair(key, mapped_type());
+				return (avl_tree.atOfTree(tmp)->data->second);
+			}
 			
-			// mapped_type& operator[]( const Key& key ) {
-			// 	value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
-			// 	//  std::cout<<"****find****> "<<node->data->second<<std::endl;
-			// 	//  std::cout<<"****init****> "<<value.second<<std::endl;
-			// 	insert(value);
-			// 	node_avl*	node = avl_tree.find_element(avl_tree._node, value);
-			// 	return (node->data->second);
-			// }
+			mapped_type& operator[]( const Key& key ) {
+				value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
+				insert(value);
+				return (avl_tree.find_element(avl_tree.root->left, value)->data->second);
+			}
             
 			/*---------------------> Iterators <---------------------------*/
-			// iterator begin(){
-            //    node_avl* node = avl_tree.minValue(avl_tree._node);
-            //     return (node->data);
-            // }
-            // const_iterator begin() const{
-            //     node_avl*	node = avl_tree.minValue(avl_tree._node);
-            //     return (node->data);
-            // }
-            // // iterator end() {
-            // //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
-            // //     return (node->data);
-            // // }
-            // // const_iterator end() const{
-            // //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
-            // //     return (node->data); 
-            // // }
-			// iterator end() {return iterator(NULL, &avl_tree);}	
-			// const_iterator end() const {return iterator(NULL, &avl_tree);}
+			iterator begin(){
+                return (avl_tree.minNode()->data);
+            }
+            const_iterator begin() const{
+                return (avl_tree.minNode()->data);
+            }
+            iterator end() {
+                return (avl_tree.endNode()->data);
+            }
+            const_iterator end() const{
+                return (avl_tree.endNode()->data); 
+            }
             // reverse_iterator rbegin(){
             //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
             //     return (node->data);
@@ -169,8 +154,10 @@
 			
 			iterator insert( iterator pos, const value_type& value ) {
 				avl_tree.check = false;
-				avl_tree.root = avl_tree.insert_element(avl_tree.root, value);
-				size_m++;
+				avl_tree.root->left = avl_tree.insert_endnode(avl_tree.root, value);
+				if (avl_tree.check){
+					size_m++;
+				}
 				(void)pos;
 				return((ft::pair<iterator, bool>(iterator(avl_tree.root->data, &avl_tree), avl_tree.check)).first);
 			}

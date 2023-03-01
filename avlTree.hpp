@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/01 15:38:31 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:33:04 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ class avlTree
      // std::cout<<"******"<< node->data->second<<std::endl; 
     }
     node_avl* child = insert_element(node->left, key);
-    child->parent = node;
+    // child->parent = node;
     return  (child);
   }
   
@@ -238,7 +238,23 @@ class avlTree
       current = current->right;
     return current;
   }
-
+  
+  node_avl* endNode(){
+    return (root);
+  }
+  
+   node_avl* atOfTree(const T& key){
+    node_avl*	node = find_element(root->left, key);
+		if (node)
+			return node;
+		else
+      throw std::out_of_range("out of range\n");
+  }
+  
+  node_avl* minNode(){
+    node_avl* node = minValue(root->left);
+    return (node);
+  }
   // Delete a node
   node_avl *balanceTree(node_avl *node){
     // balance the tree
@@ -264,23 +280,23 @@ class avlTree
   }
   
   void clearAll(){
-    root = clear(root);
+    root->left = clear(root->left);
   }
   
 node_avl *  clear(node_avl* node){
     if(node != NULL) {
           clear(node->left);
-          node_alloc.deallocate(node->data, 1);
+          root->alloc_pairs.deallocate(node->data, 1);
           clear(node->right);
           node_alloc.deallocate(node, 1);
           node = NULL;
     }
-    return (node);
+  return (node);
 }
   
 node_avl * delete_element(node_avl * node, const T& val_to_delete) 
   {
-      	    std::cout<<"--------------"<<val_to_delete.second<<std::endl;
+  std::cout<<"--------------"<<val_to_delete.second<<std::endl;
     if (node == NULL){
       return NULL;
     }
@@ -404,34 +420,33 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
   }
   
   node_avl  *find_element(node_avl *node, const T& key) const {
-    node_avl* next = nullptr;
-    while (node != nullptr){
-      if (compare(key.first, node->data->first)){
-        node = node->left;
-        next = node;
-      }
-      else if (compare(node->data->first, key.first)) {
-    //  std::cout<<"------------hey i am find node------------"<<std::endl;
-        node = node->right;
-        next = node;
-      }
-      else{
-        return (next);
-  
-      }
+    // node_avl* next = nullptr;
+    // while (node != nullptr){
+    //   if (compare(key.first, node->data->first)){
+    //     node = node->left;
+    //     next = node;
+    //   }
+    //   else if (compare(node->data->first, key.first)) {
+    // //  std::cout<<"------------hey i am find node------------"<<std::endl;
+    //     node = node->right;
+    //     next = node;
+    //   }
+    //   else{
+    //     return (node);
+    //   }
+    // }
+    //  // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
+    // return next;
+    if (node == NULL){
+      return (NULL);
+     }
+    if (compare(key.first, node->data->first)){
+      return (find_element(node->left, key));
     }
-     // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
-    return next;
-    // if (node == NULL){
-    //   return (NULL);
-    //  }
-    // if (compare(key.first, node->data->first)){
-    //   return (find_element(node->left, key));
-    // }
-    // else if (compare(node->data->first, key.first)) {
-    //   return (find_element(node->right, key));
-    // }
-    // return (node);
+    else if (compare(node->data->first, key.first)) {
+      return (find_element(node->right, key));
+    }
+    return (node);
 }
       
   node_avl* findParent(node_avl* node, T& key){
