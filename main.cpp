@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/28 21:16:47 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:40:09 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int main ()
       mymap.insert (ft::pair<char,int>('l',9));
       mymap.insert (ft::pair<char,int>('m',10));
       mymap.insert (ft::pair<char,int>('n',11));
-     // mymap.avl_tree.printTree(mymap.avl_tree._node, " ", 1);
+       mymap.print(" ", 1);
       //std::cout<<"size -->"<<mymap.size()<<std::endl;
       //mymap.clear();
       //mymap['u']=56;

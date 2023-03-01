@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/28 22:26:14 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:42:41 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@
 			
 			ft::pair<iterator, bool> insert( const value_type& value ) {
 				avl_tree.check = false;
-				avl_tree._node = avl_tree.insert_endnode(avl_tree._node->left, value);
+				avl_tree._node->left = avl_tree.insert_endnode(avl_tree._node, value);
 				if (avl_tree.check){
 					size_m++;
 				}
@@ -185,6 +185,10 @@
 					i++;
 				}
 			}
+			void print(std::string indent, int last)
+			{
+				avl_tree.printTree(avl_tree._node->left, indent, last);
+			} 
 			
 			private:
 				// avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;

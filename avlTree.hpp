@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/28 22:22:15 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:43:33 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,16 +187,13 @@ class avlTree
   }
   
   node_avl *insert_endnode(node_avl *node, const T& key){
-    node_avl* find = find_element(node, key);
-    if (!find){
-    std::cout<<"-----null---->\n"<< key.second<<std::endl;
+    node_avl* find = find_element(_node->left, key);
+    if (find){
       check = false;
-      return(insert_element(node, key));
-    }
-    else{
-      check = true;
       return (find);
     }
+    check = true;
+     return  (insert_element(_node->left, key));
   }
   
   // Insert a node
@@ -471,6 +468,7 @@ node_avl * delete_element(node_avl * root, const T& val_to_delete)
       std::cout << root->data->second << std::endl;
       printTree(root->left, indent, 0);
       printTree(root->right, indent, 1);
+    // exit(1);
     }
   }
 };
