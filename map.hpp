@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/01 18:40:10 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:48:19 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,16 @@
             
 			/*---------------------> Iterators <---------------------------*/
 			iterator begin(){
-                return (avl_tree.minNode()->data);
+                return ( iterator(avl_tree.minNode()->data,&avl_tree));
             }
             const_iterator begin() const{
-                return (avl_tree.minNode()->data);
+                return (iterator(avl_tree.minNode()->data,&avl_tree));
             }
             iterator end() {
-                return (avl_tree.endNode()->data);
+                return (iterator(avl_tree.endNode()->data,&avl_tree));
             }
             const_iterator end() const{
-                return (avl_tree.endNode()->data); 
+                return (iterator(avl_tree.endNode()->data,&avl_tree)); 
             }
             // reverse_iterator rbegin(){
             //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
@@ -164,12 +164,10 @@
 			
 			template< class InputIt >
 			void insert( InputIt first, InputIt last ){
+				while (first != last){
 				std::cout<<"hey"<<std::endl;
-				int i = 0;
-				while (i < 10){
-					insert(*first);
-					++first;
-					i++;
+					insert(ft::pair<key_type, mapped_type>(first->first, first->second));
+					first++;
 				}
 			}
 			void print(std::string indent, int last)
