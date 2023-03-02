@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/01 18:33:04 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:49:08 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ class avlTree
     node_avl* find = find_element(node->left, key);
     if (find){
       check = false;
-      return (find);
+      return (root->left);
     }
     check = true;
     if (node){
@@ -391,9 +391,16 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
       }
       return (prev); 
   }
+  
+  node_avl *successor(const T& key)const{
+     std::cout<<"------------hey i am find node------------"<<std::endl;
+     std::cout << root << std::endl;
+    //  while(1);
+    return (findSuccessor(root->left, key));
+  }
        
-  node_avl *findSuccessor(node_avl* node, T& key)const{
-   
+  node_avl *findSuccessor(node_avl* node, const T& key)const{
+     std::cout<<"hey -"<<std::endl;
     node_avl *next = find_element(node, key);
     if (node == nullptr) {
         return nullptr;
