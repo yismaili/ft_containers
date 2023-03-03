@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/02 13:48:19 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/03 01:11:03 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@
             
 			/*---------------------> Iterators <---------------------------*/
 			iterator begin(){
-                return ( iterator(avl_tree.minNode()->data,&avl_tree));
+                return (iterator(avl_tree.minNode()->data,&avl_tree));
             }
             const_iterator begin() const{
                 return (iterator(avl_tree.minNode()->data,&avl_tree));
@@ -165,11 +165,37 @@
 			template< class InputIt >
 			void insert( InputIt first, InputIt last ){
 				while (first != last){
-				std::cout<<"hey"<<std::endl;
-					insert(ft::pair<key_type, mapped_type>(first->first, first->second));
-					first++;
+				insert(ft::pair<key_type, mapped_type>(first->first, first->second));
+				first++;
 				}
 			}
+			
+			void erase( iterator pos ){
+				avl_tree.delete_(ft::pair<key_type, mapped_type>(pos->first, pos->second));
+				size_m--;
+			}
+			
+			void erase( iterator first, iterator last ){
+				while (size_m > 0){
+					avl_tree.delete_(ft::pair<key_type, mapped_type>(first->first, first->second));
+					first++;
+					size_m--;
+				}
+			}
+			
+			size_type erase (const key_type& k){
+				ft::pair<iterator, bool> tmp = (iterator(avl_tree.find_element(avl_tree.root,ft::pair<key_type, mapped_type>(k, mapped_type())), &avl_tree),true);
+				if(tmp.second)
+				{
+					erase(tmp);
+					return (0);
+				}else{
+					return (1);
+				}
+			}
+			// void swap( map& other ){
+				
+			// }
 			void print(std::string indent, int last)
 			{
 				avl_tree.printTree(avl_tree.root, indent, last);
