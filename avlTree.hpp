@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/02 13:49:08 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/02 23:55:13 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ class avlTree
   }
 
   // Node with maximum value
-  node_avl *maxValue(node_avl *node) {
+  node_avl *maxValue(node_avl *node) const {
   node_avl *current = node;
     while (current->right != NULL)
       current = current->right;
@@ -294,9 +294,13 @@ node_avl *  clear(node_avl* node){
   return (node);
 }
   
+void  delete_(const T& val_to_delete){
+  root->left  = delete_element(root->left, val_to_delete);
+}
+
 node_avl * delete_element(node_avl * node, const T& val_to_delete) 
   {
-  std::cout<<"--------------"<<val_to_delete.second<<std::endl;
+  // std::cout<<"--------------"<<val_to_delete.second<<std::endl;
     if (node == NULL){
       return NULL;
     }
@@ -312,8 +316,8 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
     // {
         if (node->left == NULL && node->right == NULL) 
           {
-          node_alloc.destroy(node->data);
-          node_alloc.deallocate(node->data, 1);
+          root->alloc_pairs.destroy(node->data);
+          root->alloc_pairs.deallocate(node->data, 1);
           node_alloc.destroy(node);
           node_alloc.deallocate(node, 1);
             return NULL;
@@ -321,8 +325,8 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
           else if(node->left == NULL)
           {
             node_avl * temp = node->right;
-            node_alloc.destroy(node->data);
-            node_alloc.deallocate(node->data, 1);
+            root->alloc_pairs.destroy(node->data);
+            root->alloc_pairs.deallocate(node->data, 1);
             node_alloc.destroy(node);
             node_alloc.deallocate(node, 1);
             return temp;
@@ -330,8 +334,8 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
           else if (node->right == NULL) 
           {
             node_avl * temp = node->left;
-           node_alloc.destroy(node->data);
-           node_alloc.deallocate(node->data, 1);
+            root->alloc_pairs.destroy(node->data);
+            root->alloc_pairs.deallocate(node->data, 1);
             node_alloc.destroy(node);
             node_alloc.deallocate(node, 1);
             return temp;
@@ -347,7 +351,7 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
             min_right_subtree = current;
             // switching the values 
             node->data = min_right_subtree->data;
-           node_alloc.construct(node->data, *(min_right_subtree->data));
+            root->alloc_pairs.construct(node->data, *(min_right_subtree->data));
             // Deleting the node with val_to_delete now as a leaf node
             node->right = delete_element(node->right, *(min_right_subtree->data));
           }
@@ -393,15 +397,12 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
   }
   
   node_avl *successor(const T& key)const{
-     std::cout<<"------------hey i am find node------------"<<std::endl;
-     std::cout << root << std::endl;
-    //  while(1);
     return (findSuccessor(root->left, key));
   }
        
   node_avl *findSuccessor(node_avl* node, const T& key)const{
-     std::cout<<"hey -"<<std::endl;
-    node_avl *next = find_element(node, key);
+     node_avl *next = find_element(node, key);
+   //  std::cout<<key.second<<std::endl;
     if (node == nullptr) {
         return nullptr;
     }
@@ -412,6 +413,9 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
       }
       else if (compare(node->data->first, key.first)) {
           node = node->right;
+          if (node == maxValue(root->left)){
+            return (root);
+          }
       }
       else {
           if (node->right){

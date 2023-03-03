@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/01 19:30:23 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/03 00:58:00 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int main ()
       mymap.insert (ft::pair<char,int>('l',9));
       mymap.insert (ft::pair<char,int>('m',10));
       mymap.insert (ft::pair<char,int>('n',11));
-      //mymap.print(" ", 1);
+      mymap.print(" ", 1);
       // std::cout<<"size -->"<<mymap.size()<<std::endl;
       //  mymap.clear();
       // std::cout<<"size -->"<<mymap.size()<<std::endl;
@@ -102,9 +102,17 @@ int main ()
       // mymap.insert (mymap.begin(), ft::pair<char,int>('a',22222));
         // mymap.print(" ", 1);
      //  std::cout << "m['a'] = " << mymap['a'] << std::endl;  
-      ft::map<char,int> secondmap;
-      secondmap.insert(mymap.begin(), mymap.end());
-      secondmap.print(" ", 1);
+      // ft::map<char,int> secondmap;
+      // secondmap.insert(mymap.begin(), mymap.end() ++);
+      // secondmap.print(" ", 1);
+      // mymap.erase(mymap.begin(), mymap.end());
+       
+      // mymap.print(" ", 1);
+
+        std::size_t num_erased = mymap.erase(2);
+
+    std::cout << "Size of mymap after erase: " << mymap.size() << '\n';
+    std::cout << "Number of elements erased: " << num_erased << '\n';
   }
   catch(const std::exception& e)
   {

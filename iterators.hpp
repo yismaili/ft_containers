@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/02 13:35:49 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/03 00:16:05 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,10 +202,8 @@
           typedef T											value_type;
 
      bidirectional_iterator() :ptr(NULL), nodeAvl(NULL){
-          std::cout << "hi im here " << std::endl;
      }
      bidirectional_iterator(pointer ptr_, const avlTree<T, Compare, Alloc> *node_avl = NULL) :ptr(ptr_), nodeAvl(node_avl){
-          std::cout << "hi im here " << std::endl;
      }
      ~bidirectional_iterator(){}
      bidirectional_iterator(const bidirectional_iterator &obj){
@@ -214,7 +212,7 @@
      
      bidirectional_iterator & operator=(const bidirectional_iterator &obj)
      {
-          if (this != obj){
+          if (*this != obj){
                ptr = obj.ptr;
           }
           return (*this);
@@ -233,10 +231,10 @@
           }
        } 
      bool operator != (const bidirectional_iterator &opj) {
-          if ((ptr != opj.ptr) && (nodeAvl != opj.nodeAvl)){
-               return (false);
-          }else {
+          if (ptr != opj.ptr){
                return (true);
+          }else {
+               return (false);
           }
        }
        
@@ -247,8 +245,6 @@
      }
      
      bidirectional_iterator &operator++(){
-          std::cout<<"-----"<<std::endl;
-          std::cout << nodeAvl << std::endl;
      if (nodeAvl->successor(*ptr)){
           ptr = nodeAvl->successor(*ptr)->data;
      }
