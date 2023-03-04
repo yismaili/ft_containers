@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 16:17:33 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 22:42:36 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,65 @@
 				ft::pair<key_type, mapped_type> value(key, mapped_type());
 				iterator it(avl_tree.find_find(value)->data, &avl_tree);
 				return (ft::pair<iterator, bool>(it,  avl_tree.check).first);
+			}
+
+			const_iterator find( const key_type& key ) const{
+				avl_tree.check = false;
+				ft::pair<key_type, mapped_type> value(key, mapped_type());
+				const_iterator it(avl_tree.find_find(value)->data, &avl_tree);
+				return (ft::pair<const_iterator, bool>(it,  avl_tree.check).first);
+			}
+			
+			iterator lower_bound( const key_type& key ){
+				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
+				iterator tmp_it (avl_tree.find_find(p_r)->data, &avl_tree);
+				iterator it = end();//!!!
+				if (tmp_it != it){
+					return (tmp_it);
+				}
+				return(it);
+			}
+			
+			const_iterator lower_bound( const key_type& key ) const{
+				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
+				const_iterator tmp_it (avl_tree.find_find(p_r)->data, &avl_tree);
+				const_iterator it = end();//!!!
+				if (tmp_it != it){
+					return (tmp_it);
+				}
+				return(it);
+			}
+			
+			iterator upper_bound( const key_type& key ){
+				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
+				iterator tmp_it (avl_tree.upper(avl_tree.root->left, p_r)->data, &avl_tree);
+				return(tmp_it);
+			}
+			
+			const_iterator upper_bound( const key_type& key ) const{
+				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
+				const_iterator tmp_it (avl_tree.upper(avl_tree.root->left, p_r)->data, &avl_tree);
+				return(tmp_it);
+			}
+			
+			ft::pair<iterator,iterator> equal_range( const key_type& key ){
+				ft::pair<iterator, iterator> p_r (lower_bound(key), upper_bound(key));
+				return (p_r);
+			}
+
+			ft::pair<const_iterator,const_iterator> equal_range( const key_type& key ) const{
+				ft::pair<const_iterator, const_iterator> p_r (lower_bound(key), upper_bound(key));
+				return (p_r);
+			}
+			
+			/*----------------Observers----------------*/
+
+			key_compare key_comp() const{
+				return (compare_m);
+			}
+			
+			value_compare value_comp() const{
+				return (value_compare());
 			}
 			
 			void print(std::string indent, int last)
