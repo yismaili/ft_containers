@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 11:35:19 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 12:29:51 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,14 +188,15 @@
 				ft::pair<key_type, mapped_type> value(k, mapped_type());
 				avl_tree.delete_(value);
 				if (avl_tree.check == true){
+					size_m--;
 					return (1);
 				}else{
 					return (0);
 				}
 			}
-			// void swap( map& other ){
-				
-			// }
+			void swap( map& other ){
+				std::swap(avl_tree.root, other.avl_tree.root);
+			}
 			void print(std::string indent, int last)
 			{
 				avl_tree.printTree(avl_tree.root, indent, last);
