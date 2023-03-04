@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/02 23:55:13 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 11:33:18 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,6 +320,7 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
           root->alloc_pairs.deallocate(node->data, 1);
           node_alloc.destroy(node);
           node_alloc.deallocate(node, 1);
+           check = true;
             return NULL;
           } 
           else if(node->left == NULL)
@@ -329,6 +330,7 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
             root->alloc_pairs.deallocate(node->data, 1);
             node_alloc.destroy(node);
             node_alloc.deallocate(node, 1);
+             check = true;
             return temp;
           }
           else if (node->right == NULL) 
@@ -338,6 +340,7 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
             root->alloc_pairs.deallocate(node->data, 1);
             node_alloc.destroy(node);
             node_alloc.deallocate(node, 1);
+            check = true;
             return temp;
           }
           else 
@@ -430,6 +433,12 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
       return next;
   }
   
+  node_avl  *find(const T& key) const {
+    node_avl* node = find_element(root->left, key);
+    std::cout<<"------"<<key.first<<std::endl;
+    return (node);
+   }
+
   node_avl  *find_element(node_avl *node, const T& key) const {
     // node_avl* next = nullptr;
     // while (node != nullptr){
