@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 12:34:37 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 16:17:55 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,25 +114,38 @@ int main ()
     // std::cout << "Size of mymap after erase: " << mymap.size() << '\n';
     // std::cout << "Number of elements erased: " << num_erased << '\n';
 
-     ft::map<char,int> mymap1;
-       mymap1.insert (ft::pair<char,int>('a',11));
+    //  ft::map<char,int> mymap1;
+    //    mymap1.insert (ft::pair<char,int>('a',11));
     
-      mymap1.insert (ft::pair<char,int>('b',21));
-      mymap1.insert (ft::pair<char,int>('c',31));
-      mymap1.insert (ft::pair<char,int>('d',41));
-      mymap1.insert (ft::pair<char,int>('e',51));
-      mymap1.insert (ft::pair<char,int>('f',61));
-      mymap1.insert (ft::pair<char,int>('j',71));
-      mymap1.insert (ft::pair<char,int>('k',81));
-      mymap1.insert (ft::pair<char,int>('l',91));
-      mymap1.insert (ft::pair<char,int>('m',110));
-      mymap1.insert (ft::pair<char,int>('n',111));
-       mymap1.swap(mymap);
-      //  std::cout<<"begin -->"<< mymap1.begin()->second <<std::endl;
-      //   std::cout<<"begin -->"<< mymap.begin()->second <<std::endl;
-     mymap1.print(" ", 1);
-    mymap.print(" ", 1);
-  }
+    //   mymap1.insert (ft::pair<char,int>('b',21));
+    //   mymap1.insert (ft::pair<char,int>('c',31));
+    //   mymap1.insert (ft::pair<char,int>('d',41));
+    //   mymap1.insert (ft::pair<char,int>('e',51));
+    //   mymap1.insert (ft::pair<char,int>('f',61));
+    //   mymap1.insert (ft::pair<char,int>('j',71));
+    //   mymap1.insert (ft::pair<char,int>('k',81));
+    //   mymap1.insert (ft::pair<char,int>('l',91));
+    //   mymap1.insert (ft::pair<char,int>('m',110));
+    //   mymap1.insert (ft::pair<char,int>('n',111));
+    //    mymap1.swap(mymap);
+    //   //  std::cout<<"begin -->"<< mymap1.begin()->second <<std::endl;
+    //   //   std::cout<<"begin -->"<< mymap.begin()->second <<std::endl;
+    //  mymap1.print(" ", 1);
+    // mymap.print(" ", 1);
+
+    // char keyToFind = 'o';
+    // int count = mymap.count(keyToFind);
+    // std::cout << "The number of elements with key " << keyToFind << " is: " << count << std::endl;
+
+    // keyToFind = 'b';
+    // count = mymap.count(keyToFind);
+    // std::cout << "The number of elements with key " << keyToFind << " is: " << count << std::endl;
+    // print content:
+  std::cout << "elements in mymap:" << '\n';
+  std::cout << "a => " << mymap.find('a')->second << '\n';
+  std::cout << "c => " << mymap.find('c')->second << '\n';
+  std::cout << "d => " << mymap.find('d')->second << '\n';
+}
   catch(const std::exception& e)
   {
     std::cerr << e.what() << '\n';
