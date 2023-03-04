@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 16:17:55 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:28:36 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,16 @@ int main ()
     // count = mymap.count(keyToFind);
     // std::cout << "The number of elements with key " << keyToFind << " is: " << count << std::endl;
     // print content:
-  std::cout << "elements in mymap:" << '\n';
-  std::cout << "a => " << mymap.find('a')->second << '\n';
-  std::cout << "c => " << mymap.find('c')->second << '\n';
-  std::cout << "d => " << mymap.find('d')->second << '\n';
+  // std::cout << "elements in mymap:" << '\n';
+  // std::cout << "a => " << mymap.find('a')->second << '\n';
+  // std::cout << "c => " << mymap.find('c')->second << '\n';
+  // std::cout << "d => " << mymap.find('d')->second << '\n';
+  auto it = mymap.upper_bound('w');
+   if (it!= mymap.end()) {
+        std::cout << "The key " <<it->first << " maps to value " << it->second << std::endl;
+    } else {
+        std::cout << "Key not found" <<it->first << " maps to value " << it->second << std::endl;
+    }
 }
   catch(const std::exception& e)
   {

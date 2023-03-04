@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 16:08:26 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:03:45 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -442,18 +442,38 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
 
 
    
-  node_avl  *find(const T& key) const {
+node_avl  *find(const T& key) const {
     node_avl* node = find_element(root->left, key);
     return (node);
    }
-node_avl  *find_find(const T& key) const {
+   
+node_avl  *find_find(const T& key){
     node_avl* node = find_element(root->left, key);
     if (!node){
       return (root);
     }
+    check = true;
     return (node);
    }
-  node_avl  *find_element(node_avl *node, const T& key) const {
+   
+node_avl* upper(node_avl *node, const T& key){
+  node_avl *tmp = node;
+  while (node)
+  {
+    if (compare(key.first, node->data->first)){
+      tmp = node;
+      node = node->left;
+    }else{
+      node = node->right;
+    }
+  }
+    if (compare(tmp->data->first, key.first)){
+      return (endNode());
+    }
+  return (tmp);
+}
+
+node_avl  *find_element(node_avl *node, const T& key) const {
     // node_avl* next = nullptr;
     // while (node != nullptr){
     //   if (compare(key.first, node->data->first)){
