@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 12:26:52 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 16:08:26 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -446,7 +446,13 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
     node_avl* node = find_element(root->left, key);
     return (node);
    }
-
+node_avl  *find_find(const T& key) const {
+    node_avl* node = find_element(root->left, key);
+    if (!node){
+      return (root);
+    }
+    return (node);
+   }
   node_avl  *find_element(node_avl *node, const T& key) const {
     // node_avl* next = nullptr;
     // while (node != nullptr){
