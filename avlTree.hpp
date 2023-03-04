@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 11:33:18 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 12:26:52 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,9 +433,17 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
       return next;
   }
   
+ node_avl* swap(node_avl* root, node_avl* other) {
+    node_avl* tmp = other;
+    other = root;
+    root = tmp;
+    return root;
+}
+
+
+   
   node_avl  *find(const T& key) const {
     node_avl* node = find_element(root->left, key);
-    std::cout<<"------"<<key.first<<std::endl;
     return (node);
    }
 
