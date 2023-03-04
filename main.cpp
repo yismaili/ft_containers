@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/03 00:58:00 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 11:36:05 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,11 @@ int main ()
        
       // mymap.print(" ", 1);
 
-        std::size_t num_erased = mymap.erase(2);
+        std::size_t num_erased = mymap.erase('a');
 
     std::cout << "Size of mymap after erase: " << mymap.size() << '\n';
     std::cout << "Number of elements erased: " << num_erased << '\n';
+    mymap.print(" ", 1);
   }
   catch(const std::exception& e)
   {

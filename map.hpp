@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/03 01:11:03 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/04 11:35:19 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@
 			}
 			
 			void erase( iterator pos ){
-				avl_tree.delete_(ft::pair<key_type, mapped_type>(pos->first, pos->second));
+				avl_tree.delete_(ft::make_pair<key_type, mapped_type>(pos->first, pos->second));
 				size_m--;
 			}
 			
@@ -184,13 +184,13 @@
 			}
 			
 			size_type erase (const key_type& k){
-				ft::pair<iterator, bool> tmp = (iterator(avl_tree.find_element(avl_tree.root,ft::pair<key_type, mapped_type>(k, mapped_type())), &avl_tree),true);
-				if(tmp.second)
-				{
-					erase(tmp);
-					return (0);
-				}else{
+			    avl_tree.check = false;
+				ft::pair<key_type, mapped_type> value(k, mapped_type());
+				avl_tree.delete_(value);
+				if (avl_tree.check == true){
 					return (1);
+				}else{
+					return (0);
 				}
 			}
 			// void swap( map& other ){
