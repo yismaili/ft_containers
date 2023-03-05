@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/03 22:17:15 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:50:05 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@
      }
           
      bidirectional_iterator(pointer ptr_, const avlTree<T, Compare, Alloc> *node_avl = NULL) :ptr(ptr_), nodeAvl(node_avl){
-          // exit(1);
+   
      }
      ~bidirectional_iterator(){}
      bidirectional_iterator(const bidirectional_iterator &obj){
@@ -248,6 +248,7 @@
      
      bidirectional_iterator &operator++(){
      if (nodeAvl->successor(*ptr)){
+          
           ptr = nodeAvl->successor(*ptr)->data;
      }
      else{
@@ -275,10 +276,10 @@
           }
           return (*this);
      }
-    operator bidirectional_iterator<const T, Compare, Alloc> () const {
-				return bidirectional_iterator<const T, Compare, Alloc>(ptr,
-				reinterpret_cast<const avlTree<const value_type, Compare, Alloc>*>(nodeAvl));
-			}
+//     operator bidirectional_iterator<const T, Compare, Alloc> () const {
+// 				return bidirectional_iterator<const T, Compare, Alloc>(ptr,
+// 				reinterpret_cast<const avlTree<const value_type, Compare, Alloc>*>(nodeAvl));
+// 			}
     };
  };
  

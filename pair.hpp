@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:41:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 17:47:48 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:25:57 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ class pair{
         typedef T2  types;
             T1 first;
             T2 second;
-            pair(): first('?'), second(1713361877){
+        
+            pair(): first(), second(){
             }
             pair( const T1& x, const T2& y ): first(x), second(y){
                 // first  = x;
@@ -34,10 +35,8 @@ class pair{
             }
                  
             pair& operator=( const pair& other ){
-                if (this != other){
                     first = other.first;
                     second = other.second;
-                }
                 return (*this);
             }
             ~pair(){};

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:26:20 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/03 19:51:14 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/05 16:31:23 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
    typedef T& reference;
    typedef T* pointer;
    typedef std::ptrdiff_t difference_type;
-    reverse_iterator(){}
+    reverse_iterator(){
+     ptr = NULL;
+    }
     reverse_iterator(T *ptr_){
         ptr = ptr_;
     }
