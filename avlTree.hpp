@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 21:03:45 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/05 23:20:04 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ class avlTree
             left = NULL;
             right = NULL;
             parent = NULL;
-            height = 0;
+            height = 1;
           }
           
           node_avl (const T& value){
@@ -192,30 +192,27 @@ class avlTree
       return (root->left);
     }
     check = true;
-    if (node){
-     // std::cout<<"******"<< node->data->second<<std::endl; 
-    }
     node_avl* child = insert_element(node->left, key);
-    // child->parent = node;
+    child->parent = node;
     return  (child);
   }
   
   // Insert a node
   node_avl *insert_element(node_avl *node, const T& key) {
       if (node == NULL){
-      // std::cout<<"-----null---->\n"<< key.second<<std::endl;
+      //  std::cout<<"-----create---->"<< key.first<<std::endl;
         return (creatNode(key)); 
       }
       // Find the correct postion 
       int cmp= key_compare(node, key);
       if (cmp == -1){ // Go left
-      //  std::cout<<"-----left---->\n";
+      // std::cout<<"-----left---->\n";
         node->left = insert_element(node->left, key);
         node->left->parent = node;
         node = rebalance_left(node, key);
         }
       else if (cmp == 1){ // Go right
-        // std::cout<<"-----right--->\n";
+       //  std::cout<<"-----right--->\n";
         node->right = insert_element(node->right, key);
         node->right->parent = node;
         node = rebalance_right(node);
@@ -300,7 +297,6 @@ void  delete_(const T& val_to_delete){
 
 node_avl * delete_element(node_avl * node, const T& val_to_delete) 
   {
-  // std::cout<<"--------------"<<val_to_delete.second<<std::endl;
     if (node == NULL){
       return NULL;
     }
@@ -404,8 +400,7 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
   }
        
   node_avl *findSuccessor(node_avl* node, const T& key)const{
-     node_avl *next = find_element(node, key);
-   //  std::cout<<key.second<<std::endl;
+    node_avl *next = find_element(node, key);
     if (node == nullptr) {
         return nullptr;
     }
@@ -494,6 +489,7 @@ node_avl  *find_element(node_avl *node, const T& key) const {
     if (node == NULL){
       return (NULL);
      }
+  //  std::cout<<"1 ------------------------"<<node->data->first<<std::endl;
     if (compare(key.first, node->data->first)){
       return (find_element(node->left, key));
     }
@@ -541,7 +537,7 @@ node_avl  *find_element(node_avl *node, const T& key) const {
       std::cout << node->data->second << std::endl;
       printTree(node->left, indent, 0);
       printTree(node->right, indent, 1);
-    // exit(1);
+      
     }
   }
 };

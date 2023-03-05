@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/04 22:42:36 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/05 23:41:45 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@
 #include <iostream>
 #include <functional>
 
-
  namespace ft {
 
 	template< class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > > class map {
 		public:
-			 avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
 			typedef Key																			key_type;
 			typedef T																			mapped_type;
 			typedef ft::pair<const key_type, mapped_type>										value_type;
@@ -38,14 +36,37 @@
 			typedef typename ft::bidirectional_iterator<const value_type, Compare, Allocator>	const_iterator;
 			typedef typename ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef typename ft::reverse_iterator<const_iterator>								const_reverse_iterator;
+			template <class Key1, class T1, class Compare1, class Alloc1>
+			/*---------------------- friend-----------------------------*/
+			friend	bool operator==(const map<Key1, T1, Compare1, Alloc1>& lhs, const map<Key1, T1, Compare1, Alloc1>& rhs);
 
+			template <class Key1, class T1, class Compare1, class Alloc1>
+			friend	bool operator!=(const map<Key1, T1, Compare1, Alloc1>& lhs, const map<Key1, T1, Compare1, Alloc1>& rhs);
+
+			template <class Key1, class T1, class Compare1, class Alloc1>
+			friend	bool operator<(const map<Key1, T1, Compare1, Alloc1>& lhs, const map<Key1, T1, Compare1, Alloc1>& rhs);
+
+			template <class Key1, class T1, class Compare1, class Alloc1>
+			friend	bool operator<=(const map<Key1, T1, Compare1, Alloc1>& lhs, const map<Key1, T1, Compare1, Alloc1>& rhs);
+			
+			template <class Key1, class T1, class Compare1, class Alloc1>
+			friend	bool operator>(const map<Key1, T1, Compare1, Alloc1>& lhs, const map<Key1, T1, Compare1, Alloc1>& rhs);
+
+			template <class Key1, class T1, class Compare1, class Alloc1>
+			friend	bool operator>=(const map<Key1, T1, Compare1, Alloc1>& lhs, const map<Key1, T1, Compare1, Alloc1>& rhs);
+
+			template <class Key1, class T1, class Compare1, class Alloc1>
+  			friend void swap (map<Key1, T1, Compare1, Alloc1>& x, map<Key1, T1, Compare1, Alloc1>& y);
+
+			
 			 class value_compare 
                 : public std::binary_function<value_type, value_type, bool>
 			{
-                protected:
-                    key_compare comp;
-                    value_compare(const key_compare& c) : comp(c){}
+
                 public:
+                    key_compare comp;
+					value_compare(){}
+                    value_compare(const key_compare& c) : comp(c){}
                     bool operator()(const value_type&lt,const value_type&rt) const{
                         return (comp(lt.first, rt.first));    
                     }
@@ -62,7 +83,7 @@
 				compare_m = comp;
 				alloc_m = alloc;
 				size_m = std::distance(first, last);
-				while (first < last)
+				while (first != last)
 				{
 						avl_tree.insert_element(avl_tree.root, *first);
 						first++;
@@ -88,11 +109,33 @@
 			}
 			
 			mapped_type& operator[]( const Key& key ) {
-				value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
-				insert(value);
-				return (avl_tree.find_element(avl_tree.root->left, value)->data->second);
+				// value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
+				// insert(value);
+				// return (avl_tree.find_element(avl_tree.root->left, value)->data->second);
+				pair<key_type, mapped_type> val;
+				
+				val.first = key;
+				val.second = mapped_type();
+				pair<iterator, bool> p = insert(val);
+				iterator it = p.first;
+				return it->second;
 			}
-            
+            mapped_type& operator()( const Key& key ) {
+				// value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
+				// insert(value);
+				// std::cout<<"------"<<avl_tree.find(value)<<std::endl;
+				// exit(1);
+				// return (avl_tree.find_element(avl_tree.root->left, value)->data->second);
+
+				pair<key_type, mapped_type> val;
+				
+				val.first = key;
+				val.second = mapped_type();
+				pair<iterator, bool> p = insert(val);
+				iterator it = p.first;
+				return it->second;
+				
+			}
 			/*---------------------> Iterators <---------------------------*/
 			iterator begin(){
                 return (iterator(avl_tree.minNode()->data,&avl_tree));
@@ -224,22 +267,20 @@
 			
 			iterator lower_bound( const key_type& key ){
 				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
-				iterator tmp_it (avl_tree.find_find(p_r)->data, &avl_tree);
-				iterator it = end();//!!!
-				if (tmp_it != it){
+				iterator tmp_it = find(key);
+				if (tmp_it !=  end()){
 					return (tmp_it);
 				}
-				return(it);
+				return( end());
 			}
 			
 			const_iterator lower_bound( const key_type& key ) const{
 				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
-				const_iterator tmp_it (avl_tree.find_find(p_r)->data, &avl_tree);
-				const_iterator it = end();//!!!
-				if (tmp_it != it){
+				const_iterator tmp_it = find(key);
+				if (tmp_it !=  begin()){
 					return (tmp_it);
 				}
-				return(it);
+				return(begin());
 			}
 			
 			iterator upper_bound( const key_type& key ){
@@ -280,9 +321,63 @@
 			} 
 			
 			private:
-				// avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
+				avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
 				Allocator												alloc_m;
 				Compare												    compare_m;
 				std::size_t												size_m;
-			};
+	};
+
+	/*------------------Non-member functions----------------------*/
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator==( const ft::map<Key, T, Compare, Alloc>& lhs,const ft::map<Key, T, Compare, Alloc>& rhs ){
+		if (lhs.size() == rhs.size()){
+			return (true);
+		}
+		return (false);
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator!=( const std::map<Key, T, Compare, Alloc>& lhs,const std::map<Key, T, Compare, Alloc>& rhs ){
+		if (lhs.size() != rhs.size()){
+			return (true);
+		}
+		return (false);
+	}
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<( const std::map<Key, T, Compare, Alloc>& lhs, const std::map<Key, T, Compare, Alloc>& rhs ){
+		if (lhs.size() < rhs.size()){
+			return (true);
+		}
+		return (false);
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<=( const std::map<Key, T, Compare, Alloc>& lhs, const std::map<Key, T, Compare, Alloc>& rhs ){
+		if (lhs.size() <= rhs.size()){
+			return (true);
+		}
+		return (false);
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>( const std::map<Key, T, Compare, Alloc>& lhs,  const std::map<Key, T, Compare, Alloc>& rhs ){
+		if (lhs.size() > rhs.size()){
+			return (true);
+		}
+		return (false);
+	}
+
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>=( const std::map<Key, T, Compare, Alloc>& lhs, const std::map<Key, T, Compare, Alloc>& rhs ){
+		if (lhs.size() >= rhs.size()){
+			return (true);
+		}
+		return (false);
+	}
+	
+	template< class Key, class T, class Compare, class Alloc >
+	void swap( std::map<Key, T, Compare, Alloc>& lhs, std::map<Key, T, Compare, Alloc>& rhs ){
+		std::swap(lhs, rhs);
+	}
+
 }
