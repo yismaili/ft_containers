@@ -6,16 +6,19 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/05 23:41:45 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/05 23:52:37 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "avlTree.hpp"
+#ifndef MAP_HPP
+#define MAP_HPP
 
+#include "avlTree.hpp"
 #include "pair.hpp"
 #include <memory>
 #include <iostream>
 #include <functional>
+
 
  namespace ft {
 
@@ -326,58 +329,57 @@
 				Compare												    compare_m;
 				std::size_t												size_m;
 	};
-
-	/*------------------Non-member functions----------------------*/
 	template< class Key, class T, class Compare, class Alloc >
-	bool operator==( const ft::map<Key, T, Compare, Alloc>& lhs,const ft::map<Key, T, Compare, Alloc>& rhs ){
-		if (lhs.size() == rhs.size()){
-			return (true);
+		bool operator==( const ft::map<Key, T, Compare, Alloc>& lhs,const ft::map<Key, T, Compare, Alloc>& rhs ){
+			if (lhs.size() == rhs.size()){
+				return (true);
+			}
+			return (false);
 		}
-		return (false);
-	}
 
-	template< class Key, class T, class Compare, class Alloc >
-	bool operator!=( const std::map<Key, T, Compare, Alloc>& lhs,const std::map<Key, T, Compare, Alloc>& rhs ){
-		if (lhs.size() != rhs.size()){
-			return (true);
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator!=( const ft::map<Key, T, Compare, Alloc>& lhs,const ft::map<Key, T, Compare, Alloc>& rhs ){
+			if (lhs.size() != rhs.size()){
+				return (true);
+			}
+			return (false);
 		}
-		return (false);
-	}
-	template< class Key, class T, class Compare, class Alloc >
-	bool operator<( const std::map<Key, T, Compare, Alloc>& lhs, const std::map<Key, T, Compare, Alloc>& rhs ){
-		if (lhs.size() < rhs.size()){
-			return (true);
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator<( const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs ){
+			if (lhs.size() < rhs.size()){
+				return (true);
+			}
+			return (false);
 		}
-		return (false);
-	}
 
-	template< class Key, class T, class Compare, class Alloc >
-	bool operator<=( const std::map<Key, T, Compare, Alloc>& lhs, const std::map<Key, T, Compare, Alloc>& rhs ){
-		if (lhs.size() <= rhs.size()){
-			return (true);
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator<=( const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs ){
+			if (lhs.size() <= rhs.size()){
+				return (true);
+			}
+			return (false);
 		}
-		return (false);
-	}
 
-	template< class Key, class T, class Compare, class Alloc >
-	bool operator>( const std::map<Key, T, Compare, Alloc>& lhs,  const std::map<Key, T, Compare, Alloc>& rhs ){
-		if (lhs.size() > rhs.size()){
-			return (true);
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator>( const ft::map<Key, T, Compare, Alloc>& lhs,  const ft::map<Key, T, Compare, Alloc>& rhs ){
+			if (lhs.size() > rhs.size()){
+				return (true);
+			}
+			return (false);
 		}
-		return (false);
-	}
 
-	template< class Key, class T, class Compare, class Alloc >
-	bool operator>=( const std::map<Key, T, Compare, Alloc>& lhs, const std::map<Key, T, Compare, Alloc>& rhs ){
-		if (lhs.size() >= rhs.size()){
-			return (true);
+		template< class Key, class T, class Compare, class Alloc >
+		bool operator>=( const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs ){
+			if (lhs.size() >= rhs.size()){
+				return (true);
+			}
+			return (false);
 		}
-		return (false);
-	}
-	
-	template< class Key, class T, class Compare, class Alloc >
-	void swap( std::map<Key, T, Compare, Alloc>& lhs, std::map<Key, T, Compare, Alloc>& rhs ){
-		std::swap(lhs, rhs);
-	}
-
+		
+		template< class Key, class T, class Compare, class Alloc >
+		void swap( ft::map<Key, T, Compare, Alloc>& lhs, ft::map<Key, T, Compare, Alloc>& rhs ){
+			ft::swap(lhs, rhs);
+		}
 }
+
+#endif

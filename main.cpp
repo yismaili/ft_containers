@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/05 23:42:55 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/05 23:53:12 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,38 +238,38 @@ int main ()
     // } while ( mymap5.value_comp()(*it++, highest) );
 
 
-      // ft::map<char, int> alice;
-      // ft::map<char, int> bob;
-      // ft::map<char, int> eve;
-      // alice['a']=1;
-      // alice['b']=2;
-      // alice['c']=3;
+      std::map<char, int> alice;
+      std::map<char, int> bob;
+      std::map<char, int> eve;
+      alice['a']=1;
+      alice['b']=2;
+      alice['c']=3;
       
-      // bob['z']=8;
-      // bob['y']=9;
-      // bob['x']=10;
+      bob['z']=8;
+      bob['y']=9;
+      bob['x']=10;
       
-      // eve['a']=1;
-      // eve['b']=2;
-      // eve['c']=3;
-      // std::cout << std::boolalpha;
-      // // Compare non equal containers
-      // std::cout << "alice == bob returns " << (alice == bob) << '\n';
-      // std::cout << "alice != bob returns " << (alice != bob) << '\n';
-      // std::cout << "alice <  bob returns " << (alice < bob) << '\n';
-      // std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
-      // std::cout << "alice >  bob returns " << (alice > bob) << '\n';
-      // std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
+      eve['a']=1;
+      eve['b']=2;
+      eve['c']=3;
+      std::cout << std::boolalpha;
+      // Compare non equal containers
+      std::cout << "alice == bob returns " << (alice == bob) << '\n';
+      std::cout << "alice != bob returns " << (alice != bob) << '\n';
+      std::cout << "alice <  bob returns " << (alice < bob) << '\n';
+      std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
+      std::cout << "alice >  bob returns " << (alice > bob) << '\n';
+      std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
   
-      // std::cout << '\n';
+      std::cout << '\n';
   
-      // // Compare equal containers
-      // std::cout << "alice == eve returns " << (alice == eve) << '\n';
-      // std::cout << "alice != eve returns " << (alice != eve) << '\n';
-      // std::cout << "alice <  eve returns " << (alice < eve) << '\n';
-      // std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
-      // std::cout << "alice >  eve returns " << (alice > eve) << '\n';
-      // std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
+      // Compare equal containers
+      std::cout << "alice == eve returns " << (alice == eve) << '\n';
+      std::cout << "alice != eve returns " << (alice != eve) << '\n';
+      std::cout << "alice <  eve returns " << (alice < eve) << '\n';
+      std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
+      std::cout << "alice >  eve returns " << (alice > eve) << '\n';
+      std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
    }
    
   catch(const std::exception& e)
