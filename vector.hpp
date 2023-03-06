@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/06 17:31:37 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:47:23 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,29 @@ public:
     typedef typename allocator_type::difference_type    difference_type;
     typedef typename allocator_type::size_type          size_type;
     
+    /*------------------- friend------------------------*/
+
+    template <class T1, class Alloc>
+	friend bool operator==(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs);
+			
+	template <class T1, class Alloc>
+	friend bool operator!=(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs);
+			
+	template <class T1, class Alloc>
+	friend bool operator<(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs);
+			
+	template <class T1, class Alloc>
+	friend bool operator<=(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs);
+			
+	template <class T1, class Alloc>
+	friend bool operator>(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs);
+			
+	template <class T1, class Alloc>
+	friend bool operator>=(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs);
+
+	template <class T1, class Alloc>
+	friend void	swap(vector<T1,Alloc>& other1, vector<T1,Alloc>& other2);
+
     vector(const allocator_type & alloc = allocator_type()){
         size_v = 0;
         ptr = NULL;
@@ -102,7 +125,7 @@ public:
         size_v = x.size_v;
         ptr = alloc.allocate(x.size_v);
          for(size_t i = 0; i < x.size_v; i++){
-            alloc.construct(ptr, x.ptr + i);
+            alloc.construct(x.ptr + i);
         }
         capacity_v = x.size_v;
         return (*this);
@@ -156,10 +179,13 @@ public:
    }
    
    /*-------------Capacity------------------*/
+   
    size_type size() const{
     return (size_v);
    }
-   
+   allocator_type get_allocator() const{
+    return (alloc);
+   }
    bool empty() const{
     if (begin() == end()){
         return (true);
@@ -370,7 +396,124 @@ private:
     size_type size_v;
     pointer ptr;
     size_type capacity_v;
+	
 };
+
+	template <class T1, class Alloc>
+	bool operator==(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs)
+	{
+         size_t i = 0;
+        bool check = true;
+		if (lhs.size() == rhs.size() && lhs.capacity() == rhs.capacity() && lhs.get_allocator() == lhs.get_allocator())
+		{
+			while ( i < lhs.size())
+            {
+                if (lhs.ptr[i] != rhs.ptr[i]){
+					check = false;
+                    break; 
+                }
+                i++;
+            }
+            if (check == true){
+			    return true;  
+            }else{
+                return (false);
+            }
+		}
+		return false;
+	}
+
+	template <class T1, class Alloc>
+	bool operator!=(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs)
+	{
+		if (lhs == rhs){
+            return (false);
+        }else{
+            return (true);
+        }
+	}
+
+	template <class T1, class Alloc>
+	bool operator<(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs)
+	{
+		size_t size_min;
+        size_t i = 0;
+		if (rhs.size() < lhs.size()){
+		    size_min = lhs.size();  
+        }else{
+            size_min = rhs.size();
+        }
+		while(i < size_min)
+		{
+			if (lhs.ptr[i] < rhs.ptr[i])
+				return true;
+            i++;
+		}
+		return false;
+	}
+
+	template <class T1, class Alloc>
+	bool operator<=(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs)
+	{
+		size_t size_min;
+        size_t i = 0;
+		if (rhs.size() < lhs.size()){
+		    size_min = lhs.size();  
+        }else{
+            size_min = rhs.size();
+        }
+		while(i < size_min)
+		{
+			if (lhs.ptr[i] <= rhs.ptr[i])
+				return true;
+            i++;
+		}
+		return false;
+	}
+
+	template <class T1, class Alloc>
+	bool operator>(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs)
+	{
+		size_t size_min;
+        size_t i = 0;
+		if (rhs.size() < lhs.size()){
+		    size_min = lhs.size();  
+        }else{
+            size_min = rhs.size();
+        }
+		while(i > size_min)
+		{
+			if (lhs.ptr[i] > rhs.ptr[i])
+				return true;
+            i++;
+		}
+		return false;
+	}
+
+	template <class T1, class Alloc>
+	bool operator>=(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs)
+	{
+		size_t size_min;
+        size_t i = 0;
+		if (rhs.size() < lhs.size()){
+		    size_min = lhs.size();  
+        }else{
+            size_min = rhs.size();
+        }
+		while(i < size_min)
+		{
+			if (lhs.ptr[i] >= rhs.ptr[i])
+				return true;
+            i++;
+		}
+		return false;
+	}
+
+	template <class T1, class Alloc>
+	void swap (vector<T1,Alloc>& other1, vector<T1,Alloc>& other2)
+	{
+		other1.swap(other2);
+	}
 }
 
 #endif
