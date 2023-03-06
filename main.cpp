@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/05 23:53:12 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:49:23 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,27 +61,29 @@
 #include <map>
 #include <string>
 #include "map.hpp"
+#include <stack> 
+#include "stack.hpp"
 
 int main ()
 {
   try
   {
-     ft::map<std::string,int> mymap;
-      mymap.insert (ft::pair<std::string,int>("afdsf",1));
+    //  ft::map<std::string,int> mymap;
+    //   mymap.insert (ft::pair<std::string,int>("afdsf",1));
     
-      mymap.insert (ft::pair<std::string,int>("csdfdsf",2));
-      mymap.insert (ft::pair<std::string,int>("csdfsdf",3));
-      mymap.insert (ft::pair<std::string,int>("dsdfsdf",4));
-      mymap.insert (ft::pair<std::string,int>("edsfsd",5));
-      mymap.insert (ft::pair<std::string,int>("fsdfsdf",6));
-      mymap.insert (ft::pair<std::string,int>("jdsfsdf",7));
-      mymap.insert (ft::pair<std::string,int>("jsdfsdf",8));
-      mymap.insert (ft::pair<std::string,int>("lsdfsdf",9));
-      mymap.insert (ft::pair<std::string,int>("msdfsd",10));
-      mymap.insert (ft::pair<std::string,int>("nsdfsdf",11));
-      mymap.insert(ft::pair<std::string, int>("sunday", 1));
+    //   mymap.insert (ft::pair<std::string,int>("csdfdsf",2));
+    //   mymap.insert (ft::pair<std::string,int>("csdfsdf",3));
+    //   mymap.insert (ft::pair<std::string,int>("dsdfsdf",4));
+    //   mymap.insert (ft::pair<std::string,int>("edsfsd",5));
+    //   mymap.insert (ft::pair<std::string,int>("fsdfsdf",6));
+    //   mymap.insert (ft::pair<std::string,int>("jdsfsdf",7));
+    //   mymap.insert (ft::pair<std::string,int>("jsdfsdf",8));
+    //   mymap.insert (ft::pair<std::string,int>("lsdfsdf",9));
+    //   mymap.insert (ft::pair<std::string,int>("msdfsd",10));
+    //   mymap.insert (ft::pair<std::string,int>("nsdfsdf",11));
+    //   mymap.insert(ft::pair<std::string, int>("sunday", 1));
       
-      mymap.print(" ", 1);
+    //   mymap.print(" ", 1);
     // ft::map<char,int> mymap;
     //   mymap.insert (ft::pair<char,int>('a',1));
     //   mymap.insert (ft::pair<char,int>('b',2));
@@ -238,38 +240,53 @@ int main ()
     // } while ( mymap5.value_comp()(*it++, highest) );
 
 
-      std::map<char, int> alice;
-      std::map<char, int> bob;
-      std::map<char, int> eve;
-      alice['a']=1;
-      alice['b']=2;
-      alice['c']=3;
+      // std::map<char, int> alice;
+      // std::map<char, int> bob;
+      // std::map<char, int> eve;
+      // alice['a']=1;
+      // alice['b']=2;
+      // alice['c']=3;
       
-      bob['z']=8;
-      bob['y']=9;
-      bob['x']=10;
+      // bob['z']=8;
+      // bob['y']=9;
+      // bob['x']=10;
       
-      eve['a']=1;
-      eve['b']=2;
-      eve['c']=3;
-      std::cout << std::boolalpha;
-      // Compare non equal containers
-      std::cout << "alice == bob returns " << (alice == bob) << '\n';
-      std::cout << "alice != bob returns " << (alice != bob) << '\n';
-      std::cout << "alice <  bob returns " << (alice < bob) << '\n';
-      std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
-      std::cout << "alice >  bob returns " << (alice > bob) << '\n';
-      std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
+      // eve['a']=1;
+      // eve['b']=2;
+      // eve['c']=3;
+      // std::cout << std::boolalpha;
+      // // Compare non equal containers
+      // std::cout << "alice == bob returns " << (alice == bob) << '\n';
+      // std::cout << "alice != bob returns " << (alice != bob) << '\n';
+      // std::cout << "alice <  bob returns " << (alice < bob) << '\n';
+      // std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
+      // std::cout << "alice >  bob returns " << (alice > bob) << '\n';
+      // std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
   
-      std::cout << '\n';
+      // std::cout << '\n';
   
-      // Compare equal containers
-      std::cout << "alice == eve returns " << (alice == eve) << '\n';
-      std::cout << "alice != eve returns " << (alice != eve) << '\n';
-      std::cout << "alice <  eve returns " << (alice < eve) << '\n';
-      std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
-      std::cout << "alice >  eve returns " << (alice > eve) << '\n';
-      std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
+      // // Compare equal containers
+      // std::cout << "alice == eve returns " << (alice == eve) << '\n';
+      // std::cout << "alice != eve returns " << (alice != eve) << '\n';
+      // std::cout << "alice <  eve returns " << (alice < eve) << '\n';
+      // std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
+      // std::cout << "alice >  eve returns " << (alice > eve) << '\n';
+      // std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
+
+      /*-------------test for stack -----------------*/
+      ft::stack<int> mystack;
+      int sum (0);
+
+      for (int i=1;i<=10;i++) mystack.push(i);
+
+      while (!mystack.empty())
+      {
+        sum += mystack.top();
+        mystack.pop();
+      }
+
+      std::cout << "total: " << sum << '\n';
+
    }
    
   catch(const std::exception& e)

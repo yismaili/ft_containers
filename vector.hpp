@@ -6,13 +6,18 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/02/25 12:39:18 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:31:37 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+#ifndef VECTOR_HPP
+# define VECTOR_HPP
 
 #include <iostream>
 #include <memory>
 #include "iterators.hpp"
+#include <vector>
 #include <stdexcept>
 #include <iterator>
 #include "utils.hpp"
@@ -94,12 +99,13 @@ public:
     vector& operator= (const vector& x)
     {
        free_memory();
-        size_v = x.n;
-        ptr = alloc.allocate(x.n);
-        for(size_t i = 0; i < x.n; i++){
-            alloc.construct(ptr + i, x.val);
+        size_v = x.size_v;
+        ptr = alloc.allocate(x.size_v);
+         for(size_t i = 0; i < x.size_v; i++){
+            alloc.construct(ptr, x.ptr + i);
         }
-        capacity_v = x.n;
+        capacity_v = x.size_v;
+        return (*this);
     }
    /*----------Element access--------------*/
    reference at( size_type pos )
@@ -367,3 +373,4 @@ private:
 };
 }
 
+#endif
