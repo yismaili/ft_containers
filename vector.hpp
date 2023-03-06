@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/06 17:31:37 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:43:13 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ public:
         size_v = x.size_v;
         ptr = alloc.allocate(x.size_v);
          for(size_t i = 0; i < x.size_v; i++){
-            alloc.construct(ptr, x.ptr + i);
+            alloc.construct(x.ptr + i);
         }
         capacity_v = x.size_v;
         return (*this);

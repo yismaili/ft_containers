@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:03:30 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/06 17:15:51 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:43:44 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ template<class T, class Container = ft::vector<T> > class stack
     stack(const stack& other) {
         contner = other.contner;
     }
-    ~stack();
+    ~stack(){};
     stack& operator=( const stack& other ){
         contner = other.contner;
         return (*this);
