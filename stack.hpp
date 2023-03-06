@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:03:30 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/06 17:43:44 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:05:28 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,32 @@ namespace ft{
 template<class T, class Container = ft::vector<T> > class stack
    {
    public:
-    typedef  Container                              container_type;
+    typedef  Container                                   container_type;
     typedef typename container_type::value_type          value_type;
     typedef typename container_type::size_type           size_type;
     typedef typename container_type::reference           reference;
     typedef typename container_type::const_reference     const_reference;
     
+    /*---------------------- friend-----------------------------*/
+    
+	template <class T1, class container_>
+    friend bool operator==(const stack<T1,container_>& lhs, const stack<T1,container_>& rhs);
+            
+    template <class T1, class container_>
+    friend bool operator!=(const stack<T1,container_>& lhs, const stack<T1,container_>& rhs);
+            
+    template <class T1, class container_>
+    friend bool operator<(const stack<T1,container_>& lhs, const stack<T1,container_>& rhs);
+            
+    template <class T1, class container_>
+    friend bool operator<=(const stack<T1,container_>& lhs, const stack<T1,container_>& rhs);
+            
+    template <class T1, class container_>
+    friend bool operator>(const stack<T1,container_>& lhs, const stack<T1,container_>& rhs);
+            
+    template <class T1, class container_>
+    friend bool operator>=(const stack<T1,container_>& lhs, const stack<T1,container_>& rhs);
+	
     stack(const Container& cont = Container() ){
          contner = cont ;
     }

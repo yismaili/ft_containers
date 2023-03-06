@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/06 16:49:23 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:56:13 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,70 @@ int main ()
 
       std::cout << "total: " << sum << '\n';
 
+      /*------------push and pop---------------*/
+      ft::stack<int> mystack1;
+
+      for (int i=0; i<5; ++i) mystack1.push(i);
+
+      std::cout << "Popping out elements...";
+      while (!mystack1.empty())
+      {
+        std::cout << ' ' << mystack1.top();
+        mystack1.pop();
+      }
+      std::cout << '\n';
+      /*--------------size----------------*/
+     ft::stack<int> myints;
+      std::cout << "0. size: " << myints.size() << '\n';
+
+      for (int i=0; i<5; i++) myints.push(i);
+      std::cout << "1. size: " << myints.size() << '\n';
+
+      myints.pop();
+      std::cout << "2. size: " << myints.size() << '\n';
+      /*------------top---------------------*/
+
+      ft::stack<int> mystack2;
+      mystack2.push(10);
+      mystack2.push(20);
+
+      mystack2.top() -= 5;
+
+      std::cout << "mystack2.top() is now " << mystack2.top() << '\n';
+      
+      /*--------------comparition--------------*/
+      ft::stack<int> alice;
+      ft::stack<int> bob;
+      ft::stack<int> eve;
+      alice.push(1);
+      alice.push(2);
+      alice.push(3);
+      
+      bob.push(8);
+      bob.push(9);
+      bob.push(10);
+      
+      eve.push(1);
+      eve.push(2);
+      eve.push(3);
+      std::cout << std::boolalpha;
+      // Compare non equal containers
+      std::cout << "alice == bob returns " << (alice == bob) << '\n';
+      std::cout << "alice != bob returns " << (alice != bob) << '\n';
+      std::cout << "alice <  bob returns " << (alice < bob) << '\n';
+      std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
+      std::cout << "alice >  bob returns " << (alice > bob) << '\n';
+      std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
+  
+      std::cout << '\n';
+  
+      // Compare equal containers
+      std::cout << "alice == eve.push(n)s " << (alice == eve) << '\n';
+      std::cout << "alice != eve returns " << (alice != eve) << '\n';
+      std::cout << "alice <  eve returns " << (alice < eve) << '\n';
+      std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
+      std::cout << "alice >  eve returns " << (alice > eve) << '\n';
+      std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
    }
    
   catch(const std::exception& e)
