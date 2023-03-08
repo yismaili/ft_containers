@@ -1,7 +1,7 @@
 
 NAME = containers
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98  -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -std=c++98  -g -fsanitize=address,integer
 SRCS = main.cpp 
 HDR = vector.hpp iterators.hpp reverse_iterator.hpp  map.hpp algorithm.hpp avlTree.hpp utils.hpp avlNode.hpp stack.hpp
 OBJS = $(SRCS:.cpp=.o)
@@ -16,7 +16,7 @@ all : $(NAME)
 	
 %.o: %.cpp $(HDR)
 	@echo "$(BPurple) Compile $(BYellow) $^ $(BGreen)to $@"
-	@$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(NAME): $(OBJS)
 	@echo "$(BYellow) Make $(BGreen) $@"

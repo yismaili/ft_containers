@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:26:20 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/05 16:31:23 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/08 16:37:24 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@
           }
        } 
      bool operator != (const reverse_iterator &opj) {
-          if (ptr != opj.ptr){
-               return (true);
-          }else {
+          if (ptr == opj.ptr){
                return (false);
+          }else {
+               return (true);
           }
        } 
      reference operator*(){
@@ -57,20 +57,19 @@
           return (&*ptr);
      }
      reverse_iterator& operator--(){
-          --ptr;
-          return (*this);
-     }
-     reverse_iterator& operator++(){
           ++ptr;
           return (*this);
      }
+     reverse_iterator& operator++(){
+          --ptr;
+          return (*this);
+     }
      reverse_iterator operator--(int){
-          
-          ptr--;
+          ptr++;
           return (ptr);
      }
      reverse_iterator operator++(int){
-          ptr++;
+          ptr--;
           return (ptr);
      }
      reverse_iterator operator+(const int n){

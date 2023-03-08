@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/06 18:02:26 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/08 19:08:10 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,8 @@
 			}
 			
 			void erase( iterator first, iterator last ){
+				
+				(void )last;
 				while (size_m > 0){
 					avl_tree.delete_(ft::pair<key_type, mapped_type>(first->first, first->second));
 					first++;
