@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/08 19:08:10 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/09 21:03:06 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 			typedef typename Allocator::pointer													pointer;
 			typedef typename Allocator::const_pointer											const_pointer;
 			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>			iterator;
-			typedef typename ft::bidirectional_iterator<const value_type, Compare, Allocator>	const_iterator;
+			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>			const_iterator;
 			typedef typename ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef typename ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 			/*---------------------- friend-----------------------------*/
@@ -81,76 +81,62 @@
 					    
 				}
 				
-			template <class InputIterator> map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()) {
+			template <class InputIterator>
+			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),const allocator_type& alloc = allocator_type()) {
 				compare_m = comp;
-				alloc_m = alloc;
-				size_m = std::distance(first, last);
-				while (first != last)
-				{
-						avl_tree.insert_element(avl_tree.root, *first);
-						first++;
+				(void)alloc;
+				size_m = 0;
+				while (first != last){
+					avl_tree.root->left = avl_tree.insert_endnode(avl_tree.root, *first);
+					if (avl_tree.check){
+						size_m++;
+					}
+					first++;
 				}
 			}
 			
-			map (const map& x) {*this = x;}
-			// map& operator=( const map& other ) {
-			// 	clear();
-			// 	avl_tree.clonne(other.avl_tree.node);
-			// 	size_m = other.size();
-			// 	return *this;
-			// }
-			~map() {}
-			/*---------------------> Element access <-----------------------*/
-			T& at( const Key& key ) {
-				value_type tmp = ft::make_pair(key, mapped_type());
-				return (avl_tree.atOfTree(tmp)->data->second);
-			}
-			const T& at( const Key& key ) const {
-				value_type tmp = ft::make_pair(key, mapped_type());
-				return (avl_tree.atOfTree(tmp)->data->second);
+			map (const map& other) {
+				compare_m = other.compare_m;
+				size_m = other.size_m;
+				insert(other.begin(), other.end());
 			}
 			
-			mapped_type& operator[]( const Key& key ) {
-				// value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
-				// insert(value);
-				// return (avl_tree.find_element(avl_tree.root->left, value)->data->second);
-				pair<key_type, mapped_type> val;
-				
-				val.first = key;
-				val.second = mapped_type();
-				pair<iterator, bool> p = insert(val);
-				iterator it = p.first;
-				return it->second;
+			map& operator=( const map& other ) {
+				clear();
+				size_m = other.size();
+				compare_m = other.compare_m;
+				size_m = other.size_m;
+				insert(other.begin(), other.end());
+				return *this;
 			}
-            mapped_type& operator()( const Key& key ) {
-				// value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
-				// insert(value);
-				// std::cout<<"------"<<avl_tree.find(value)<<std::endl;
-				// exit(1);
-				// return (avl_tree.find_element(avl_tree.root->left, value)->data->second);
-
-				pair<key_type, mapped_type> val;
-				
-				val.first = key;
-				val.second = mapped_type();
-				pair<iterator, bool> p = insert(val);
-				iterator it = p.first;
-				return it->second;
-				
+			~map() {clear();}
+			/*---------------------> Element access <-----------------------*/
+			// T& at( const Key& key ) {
+			// 	value_type tmp = ft::make_pair(key, mapped_type());
+			// 	return (avl_tree.atOfTree(tmp)->data->second);
+			// }
+			// const T& at( const Key& key ) const {
+			// 	value_type tmp = ft::make_pair(key, mapped_type());
+			// 	return (avl_tree.atOfTree(tmp)->data->second);
+			// }
+			
+			mapped_type& operator[]( const Key& key ) {
+				value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
+				insert(value);
+				return (avl_tree.find(value)->data->second);
 			}
 			/*---------------------> Iterators <---------------------------*/
 			iterator begin(){
-                return (iterator(avl_tree.minNode()->data,&avl_tree));
+                return (iterator(avl_tree.minNode()->data, &avl_tree));
             }
             const_iterator begin() const{
-                return (iterator(avl_tree.minNode()->data,&avl_tree));
+                return (iterator(avl_tree.minNode()->data, &avl_tree));
             }
             iterator end() {
-                return (iterator(avl_tree.endNode()->data,&avl_tree));
+                return (const_iterator(avl_tree.endNode()->data, &avl_tree));
             }
             const_iterator end() const{
-                return (iterator(avl_tree.endNode()->data,&avl_tree)); 
+                return (const_iterator(avl_tree.endNode()->data, &avl_tree)); 
             }
             // reverse_iterator rbegin(){
             //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
@@ -222,11 +208,11 @@
 			}
 			
 			void erase( iterator first, iterator last ){
-				
-				(void )last;
-				while (size_m > 0){
+				while (first != last){
 					avl_tree.delete_(ft::pair<key_type, mapped_type>(first->first, first->second));
 					first++;
+					// std::cout<<"--***-----"<<std::endl;
+					// exit(1);
 					size_m--;
 				}
 			}

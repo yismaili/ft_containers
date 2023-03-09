@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/08 16:35:37 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/09 17:00:15 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,12 +194,11 @@
      private:
           const avlTree<T, Compare, Alloc> *nodeAvl;
           T* ptr;
-          
      public:
-          typedef T& reference;
-          typedef T* pointer;
-          typedef std::ptrdiff_t difference_type;
-          typedef T											value_type;
+          typedef T&                                        reference;
+          typedef T*                                        pointer;
+          typedef std::ptrdiff_t                            difference_type;
+          typedef T									value_type;
 
      bidirectional_iterator() :ptr(NULL), nodeAvl(NULL){
      }
