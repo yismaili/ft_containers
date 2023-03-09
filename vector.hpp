@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/09 12:34:27 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/09 12:40:30 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ public:
     }
     /*-----------------Vector destructor------------*/
     ~vector(){
-        //free_memory();
+        free_memory();
     }
     
     void free_memory(){
@@ -349,6 +349,7 @@ public:
     }
    
     iterator insert(iterator pos, const T& value){
+        
         if (capacity_v == size_v){
             capacity_v *= 2;
         pointer ptr_tmp =  alloc.allocate(capacity_v);
@@ -374,7 +375,7 @@ public:
         int  j = pos - begin();
         while (i >= j)
         {
-            ptr_tmp[i + 1] = ptr_tmp[i];
+            ptr[i + 1] = ptr[i];
             i--;
         }
         size_v++;
@@ -382,7 +383,7 @@ public:
         return (ptr);
    }
 
-   iterator insert( const_iterator pos, size_type count, const T& value){
+   iterator insert(iterator pos, size_type count, const T& value){
     size_type l = 0;
     if (capacity_v == size_v){
         reserve(capacity_v * 2);
