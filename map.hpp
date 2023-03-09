@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/09 21:03:06 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/09 21:11:50 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,10 @@
 			
 			size_type max_size() const{
 				return (alloc_m.max_size());
+			}
+			
+			allocator_type get_allocator() const{
+				return (alloc_m);
 			}
 			/*--------Modifiers----------*/
 			void clear(){
