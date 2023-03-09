@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/08 20:09:58 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/09 12:34:27 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ public:
     }
     /*-----------------Vector destructor------------*/
     ~vector(){
-        free_memory();
+        //free_memory();
     }
     
     void free_memory(){
@@ -313,6 +313,7 @@ public:
     std::swap(ptr, ptr_tmp);
     capacity_v = new_cap;
    }
+   
     /*---------------Iterators--------------------*/
      iterator begin(){
         return (iterator(ptr));
@@ -341,28 +342,46 @@ public:
    /*-------------- Modifiers ------------------*/
 
    void clear(){
-    while (size_v)
-    {
+    while (size_v){
         alloc.destroy(ptr + size_v);
         size_v--;
     }
     }
    
-   iterator insert(iterator pos, const T& value){
-    if (capacity_v == size_v){
-        reserve(capacity_v* 2);
+    iterator insert(iterator pos, const T& value){
+        if (capacity_v == size_v){
+            capacity_v *= 2;
+        pointer ptr_tmp =  alloc.allocate(capacity_v);
+        int i  = 0;
+        while (i < (int)size_v){
+            alloc.construct(ptr_tmp + i, *(ptr + i)); 
+            i++;
+        }
+        
+        i = size_v;
+        int  j = pos - begin();
+        while (i >= j)
+        {
+            ptr_tmp[i + 1] = ptr_tmp[i];
+            i--;
+        }
+        size_v++;
+        ptr_tmp[j] = value;
+        free_memory();
+        std::swap(ptr, ptr_tmp);
+    }else{
+        int i = size_v;
+        int  j = pos - begin();
+        while (i >= j)
+        {
+            ptr_tmp[i + 1] = ptr_tmp[i];
+            i--;
+        }
+        size_v++;
     }
-    int i = size_v;
-    int  j = pos - begin();
-    while (i >= j)
-    {
-       ptr[i + 1] = ptr[i];
-       i--;
-    }
-    size_v++;
-    ptr[j] = std::move(value);
-    return (ptr);
+        return (ptr);
    }
+
    iterator insert( const_iterator pos, size_type count, const T& value){
     size_type l = 0;
     if (capacity_v == size_v){
@@ -386,12 +405,13 @@ public:
    }
    
    template< class InputIt >
-    iterator insert( iterator pos, InputIt first, InputIt last){
+    iterator insert( iterator pos, InputIt first, InputIt last,
+    typename ft::enable_if<!ft::cmp<InputIt, int>::value>::type* = NULL){
     if (capacity_v == size_v){
         reserve(capacity_v * 2);
     }
-    difference_type n = 1;
-    difference_type range_size = last - first;
+    size_t n = 1;
+    size_t range_size = last - first;
     pointer ptr_tmp;
     ptr_tmp = alloc.allocate(capacity_v);
     size_type l = 0;
@@ -401,7 +421,7 @@ public:
     while (n <= range_size)
     {
         int  j = pos - begin();
-        int i = size_v -1;
+        int i = size_v;
         while (i >= j){
             ptr[i + 1] = ptr[i];
             i--;
