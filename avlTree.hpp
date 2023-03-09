@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/05 23:20:04 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/09 20:45:02 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ class avlTree
     avlTree &operator=(avlTree const &other){
       root = other.root;
       compare = other.compare;
-      return (this);
+      return (*this);
     }
     ~avlTree(){}
   // Calculate height
@@ -109,8 +109,8 @@ class avlTree
 			node->left = tmpR;
 			newRoot->parent = node->parent;
 			node->parent = newRoot;
-    fix_height(node);
-    fix_height(newRoot);
+      fix_height(node);
+      fix_height(newRoot);
     return newRoot;
   }
 
@@ -199,25 +199,24 @@ class avlTree
   
   // Insert a node
   node_avl *insert_element(node_avl *node, const T& key) {
-      if (node == NULL){
-      //  std::cout<<"-----create---->"<< key.first<<std::endl;
-        return (creatNode(key)); 
-      }
-      // Find the correct postion 
-      int cmp= key_compare(node, key);
-      if (cmp == -1){ // Go left
-      // std::cout<<"-----left---->\n";
-        node->left = insert_element(node->left, key);
-        node->left->parent = node;
-        node = rebalance_left(node, key);
+        if (node == NULL){
+          return (creatNode(key)); 
         }
-      else if (cmp == 1){ // Go right
-       //  std::cout<<"-----right--->\n";
-        node->right = insert_element(node->right, key);
-        node->right->parent = node;
-        node = rebalance_right(node);
-      }
-      return (node);
+        // Find the correct postion 
+        int cmp= key_compare(node, key);
+        if (cmp == -1){ // Go left
+        // std::cout<<"-----left---->\n";
+          node->left = insert_element(node->left, key);
+          node->left->parent = node;
+          node = rebalance_left(node, key);
+          }
+        else if (cmp == 1){ // Go right
+        //  std::cout<<"-----right--->\n";
+          node->right = insert_element(node->right, key);
+          node->right->parent = node;
+          node = rebalance_right(node);
+        }
+          return (node);
   }
 
   // Node with minimum value
@@ -236,7 +235,7 @@ class avlTree
     return current;
   }
   
-  node_avl* endNode(){
+  node_avl* endNode() const {
     return (root);
   }
   
@@ -248,7 +247,7 @@ class avlTree
       throw std::out_of_range("out of range\n");
   }
   
-  node_avl* minNode(){
+  node_avl* minNode()const{
     node_avl* node = minValue(root->left);
     return (node);
   }
@@ -367,7 +366,7 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
          }
         node = balanceTree(node);
         return node ;
-    }
+  }
 
   node_avl *findPredecessor(node_avl *node, T& key){
       if (node == NULL){
@@ -469,34 +468,33 @@ node_avl* upper(node_avl *node, const T& key){
 }
 
 node_avl  *find_element(node_avl *node, const T& key) const {
-    // node_avl* next = nullptr;
-    // while (node != nullptr){
-    //   if (compare(key.first, node->data->first)){
-    //     node = node->left;
-    //     next = node;
-    //   }
-    //   else if (compare(node->data->first, key.first)) {
-    // //  std::cout<<"------------hey i am find node------------"<<std::endl;
-    //     node = node->right;
-    //     next = node;
-    //   }
-    //   else{
-    //     return (node);
-    //   }
+    node_avl* next = nullptr;
+    while (node != nullptr){
+      if (compare(key.first, node->data->first)){
+        node = node->left;
+        next = node;
+      }
+      else if (compare(node->data->first, key.first)) {
+    //  std::cout<<"------------hey i am find node------------"<<std::endl;
+        node = node->right;
+        next = node;
+      }
+      else{
+        return (node);
+      }
+    }
+     // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
+    return next;
+    // if (node == NULL){
+    //   return (node);
+    //  }
+    // if (compare(key.first, node->data->first)){
+    //   return (find_element(node->left, key));
     // }
-    //  // std::cout<<"1 ------------hey i am find node------------"<<std::endl;
-    // return next;
-    if (node == NULL){
-      return (NULL);
-     }
-  //  std::cout<<"1 ------------------------"<<node->data->first<<std::endl;
-    if (compare(key.first, node->data->first)){
-      return (find_element(node->left, key));
-    }
-    else if (compare(node->data->first, key.first)) {
-      return (find_element(node->right, key));
-    }
-    return (node);
+    // else if (compare(node->data->first, key.first)) {
+    //   return (find_element(node->right, key));
+    // }
+    // return (node);
 }
       
   node_avl* findParent(node_avl* node, T& key){
