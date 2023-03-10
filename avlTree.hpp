@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/10 19:48:29 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/10 20:15:36 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,11 +281,11 @@ class avlTree
   
 node_avl *  clear(node_avl* node){
     if(node != NULL) {
-          clear(node->left);
-          root->alloc_pairs.deallocate(node->data, 1);
-          clear(node->right);
-          node_alloc.deallocate(node, 1);
-          node = NULL;
+        clear(node->left);
+        root->alloc_pairs.deallocate(node->data, 1);
+        clear(node->right);
+        node_alloc.deallocate(node, 1);
+        node = NULL;
     }
   return (node);
 }

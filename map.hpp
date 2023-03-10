@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/10 19:20:03 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:42:38 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,8 @@
 			}
 			/*--------Modifiers----------*/
 			void clear(){
-			avl_tree.clearAll();
-			size_m = 0;
+				avl_tree.clearAll();
+				size_m = 0;
 			}
 			
 			ft::pair<iterator, bool> insert( const value_type& value ) {
@@ -201,26 +201,23 @@
 			template< class InputIt >
 			void insert( InputIt first, InputIt last ){
 				while (first != last){
-				insert(ft::pair<key_type, mapped_type>(first->first, first->second));
-				first++;
+					value_type value = ft::make_pair<key_type, mapped_type>(first->first, first->second);
+					insert(value);
+					first++;
 				}
 			}
 			
 			void erase( iterator pos ){
-				std::cout << "Hello" << std::endl;
-				std::cout << "We will erase " << pos->first << " " << pos->second << std::endl;
-				return ;
+				// std::cout << "Hello" << std::endl;
+				// std::cout << "We will erase " << pos->first << " " << pos->second << std::endl;
 				avl_tree.delete_(ft::make_pair<key_type, mapped_type>(pos->first, pos->second));
 				size_m--;
 			}
 			
 			void erase( iterator first, iterator last ){
-				iterator tmp_it = first;
 				while (first != last){
-					avl_tree.delete_(ft::pair<key_type, mapped_type>(first->first, first->second));
+					avl_tree.delete_(ft::make_pair<key_type, mapped_type>(first->first, first->second));
 					first++;
-					// std::cout<<"--***-----"<<std::endl;
-					// exit(1);
 					size_m--;
 				}
 				// while (first != last)
