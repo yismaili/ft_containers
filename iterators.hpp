@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/09 17:00:15 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:48:50 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,7 @@
      {
           if (*this != obj){
                ptr = obj.ptr;
+               nodeAvl = obj.nodeAvl;
           }
           return (*this);
      }
@@ -230,7 +231,8 @@
           }else {
                return (false);
           }
-       } 
+     } 
+
      bool operator != (const bidirectional_iterator &opj) {
           if (ptr != opj.ptr){
                return (true);
@@ -241,6 +243,7 @@
        
      bidirectional_iterator operator++(int){
         bidirectional_iterator temp = *this;
+     //    std::cout << "We will increment " << temp->first << " " << temp->second << std::endl;
         ++(*this);
         return (temp);
      }

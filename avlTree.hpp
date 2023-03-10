@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/09 20:45:02 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:48:29 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,30 +311,48 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
     // {
         if (node->left == NULL && node->right == NULL) 
           {
-          root->alloc_pairs.destroy(node->data);
-          root->alloc_pairs.deallocate(node->data, 1);
-          node_alloc.destroy(node);
-          node_alloc.deallocate(node, 1);
+          //   if (node->data)
+          //   {
+          //     root->alloc_pairs.destroy(node->data);
+          //     root->alloc_pairs.deallocate(node->data, 1);
+          //   }
+          //   if (node)
+          //   {
+          // node_alloc.destroy(node);
+          // node_alloc.deallocate(node, 1);
+          //   }
            check = true;
             return NULL;
           } 
           else if(node->left == NULL)
           {
             node_avl * temp = node->right;
-            root->alloc_pairs.destroy(node->data);
-            root->alloc_pairs.deallocate(node->data, 1);
-            node_alloc.destroy(node);
-            node_alloc.deallocate(node, 1);
+            if (node->data)
+            {
+              root->alloc_pairs.destroy(node->data);
+              root->alloc_pairs.deallocate(node->data, 1);
+            }
+            if (node)
+            {
+          node_alloc.destroy(node);
+          node_alloc.deallocate(node, 1);
+            }
              check = true;
             return temp;
           }
           else if (node->right == NULL) 
           {
             node_avl * temp = node->left;
-            root->alloc_pairs.destroy(node->data);
-            root->alloc_pairs.deallocate(node->data, 1);
-            node_alloc.destroy(node);
-            node_alloc.deallocate(node, 1);
+            if (node->data)
+            {
+              root->alloc_pairs.destroy(node->data);
+              root->alloc_pairs.deallocate(node->data, 1);
+            }
+            if (node)
+            {
+          node_alloc.destroy(node);
+          node_alloc.deallocate(node, 1);
+            }
             check = true;
             return temp;
           }
@@ -393,9 +411,10 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
       }
       return (prev); 
   }
-  
   node_avl *successor(const T& key)const{
-    return (findSuccessor(root->left, key));
+  if (root && root->left)
+      return (findSuccessor(root->left, key));
+    return nullptr;
   }
        
   node_avl *findSuccessor(node_avl* node, const T& key)const{

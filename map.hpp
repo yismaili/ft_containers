@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/09 21:11:50 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:20:03 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,11 +207,15 @@
 			}
 			
 			void erase( iterator pos ){
+				std::cout << "Hello" << std::endl;
+				std::cout << "We will erase " << pos->first << " " << pos->second << std::endl;
+				return ;
 				avl_tree.delete_(ft::make_pair<key_type, mapped_type>(pos->first, pos->second));
 				size_m--;
 			}
 			
 			void erase( iterator first, iterator last ){
+				iterator tmp_it = first;
 				while (first != last){
 					avl_tree.delete_(ft::pair<key_type, mapped_type>(first->first, first->second));
 					first++;
@@ -219,6 +223,21 @@
 					// exit(1);
 					size_m--;
 				}
+				// while (first != last)
+				// {
+				// 	tmp_it = first;
+				// 	std::cout << tmp_it->first <<" " << tmp_it->second << std::endl;
+				// 	// tmp_it++;
+				// 	// first = tmp_it;
+				// 	first++;
+				// }
+				// while (first != last)
+				// {
+				// 	tmp_it = first;
+				// 	tmp_it++;
+				// 	erase(first);
+				// 	first = tmp_it;
+				// }
 			}
 			
 			size_type erase (const key_type& k){
