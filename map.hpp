@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 14:19:56 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:04:20 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 	template< class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > > class map {
 		public:
+			avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
 			typedef Key																									key_type;
 			typedef T																									mapped_type;
 			typedef ft::pair<const key_type, mapped_type>																value_type;
@@ -37,8 +38,8 @@
 			typedef typename Allocator::const_pointer																	const_pointer;
 			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>									iterator;
 			typedef typename ft::bidirectional_iterator<const value_type, Compare, Allocator>							const_iterator;
-			typedef typename ft::reverse_bidirectional_iterator<value_type, Compare, Allocator>							reverse_bidirectional_iterator;
-			typedef typename ft::reverse_bidirectional_iterator<const value_type, Compare, Allocator>					const_reverse_bidirectional_iterator;
+			typedef typename ft::reverse_bidirectional_iterator<value_type, Compare, Allocator>							reverse_iterator;
+			typedef typename ft::reverse_bidirectional_iterator<const value_type, Compare, Allocator>					const_reverse_iterator;
 			/*---------------------- friend-----------------------------*/
 			template <class Key1, class T1, class Compare1, class Alloc1>
 			friend	bool operator==(const map<Key1, T1, Compare1, Alloc1>& lhs, const map<Key1, T1, Compare1, Alloc1>& rhs);
@@ -140,17 +141,17 @@
             const_iterator end() const{
                 return (const_iterator(avl_tree.endNode()->data, &avl_tree)); 
             }
-            reverse_bidirectional_iterator rbegin(){
-               return (reverse_bidirectional_iterator(avl_tree.endNode()->data, &avl_tree));
+            reverse_iterator rbegin(){
+               return (reverse_iterator(avl_tree.maxValue(avl_tree.root->left)->data, &avl_tree));
             }
-            const_reverse_bidirectional_iterator rbegin() const{
-                return (const_reverse_bidirectional_iterator(avl_tree.endNode()->data, &avl_tree));
+            const_reverse_iterator rbegin() const{
+                return (const_reverse_iterator(avl_tree.maxValue(avl_tree.root->left)->data, &avl_tree));
             }
-            reverse_bidirectional_iterator rend(){
-                return (reverse_bidirectional_iterator(avl_tree.minNode()->data, &avl_tree));
+            reverse_iterator rend(){
+                return (reverse_iterator(avl_tree.endNode()->data, &avl_tree));
             }
-            const_reverse_bidirectional_iterator rend() const{
-               return (const_reverse_bidirectional_iterator(avl_tree.minNode()->data, &avl_tree));
+            const_reverse_iterator rend() const{
+               return (const_reverse_iterator(avl_tree.endNode()->data, &avl_tree));
             }
             /*-------------------------> Capacity <--------------------------*/
 			bool empty() const{
@@ -330,7 +331,7 @@
 			} 
 			
 			private:
-				avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
+				// avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
 				Allocator												alloc_m;
 				Compare												    compare_m;
 				std::size_t												size_m;

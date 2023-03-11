@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:26:20 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 15:33:17 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:56:02 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,8 +187,8 @@
        
      reverse_bidirectional_iterator operator++(int){
         reverse_bidirectional_iterator temp = *this;
-     //     std::cout << "We will increment " << temp->first << " " << temp->second << std::endl;
-        --(*this);
+     // std::cout << "We will increment " << temp->first << " " << temp->second << std::endl;
+        ++(*this);
         return (temp);
      }
      
@@ -205,18 +205,28 @@
      
      reverse_bidirectional_iterator operator--(int){
         reverse_bidirectional_iterator temp = *this;
+         // std::cout << "We will increment " << temp->first << " " << temp->second << std::endl;
         ++(*this);
         return (temp);
      }
      
      reverse_bidirectional_iterator &operator++(){
-               if (nodeAvl->predecessor(*ptr)){
-                    ptr = nodeAvl->predecessor(*ptr)->data;
-               }
-               else{
-                    ptr = nullptr;
-               }
-          return (*this);
+          // if (!ptr){
+          //      if(nodeAvl->root->left->right){
+          //           ptr = nodeAvl->maxNode()->data;
+          //      }
+          //      else{
+          //           ptr = nodeAvl->root->left->data;
+          //      }
+          // }
+           std::cout << "We will increment " << ptr->first << " " << ptr->second << std::endl;
+         if (nodeAvl->predecessor(*ptr)){
+             ptr = nodeAvl->predecessor(*ptr)->data;
+         }
+        else{
+           ptr = nullptr;
+         }
+       return (*this);
      }
     };
  };

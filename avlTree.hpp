@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 15:23:35 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:00:16 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,10 @@ class avlTree
     node_avl* node = minValue(root->left);
     return (node);
   }
+   node_avl* maxNode()const{
+    node_avl* node = maxValue(root->left);
+    return (node);
+  }
   // Delete a node
   node_avl *balanceTree(node_avl *node){
     // balance the tree
@@ -384,38 +388,48 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
   }
   
   node_avl *predecessor(const T& key)const{
-     std::cout << "We will increment \n";
-  std::cout << "We will increment " <<root->data->first << " " <<root->data->second << std::endl;
+ // std::cout << "We will increment " <<root->data->first << " " <<root->data->second << std::endl;
     if (root && root->left)
         return (findPredecessor(root->left, key));
       return nullptr;
   }
   
   node_avl *findPredecessor(node_avl *node, const T& key) const {
-      if (node == NULL){
-        return(0);
-      }
-      node_avl *prev = NULL;
-      while (1){
-        if (compare(key.first, node->data->first)){
-            node = node->left;
-        }
-        else if (compare(node->data->first, key.first)){
-            exit(1);
-          prev = node;
-          node = node->right;
-        }
-        else{
-          if (node->left){
-            prev = maxValue(node->left);
-          }
-          break;
-        }
-        if (node == NULL){
-          return(prev);
-        }
-      }
-      return (prev); 
+      // if (node == NULL){
+      //   return(0);
+      // }
+      // node_avl *prev = NULL;
+      // while (1){
+      //   if (compare(key.first, node->data->first)){
+      //       node = node->left;
+      //   }
+      //   else if (compare(node->data->first, key.first)){
+      //       exit(1);
+      //     prev = node;
+      //     node = node->right;
+      //   }
+      //   else{
+      //     if (node->left){
+      //       prev = maxValue(node->left);
+      //     }
+      //     break;
+      //   }
+      //   if (node == NULL){
+      //     return(prev);
+      //   }
+      // }
+      // return (prev); 
+      node_avl*	findNode = find_element(node, key);
+			if (findNode == NULL)
+				return NULL;
+			if (findNode->left)
+				return maxValue(findNode->left);
+			node_avl*	succ = findNode->parent;
+			while (succ && succ->right != findNode) {
+				findNode = succ;
+				succ = findNode->parent;
+			}
+			return succ;
   }
   node_avl *successor(const T& key)const{
   if (root && root->left)

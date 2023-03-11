@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 14:05:47 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:47:55 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,31 +162,6 @@
           return (ptr[n]);
      }
     };
-
-     template <class Iter1, class Iter2>  bool operator==(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
-		return (lhs.base() == rhs.base());
-	}
-	template <class Iter1, class Iter2>  bool operator!=(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
-		return (lhs.base() != rhs.base());
-	}
-	template <class Iter1, class Iter2>  bool operator<(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
-		return (lhs.base() < rhs.base());
-	}
-	template <class Iter1, class Iter2>  bool operator<=(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
-		return (lhs.base() <= rhs.base());
-	}
-	template <class Iter1, class Iter2>  bool operator>(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
-		return (lhs.base() > rhs.base());
-	}
-	template <class Iter1, class Iter2>  bool operator>=(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
-		return (lhs.base() >= rhs.base());
-	}
-	template <class Iterator> Random_access_iterator<Iterator> operator+( typename Random_access_iterator<Iterator>::difference_type n, const Random_access_iterator<Iterator> &it) {
-		return (Random_access_iterator<Iterator>(it.base() + n));
-	}
-	template <class Iter1, class Iter2> typename Random_access_iterator<Iter1>::difference_type operator-( const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
-		return (lhs.base() - rhs.base());
-	}
 
     /*---------- bidirectional iterator----------*/
    template<typename T, typename Compare, typename Alloc> 

@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 15:34:22 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:03:38 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -942,11 +942,13 @@ int main ()
       mymap['x'] = 100;
       mymap['y'] = 200;
       mymap['z'] = 300;
-
+      mymap.print("" , 1);
       // show content:
       int i = 0;
-      ft::map<char,int>::reverse_bidirectional_iterator rit;
-      for (rit=mymap.rend(); rit!=mymap.rbegin(); --rit)
+      std::cout <<"rbegin --- "<< mymap.rbegin()->first << " => " <<mymap.rbegin()->second << '\n';
+      std::cout << "rend --- "<<mymap.rend()->first << " => " <<mymap.rend()->second << '\n';
+      ft::map<char,int>::reverse_iterator rit = mymap.rbegin();
+       for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
       {
         std::cout << rit->first << " => " << rit->second << '\n';
         // i++;
@@ -954,6 +956,7 @@ int main ()
         //   break;
         // }
       }
+      //  std::cout << rit->first << " => " << rit->second << '\n';
     }
     
   }
