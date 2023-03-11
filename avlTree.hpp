@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 22:00:16 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 23:11:48 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -424,12 +424,15 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
 				return NULL;
 			if (findNode->left)
 				return maxValue(findNode->left);
-			node_avl*	succ = findNode->parent;
-			while (succ && succ->right != findNode) {
-				findNode = succ;
-				succ = findNode->parent;
+			node_avl*	pred = findNode->parent;
+			while (pred && pred->right != findNode) {
+				findNode = pred;
+				pred = findNode->parent;
+        if (findNode == root->left){
+          return (root);
+        }
 			}
-			return succ;
+			return pred;
   }
   node_avl *successor(const T& key)const{
   if (root && root->left)
