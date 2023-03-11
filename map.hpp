@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/10 21:42:38 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 14:19:56 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@
 
 	template< class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > > class map {
 		public:
-			typedef Key																			key_type;
-			typedef T																			mapped_type;
-			typedef ft::pair<const key_type, mapped_type>										value_type;
-			typedef std::size_t																	size_type;
-			typedef std::ptrdiff_t																difference_type;
-			typedef Compare																		key_compare;
-			typedef Allocator																	allocator_type;
-			typedef value_type&																	reference;
-			typedef const value_type&															const_reference;
-			typedef typename Allocator::pointer													pointer;
-			typedef typename Allocator::const_pointer											const_pointer;
-			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>			iterator;
-			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>			const_iterator;
-			typedef typename ft::reverse_iterator<iterator>										reverse_iterator;
-			typedef typename ft::reverse_iterator<const_iterator>								const_reverse_iterator;
+			typedef Key																									key_type;
+			typedef T																									mapped_type;
+			typedef ft::pair<const key_type, mapped_type>																value_type;
+			typedef std::size_t																							size_type;
+			typedef std::ptrdiff_t																						difference_type;
+			typedef Compare																								key_compare;
+			typedef Allocator																							allocator_type;
+			typedef value_type&																							reference;
+			typedef const value_type&																					const_reference;
+			typedef typename Allocator::pointer																			pointer;
+			typedef typename Allocator::const_pointer																	const_pointer;
+			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>									iterator;
+			typedef typename ft::bidirectional_iterator<const value_type, Compare, Allocator>							const_iterator;
+			typedef typename ft::reverse_bidirectional_iterator<value_type, Compare, Allocator>							reverse_bidirectional_iterator;
+			typedef typename ft::reverse_bidirectional_iterator<const value_type, Compare, Allocator>					const_reverse_bidirectional_iterator;
 			/*---------------------- friend-----------------------------*/
 			template <class Key1, class T1, class Compare1, class Alloc1>
 			friend	bool operator==(const map<Key1, T1, Compare1, Alloc1>& lhs, const map<Key1, T1, Compare1, Alloc1>& rhs);
@@ -76,10 +76,12 @@
             };
 			/*---------------------> Member functions <--------------------*/
 			
-			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-				: alloc_m(alloc), compare_m(comp), size_m(0) {
+			map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()){
+				alloc_m = alloc;
+				compare_m = comp;
+				size_m = 0;
 					    
-				}
+			}
 				
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(),const allocator_type& alloc = allocator_type()) {
@@ -130,30 +132,26 @@
                 return (iterator(avl_tree.minNode()->data, &avl_tree));
             }
             const_iterator begin() const{
-                return (iterator(avl_tree.minNode()->data, &avl_tree));
+                return (const_iterator(avl_tree.minNode()->data, &avl_tree));
             }
             iterator end() {
-                return (const_iterator(avl_tree.endNode()->data, &avl_tree));
+                return (iterator(avl_tree.endNode()->data, &avl_tree));
             }
             const_iterator end() const{
                 return (const_iterator(avl_tree.endNode()->data, &avl_tree)); 
             }
-            // reverse_iterator rbegin(){
-            //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
-            //     return (node->data);
-            // }
-            // const_reverse_iterator rbegin() const{
-            //     node_avl*	node = avl_tree.maxValue(avl_tree._node);
-            //     return (node->data);
-            // }
-            // reverse_iterator rend(){
-            //     node_avl*	node = avl_tree.minValue(avl_tree._node);
-            //     return (node->data);
-            // }
-            // const_reverse_iterator rend() const{
-            //     node_avl*	node = avl_tree.minValue(avl_tree._node);
-            //     return (node->node->data);
-            // }
+            reverse_bidirectional_iterator rbegin(){
+               return (reverse_bidirectional_iterator(avl_tree.endNode()->data, &avl_tree));
+            }
+            const_reverse_bidirectional_iterator rbegin() const{
+                return (const_reverse_bidirectional_iterator(avl_tree.endNode()->data, &avl_tree));
+            }
+            reverse_bidirectional_iterator rend(){
+                return (reverse_bidirectional_iterator(avl_tree.minNode()->data, &avl_tree));
+            }
+            const_reverse_bidirectional_iterator rend() const{
+               return (const_reverse_bidirectional_iterator(avl_tree.minNode()->data, &avl_tree));
+            }
             /*-------------------------> Capacity <--------------------------*/
 			bool empty() const{
 				if (size_m == 0)
@@ -386,7 +384,7 @@
 		
 		template< class Key, class T, class Compare, class Alloc >
 		void swap( ft::map<Key, T, Compare, Alloc>& lhs, ft::map<Key, T, Compare, Alloc>& rhs ){
-			ft::swap(lhs, rhs);
+			std::swap(lhs, rhs);
 		}
 }
 

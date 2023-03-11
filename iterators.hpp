@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/10 19:48:50 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 14:05:47 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,10 +278,6 @@
           }
           return (*this);
      }
-//     operator bidirectional_iterator<const T, Compare, Alloc> () const {
-// 				return bidirectional_iterator<const T, Compare, Alloc>(ptr,
-// 				reinterpret_cast<const avlTree<const value_type, Compare, Alloc>*>(nodeAvl));
-// 			}
     };
  };
  

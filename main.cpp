@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/10 21:53:24 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:34:22 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -809,7 +809,7 @@ int main ()
     //   std::cout << "mymap now contains " << mymap.size() << " elements.\n";
     // } 
     
-    /*---------------------operator=----------------------------*/ /*---error hier----*/
+    /*---------------------operator=----------------------------*/ 
     
     //   {
     //   ft::map<char,int> first;
@@ -819,14 +819,12 @@ int main ()
     //   first['y']=16;
     //   first['z']=32;
 
-    //   second=first;                // second now contains 3 ints
-    //   first=ft::map<char,int>();  // and first is now empty
+    //  second = first;                // second now contains 3 ints
+   
 
     //   std::cout << "Size of first: " << first.size() << '\n';
     //   std::cout << "Size of second: " << second.size() << '\n';
-    //   return 0;
     // }
-    
     /*---------------------size----------------------------*/
     // {
     //  ft::map<char,int> mymap;
@@ -916,7 +914,7 @@ int main ()
     //   if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
     // }  
     
-     /*----------------swap (map)---------------------------*/ /*---error hier----*/
+     /*----------------swap (map)---------------------------*/ 
      
     //  {
     //   ft::map<char,int> foo,bar;
@@ -929,7 +927,7 @@ int main ()
     //   bar['c']=33;
 
     //   swap(foo,bar);
-
+      
     //   std::cout << "foo contains:\n";
     //   for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
     //     std::cout << it->first << " => " << it->second << '\n';
@@ -939,19 +937,25 @@ int main ()
     //     std::cout << it->first << " => " << it->second << '\n';
     // }
     /*---------------------------rend---------------------------*/ /*---error hier----*/
-    // {
-    //   ft::map<char,int> mymap;
-    //   mymap['x'] = 100;
-    //   mymap['y'] = 200;
-    //   mymap['z'] = 300;
+    {
+      ft::map<char,int> mymap;
+      mymap['x'] = 100;
+      mymap['y'] = 200;
+      mymap['z'] = 300;
 
-    //   // show content:
-    //   ft::map<char,int>::reverse_iterator rit;
-    //   for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
-    //     std::cout << rit->first << " => " << rit->second << '\n';
-    // }
+      // show content:
+      int i = 0;
+      ft::map<char,int>::reverse_bidirectional_iterator rit;
+      for (rit=mymap.rend(); rit!=mymap.rbegin(); --rit)
+      {
+        std::cout << rit->first << " => " << rit->second << '\n';
+        // i++;
+        // if (i == 6){
+        //   break;
+        // }
+      }
+    }
     
-    /*-----------------------*/
   }
    
   catch(const std::exception& e)

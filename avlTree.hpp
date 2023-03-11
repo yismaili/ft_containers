@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/10 20:15:36 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:23:35 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,10 +332,9 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
               root->alloc_pairs.destroy(node->data);
               root->alloc_pairs.deallocate(node->data, 1);
             }
-            if (node)
-            {
-          node_alloc.destroy(node);
-          node_alloc.deallocate(node, 1);
+            if (node){
+              node_alloc.destroy(node);
+              node_alloc.deallocate(node, 1);
             }
              check = true;
             return temp;
@@ -343,15 +342,13 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
           else if (node->right == NULL) 
           {
             node_avl * temp = node->left;
-            if (node->data)
-            {
+            if (node->data){
               root->alloc_pairs.destroy(node->data);
               root->alloc_pairs.deallocate(node->data, 1);
             }
-            if (node)
-            {
-          node_alloc.destroy(node);
-          node_alloc.deallocate(node, 1);
+            if (node){
+              node_alloc.destroy(node);
+              node_alloc.deallocate(node, 1);
             }
             check = true;
             return temp;
@@ -385,8 +382,16 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
         node = balanceTree(node);
         return node ;
   }
-
-  node_avl *findPredecessor(node_avl *node, T& key){
+  
+  node_avl *predecessor(const T& key)const{
+     std::cout << "We will increment \n";
+  std::cout << "We will increment " <<root->data->first << " " <<root->data->second << std::endl;
+    if (root && root->left)
+        return (findPredecessor(root->left, key));
+      return nullptr;
+  }
+  
+  node_avl *findPredecessor(node_avl *node, const T& key) const {
       if (node == NULL){
         return(0);
       }
@@ -396,6 +401,7 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
             node = node->left;
         }
         else if (compare(node->data->first, key.first)){
+            exit(1);
           prev = node;
           node = node->right;
         }
@@ -446,15 +452,13 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
       return next;
   }
   
- node_avl* swap(node_avl* root, node_avl* other) {
-    node_avl* tmp = other;
-    other = root;
-    root = tmp;
-    return root;
-}
+//  node_avl* swap(node_avl* root, node_avl* other) {
+//     node_avl* tmp = other;
+//     other = root;
+//     root = tmp;
+//     return root;
+// }
 
-
-   
 node_avl  *find(const T& key) const {
     node_avl* node = find_element(root->left, key);
     return (node);
