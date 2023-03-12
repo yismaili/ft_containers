@@ -65,28 +65,34 @@
 //     return 0;
 // }
 
-#include <iostream>
-#include <iterator>
-#include <numeric>
-#include "vector.hpp"
+// #include <iostream>
+// #include <numeric>
+// #include "vector.hpp"
+// #include <iterator>
 
-template <typename Iterator>
-typename ft::iterator_traits<Iterator>::value_type
-sum(Iterator begin, Iterator end) {
-    // typedef typename ft::iterator_traits<Iterator>::value_type value_type;
-    return std::accumulate(begin, end, value_type());
-}
+// template <typename Iterator>
+// typename ft::iterator_traits<Iterator>::value_type
+// sum(Iterator begin, Iterator end) {
+//     typedef typename ft::iterator_traits<Iterator>::value_type value_type;
+//     return std::accumulate(begin, end, value_type());
+// }
 
-int main() {
-    ft::vector<int> v;
-    v.push_back(1);
-    v.push_back(2);
-    v.push_back(3);
-    v.push_back(4);
-    v.push_back(5);
-    v.push_back(6);
-    v.push_back(7);
-    std::cout << "Sum of vector elements = " << sum(v.begin(), v.end()) << std::endl;
-    return 0;
+// int main() {
+//     ft::vector<int> v;
+//     v.push_back(1);
+//     v.push_back(2);
+//     v.push_back(3);
+//     v.push_back(4);
+//     v.push_back(5);
+//     v.push_back(6);
+//     v.push_back(7);
+//     std::cout << "Sum of vector elements = " << sum(v.begin(), v.end()) << std::endl;
+//     int a[] = {1, 2, 3, 4, 5};
+//     sum(a, a + std::size(a));
+//     for (int n : a) {
+//         std::cout << n << ' ';
+//     }
+//     std::cout << '\n';
+//     return 0;
 }
 

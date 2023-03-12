@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/12 18:02:00 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/12 19:27:10 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,20 @@
      /*--------------------  iterator_traits --------------------------*/
 	template< class Random_access_iterator> struct iterator_traits {
 		public:
-			typedef typename Random_access_iterator::difference_type		difference_type;
-			typedef typename Random_access_iterator::value_type			value_type;
-			typedef typename Random_access_iterator::pointer				pointer;
-			typedef typename Random_access_iterator::reference			reference;
-			typedef typename Random_access_iterator::iterator_category	     iterator_category;
+			typedef typename Random_access_iterator::difference_type		difference_type; 
+               //  the difference between two iterators
+			typedef typename Random_access_iterator::value_type			value_type; 
+               // type of the objects that the iterator points 
+			typedef typename Random_access_iterator::pointer				pointer; 
+               // type that represents a pointer to an object of value_type.
+			typedef typename Random_access_iterator::reference			reference; 
+               //  type that represents a reference to an object of value_type
+			typedef typename Random_access_iterator::iterator_category	     iterator_category; 
+               // tag that identifies the category of the iterator
 	};
 	template< class T > struct iterator_traits<T*> {
 		public:
-			typedef std::ptrdiff_t					          diffrence_type;
+			typedef std::ptrdiff_t					          diffrence_type; 
 			typedef T								          value_type;
 			typedef T*								     pointer;
 			typedef T&								     reference;
