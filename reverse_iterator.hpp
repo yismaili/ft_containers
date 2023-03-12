@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:26:20 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 23:12:14 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 23:17:27 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,15 +211,6 @@
      }
      
      reverse_bidirectional_iterator &operator++(){
-          // if (!ptr){
-          //      if(nodeAvl->root->left->right){
-          //           ptr = nodeAvl->maxNode()->data;
-          //      }
-          //      else{
-          //           ptr = nodeAvl->root->left->data;
-          //      }
-          // }
-          //  std::cout << "We will increment " << ptr->first << " " << ptr->second << std::endl;
          if (nodeAvl->predecessor(*ptr)){
              ptr = nodeAvl->predecessor(*ptr)->data;
          }

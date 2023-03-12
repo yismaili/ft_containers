@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 21:47:55 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 23:18:17 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,17 +241,13 @@
      }
      
      bidirectional_iterator &operator--(){
-          Compare*  node = nodeAvl->find_element(nodeAvl->root, *ptr);
-          if (node){
-               Compare*  next = nodeAvl->findPredecessor(*ptr);
-               if (next){
-                    ptr = next->data;
-               }
-               else{
-                    ptr = nullptr;
-               }
-          }
-          return (*this);
+           if (nodeAvl->predecessor(*ptr)){
+             ptr = nodeAvl->predecessor(*ptr)->data;
+         }
+        else{
+           ptr = nullptr;
+         }
+       return (*this);
      }
     };
  };

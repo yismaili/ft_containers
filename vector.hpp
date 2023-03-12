@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/09 12:40:30 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/12 11:23:00 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,13 @@ public:
     vector (size_type n, const value_type& val = value_type(),const allocator_type& allocc = allocator_type()){
         size_v = n;
         (void) allocc;
-        ptr = alloc.allocate(n);
-        for (size_t i = 0; i < n; i++){
-            alloc.construct(ptr + i, val);
-        }
         capacity_v = n; 
+        ptr = alloc.allocate(n);
+        size_t i = 0;
+        while (i < n){
+            alloc.construct(ptr + i, val);
+            i++;
+        }
     }
     
     //-----------> range constructor
@@ -468,12 +470,16 @@ public:
         }
     }
 
-    void swap( vector& other ){
-        
+    void swap( vector& other ){ 
         size_type capacity_tmp = other.capacity_v;
         size_type size_tmp = other.size_v;
         pointer ptr_tmp = other.ptr;
-        
+        //  size_t i = 0;
+        //  ptr_tmp = alloc.allocate(capacity_tmp);
+        //   while (i < size_tmp){
+        //     alloc.construct(ptr_tmp + i, *(other.ptr));
+        //     i++;
+        // }
         other.capacity_v = capacity_v;
         capacity_v = capacity_tmp;
         other.size_v = size_v;

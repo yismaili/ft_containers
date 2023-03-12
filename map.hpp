@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 22:04:20 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/11 23:20:47 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 			typedef typename Allocator::pointer																			pointer;
 			typedef typename Allocator::const_pointer																	const_pointer;
 			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>									iterator;
-			typedef typename ft::bidirectional_iterator<const value_type, Compare, Allocator>							const_iterator;
+			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>							const_iterator;
 			typedef typename ft::reverse_bidirectional_iterator<value_type, Compare, Allocator>							reverse_iterator;
 			typedef typename ft::reverse_bidirectional_iterator<const value_type, Compare, Allocator>					const_reverse_iterator;
 			/*---------------------- friend-----------------------------*/
