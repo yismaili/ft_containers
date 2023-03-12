@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/12 11:23:00 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:47:58 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ public:
     template <class InputIterator>  
     void assign (InputIterator first, InputIterator last,  
     typename ft::enable_if<!ft::cmp<InputIterator, int>::value>::type* = NULL){
+        // SFINAE is typically used in combination with template specializations 
+        //and type traits to create more sophisticated and flexible template code.
 		size_type sizeR = last - first;
         size_t i = 0;
 			

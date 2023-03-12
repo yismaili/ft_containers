@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 23:18:17 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/12 18:02:00 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,43 @@
    
  namespace ft {
      /*--------------------  iterator_traits --------------------------*/
-	template <class Iterator> class iterator_traits {
+	template< class Random_access_iterator> struct iterator_traits {
 		public:
-			typedef typename Iterator::difference_type		difference_type;
-			typedef typename Iterator::value_type			value_type;
-			typedef typename Iterator::pointer				pointer;
-			typedef typename Iterator::reference			reference;
-			typedef typename Iterator::iterator_category	iterator_category;
+			typedef typename Random_access_iterator::difference_type		difference_type;
+			typedef typename Random_access_iterator::value_type			value_type;
+			typedef typename Random_access_iterator::pointer				pointer;
+			typedef typename Random_access_iterator::reference			reference;
+			typedef typename Random_access_iterator::iterator_category	     iterator_category;
 	};
-	template <class T> class iterator_traits<T *> {
+	template< class T > struct iterator_traits<T*> {
 		public:
-			typedef std::ptrdiff_t					diffrence_type;
-			typedef T								value_type;
-			typedef T*								pointer;
-			typedef T&								reference;
-			typedef std::random_access_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t					          diffrence_type;
+			typedef T								          value_type;
+			typedef T*								     pointer;
+			typedef T&								     reference;
+			typedef std::random_access_iterator_tag	               iterator_category;
 	};
-	template <class T> class iterator_traits<const T *> {
+     
+	template< class T > struct iterator_traits<const T*> {
 		public:
-			typedef std::ptrdiff_t					diffrence_type;
-			typedef T								value_type;
-			typedef const T*						pointer;
-			typedef const T&						reference;
-			typedef std::random_access_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t					                    diffrence_type;
+			typedef T								                    value_type;
+			typedef const T*						                    pointer;
+			typedef const T&						                    reference;
+			typedef std::random_access_iterator_tag	                         iterator_category;
 	};
 
-     // ----------- Random_access_iterator -----------//
+ // -------------------- Random_access_iterator -----------------//
   template <typename T> class Random_access_iterator
    {
    private:
         T *ptr;
    public:
    typedef T& reference;
+   typedef T								value_type;
    typedef T* pointer;
    typedef std::ptrdiff_t difference_type;
+   typedef std::random_access_iterator_tag iterator_category;
     Random_access_iterator(){}
     Random_access_iterator(T *ptr_){
         ptr = ptr_;
