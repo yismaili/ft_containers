@@ -6,23 +6,27 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/12 20:48:56 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:11:30 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include "utils.hpp"
 #include "vector.hpp"
 #include "map.hpp"
 #include "stack.hpp"
 #include <numeric>
+#include "algorithm.hpp"
+#include <cctype>       // std::tolower
 
 
-bool fncomp (char lhs, char rhs) {return lhs<rhs;}
+// a case-insensitive comparison function:
+bool mycomp (char c1, char c2)
+{ return std::tolower(c1)<std::tolower(c2); }
 
-struct classcomp {
-  bool operator() (const char& lhs, const char& rhs) const
-  {return lhs<rhs;}
-};
+bool mypredicate (int i, int j) {
+  return (i==j);
+}
 
 template <typename Iterator>
 typename ft::iterator_traits<Iterator>::value_type
@@ -968,8 +972,60 @@ int main ()
     v.push_back(7);
     std::cout << "Sum of vector elements = " << sum(v.begin(), v.end()) << std::endl;
   }
+  
+  /*-------------------------------  algorithm --------------------------------------*/
+  {
+      ft::vector<int> v1;
+      ft::vector<int> v2 ;
+      ft::vector<int> v3;
+        int j = 2;
+        while (j < 12){
+          v1.push_back(j);
+            j++;
+        }
+        j = 2;
+        while (j < 12){
+          v2.push_back(j);
+            j++;
+        }
+      j = 0;
+        while (j < 4){
+          v3.push_back(j);
+            j++;
+        }
+
+        if (ft::equal(v1.begin(), v1.end(), v2.begin())) {
+          std::cout << "v1 and v2 are equal." << std::endl;
+        }
+        if (!ft::equal(v1.begin(), v1.end(), v3.begin())) {
+          std::cout << "v1 and v3 are not equal." << std::endl;
+        } 
+        // using predicate comparison:
+        if ( std::equal (v1.begin(), v1.end(), v2.begin(), mypredicate) )
+          std::cout << "The contents of both sequences are equal.\n";
+        else
+          std::cout << "The contents of both sequences differ.\n";
+
+        std::cout << "Using default comparison (operator<): ";
+        bool result = ft::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end());
+          std::cout << std::boolalpha << result << std::endl; 
+        std::cout << "Using mycomp as comparison object: ";
+        std::cout << ft::lexicographical_compare(v3.begin(), v3.end(), v2.begin(), v2.end(),mycomp);
+        std::cout << '\n';
+
+    }
+    
+    /*-----------------------------is_integral---------------------------*/
+    
+    {
+        std::cout << "char: " << ft::is_integral < char >::value << std::endl;
+        std::cout << "bool: " << ft::is_integral < bool >::value << std::endl;
+        std::cout << "int: " << ft::is_integral < int >::value << std::endl;
+        std::cout << "float: " << ft::is_integral < float >::value << std::endl;
+        std::cout << "double: " << ft::is_integral < double >::value << std::endl;
+    }
+    
   }
-   
   catch(const std::exception& e)
   {
     std::cerr << e.what() << '\n';

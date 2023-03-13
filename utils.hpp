@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 13:37:43 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/12 15:35:49 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:24:31 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define UTILS_HPP
 
 namespace ft{
+    
     // enable_if
     template <bool B, class T = void>
     struct enable_if{};
@@ -21,15 +22,18 @@ namespace ft{
     struct enable_if<true, T> {
         typedef T type;
     };
-    // compare the types
-    template <class T, class U>
-    struct cmp {
-        static const bool value = false; 
-    };
-    template <class T>
-    struct cmp <T, T> {
-        static const bool value = true;
-    };
+
+    
+    // // compare the types
+    // template <class T, class U>
+    // struct cmp {
+    //     static const bool value = false; 
+    // };
+    // template <class T>
+    // struct cmp <T, T> {
+    //     static const bool value = true;
+    // };
+
 //  integral types 
 template <class T> // declare a primary template for the is_integral type trait, the type T is not an integral type
 struct is_integral {

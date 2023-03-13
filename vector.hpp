@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/12 15:47:58 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:21:27 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ template<typename T, class allocator = std::allocator<T> >
 class vector
 {
 public:
-    typedef T value_type;
+    //create an alternative name for a type T
+    typedef T                                           value_type;
     // typedef is defining a new type for use in your code, like a shorthand
-    typedef allocator allocator_type;
+    typedef allocator                                   allocator_type;
     // typename here is letting the compiler know that value_type is a type and not a static member of _MyBase
     typedef typename 	allocator_type::reference       reference; 
     typedef typename 	allocator_type::const_reference const_reference;
@@ -91,7 +92,7 @@ public:
     //-----------> range constructor
     template <class InputIterator>
     vector (InputIterator first, InputIterator last, const allocator_type& allocc = allocator_type(), 
-    typename ft::enable_if<!ft::cmp<InputIterator, int>::value>::type* = NULL)
+    typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
     {
         size_v = last - first;
         capacity_v =  last - first;
@@ -152,7 +153,7 @@ public:
     
     template <class InputIterator>  
     void assign (InputIterator first, InputIterator last,  
-    typename ft::enable_if<!ft::cmp<InputIterator, int>::value>::type* = NULL){
+    typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL){
         // SFINAE is typically used in combination with template specializations 
         //and type traits to create more sophisticated and flexible template code.
 		size_type sizeR = last - first;
@@ -410,8 +411,8 @@ public:
    }
    
    template< class InputIt >
-    iterator insert( iterator pos, InputIt first, InputIt last,
-    typename ft::enable_if<!ft::cmp<InputIt, int>::value>::type* = NULL){
+   typename ft::enable_if<!ft::is_integral<InputIt>::value, bool>::type 
+   insert( iterator pos, InputIt first, InputIt last){
     if (capacity_v == size_v){
         reserve(capacity_v * 2);
     }
