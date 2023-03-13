@@ -1,24 +1,25 @@
 
 #include <iostream>
 #include <type_traits>
+#include "utils.hpp"
 
-// template <typename T>
-// typename std::enable_if<std::is_integral<T>::value, void>::type
-// foo(T arg) {
-//     std::cout << "foo() called with an integral type" << std::endl;
-// }
+template <typename T>
+typename ft::enable_if<ft::is_integral<T>::value, void>::type
+foo(T arg) {
+    std::cout << "foo() called with an integral type" << std::endl;
+}
 
-// template <typename T>
-// typename std::enable_if<std::is_floating_point<T>::value, void>::type
-// foo(T arg) {
-//     std::cout << "foo() called with a floating point type" << std::endl;
-// }
+template <typename T>
+typename ft::enable_if<std::is_floating_point<T>::value, void>::type
+foo(T arg) {
+    std::cout << "foo() called with a floating point type" << std::endl;
+}
 
-// int main() {
-//     foo(42);      // calls the first foo() template function
-//      foo(3.14f);   // calls the second foo() template function
-//     return 0;
-// }
+int main() {
+    foo(42);      // calls the first foo() template function
+     foo(3.14f);   // calls the second foo() template function
+    return 0;
+}
 
 
 
@@ -94,5 +95,5 @@
 //     }
 //     std::cout << '\n';
 //     return 0;
-}
+//}
 

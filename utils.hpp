@@ -6,18 +6,25 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 13:37:43 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/13 17:24:31 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/13 18:40:54 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_HPP
 # define UTILS_HPP
 
+#include <iostream>
 namespace ft{
     
-    // enable_if
-    template <bool B, class T = void>
+    // struct template is a type trait that can be used to conditionally enable or 
+    //disable function templates or class templates based on a compile-time condition 
+    
+    //template parameter B is true. In this case, the enable_if struct template defines a 
+    //public member type named "type" that is an alias for the second template parameter T.
+    
+    template <bool B, class T = void >
     struct enable_if{};
+    
     template <class T> 
     struct enable_if<true, T> {
         typedef T type;
@@ -35,12 +42,17 @@ namespace ft{
     // };
 
 //  integral types 
-template <class T> // declare a primary template for the is_integral type trait, the type T is not an integral type
+// declare a primary template for the is_integral type trait, the type T is not 
+// an integral type
+
+template <class T> 
 struct is_integral {
     static const bool value = false;
 };
+
 //keyword is used to define a type trait 
 //provides a specific implementation of the is_integral template
+
 template <> struct is_integral<char> {
     static const bool value = true;
 };

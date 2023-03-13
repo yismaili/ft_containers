@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/13 17:21:27 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/13 18:04:05 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,11 +151,15 @@ public:
    }
     /*------------Assign vector content--------------------*/
     
+    // SFINAE is typically used in combination with template specializations 
+    //and type traits to create more sophisticated and flexible template code.
+    
+    //the function template is enabled only if the type 
+    //of the first and last parameters is not int.
+    
     template <class InputIterator>  
     void assign (InputIterator first, InputIterator last,  
     typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL){
-        // SFINAE is typically used in combination with template specializations 
-        //and type traits to create more sophisticated and flexible template code.
 		size_type sizeR = last - first;
         size_t i = 0;
 			
