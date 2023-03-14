@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/14 01:31:30 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/14 23:08:02 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ public:
         size_v = n;
         (void) allocc;
         capacity_v = n; 
-        _data = alloc.allocate(n); //Allocate block of storage
+        _data = alloc.allocate(capacity_v); //Allocate block of storage
         size_t i = 0;
-        while (i < n){
+        while (i < size_v){
             alloc.construct(_data + i, val); // Construct an object
             i++;
         }
@@ -168,24 +168,24 @@ public:
         size_t i = 0;
 			
 		if (sizeR > capacity_v){
-            value_type	*_data_tmp;
-			free_memory();
-			capacity_v *= 2;
-			if (sizeR > capacity_v){
-			    capacity_v = sizeR;
-            }
+            // value_type	*_data_tmp;
+			// free_memory();
+			// capacity_v *= 2;
+			// if (sizeR > capacity_v){
+			//     capacity_v = sizeR;
+            // }
             
-			_data_tmp = alloc.allocate(capacity_v);
-			while (i < capacity_v){
-				alloc.construct(_data_tmp + i);
-                i++;
-            }
+			// _data_tmp = alloc.allocate(capacity_v);
+			// while (i < capacity_v){
+			// 	alloc.construct(_data_tmp + i);
+            //     i++;
+            // }
+            reserve(capacity_v * 2);
             while (first != last){
-				_data_tmp[i] = *first;
+				_data[i] = *first;
 				i++;
                 first++;
             }
-			_data = _data_tmp;
 			size_v = sizeR;
 		}
 		else{
@@ -400,24 +400,42 @@ public:
         return (iterator(_data));
    }
 
-   iterator insert(iterator pos, size_type count, const T& value){
-    size_type l = 0;
-    if (capacity_v == size_v){
-        reserve(capacity_v *= 2);
+  iterator insert(iterator pos, size_type count, const T& value){
+    if (capacity_v < size_v + count){
+       capacity_v *= 2;
+       if (capacity_v < size_v + count){
+            capacity_v = size_v + count;
+       }
     }
-    while (l < count)
-    {
-        int i = size_v;
-        int  j = pos - begin();
-        while (i >= j){
-            _data[i + 1] = _data[i];
-            i--;
+    pointer data_tmp = alloc.allocate(capacity_v);
+    size_t i = 0;
+     size_t j = 0;
+    while (i < capacity_v){
+       alloc.construct(data_tmp + i);
+       i++;
+    }
+    i = 0;
+    while (i < size_v){
+        if (pos ==( begin() + j)){
+            break;
         }
-        size_v++;
-        _data[l] = std::move(value);
-        l++;
-   }
-    return (iterator(_data));
+        data_tmp[i] = _data[i];
+        i++;
+    }
+    j = 0;
+    while (j < count){
+        data_tmp[i] = value;
+        i++;
+        j++;
+    }
+    while (i < (size_v + count)){
+        _data[i] = _data[i - count];
+        i++;
+    }
+    free_memory();
+    size_v += count;
+    _data =  data_tmp;
+    return (_data);
    }
    
    template< class InputIt >
@@ -462,7 +480,7 @@ public:
    
    void pop_back(){
     if (size_v){
-       alloc.destroy(_data +(size_v));
+       alloc.destroy(_data + (size_v - 1));
        size_v--;
     }else {
         throw std::out_of_range("Empty !!!");
@@ -496,18 +514,19 @@ public:
         size_type capacity_tmp = other.capacity_v;
         size_type size_tmp = other.size_v;
         pointer _data_tmp = other._data;
-        //  size_t i = 0;
-        //  _data_tmp = alloc.allocate(capacity_tmp);
-        //   while (i < size_tmp){
-        //     alloc.construct(_data_tmp + i, *(other._data));
-        //     i++;
-        // }
+        allocator_type	alloc_tmp = other.alloc;
+       
         other.capacity_v = capacity_v;
         capacity_v = capacity_tmp;
+        
         other.size_v = size_v;
         size_v = size_tmp;
+        
         other._data = _data;
         _data = _data_tmp; 
+
+        other.alloc = alloc;
+        alloc = alloc_tmp; 
     }
 
     iterator erase( iterator pos ){
@@ -632,6 +651,7 @@ public:
 	{
 		size_t size_min;
         size_t i = 0;
+        std::cout<<"--**-----\n";
 		if (rhs.size() < lhs.size()){
 		    size_min = lhs.size();  
         }else{

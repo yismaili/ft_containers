@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/14 01:35:32 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/14 23:01:52 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ int main ()
         std::cout << ' ' << myvector[i];
       std::cout << '\n';
     }
-    
     /*-------------data------------------------*/
     {
       ft::vector<int> myvector (5);
@@ -223,7 +222,7 @@ int main ()
       std::cout << '\n';
       
     }
-    
+
     /*-----------------------get_allocator--------------*/
 
       {
@@ -389,7 +388,7 @@ int main ()
       myvector.resize(12);
 
       std::cout << "myvector contains:";
-      for (int i=0;i<myvector.size();i++)
+      for (size_t i=0;i<myvector.size();i++)
         std::cout << ' ' << myvector[i];
       std::cout << '\n';
     }
@@ -402,8 +401,8 @@ int main ()
       for (int i=0; i<10; i++) myints.push_back(i);
       std::cout << "1. size: " << myints.size() << '\n';
 
-      myints.insert (myints.end(),10,100);
-      std::cout << "2. size: " << myints.size() << '\n';
+       myints.insert (myints.end(),10,100);
+       std::cout << "2. size: " << myints.size() << '\n';
 
       myints.pop_back();
       std::cout << "3. size: " << myints.size() << '\n';
@@ -411,53 +410,50 @@ int main ()
     /*-------------------swap-------------------------*/
      ft::vector<int> foo (3,100);   // three ints with a value of 100
      ft::vector<int> bar (5,200);   // five ints with a value of 200
-    {
+      {
 
-      foo.swap(bar);
+        foo.swap(bar);
 
-      std::cout << "foo contains:";
-      for (unsigned i=0; i<foo.size(); i++)
-        std::cout << ' ' << foo[i];
-      std::cout << '\n';
+        std::cout << "foo contains:";
+        for (unsigned i=0; i<foo.size(); i++)
+          std::cout << ' ' << foo[i];
+        std::cout << '\n';
 
-      std::cout << "bar contains:";
-      for (unsigned i=0; i<bar.size(); i++)
-        std::cout << ' ' << bar[i];
-      std::cout << '\n';
-    }
+        std::cout << "bar contains:";
+        for (unsigned i=0; i<bar.size(); i++)
+          std::cout << ' ' << bar[i];
+        std::cout << '\n';
+     }
     /*-----------------------relational operators------------*/
-
     {
-      ft::vector<int> foo (3,100);   // three ints with a value of 100
-      ft::vector<int> bar (2,200);   // two ints with a value of 200
+        ft::vector<int> foo (3,100);   // three ints with a value of 100
+        ft::vector<int> bar (2,200);   // two ints with a value of 200
 
-      if (foo==bar) std::cout << "foo and bar are equal\n";
-      if (foo!=bar) std::cout << "foo and bar are not equal\n";
-      if (foo< bar) std::cout << "foo is less than bar\n";
-      if (foo> bar) std::cout << "foo is greater than bar\n";
-      if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
-      if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+        if (foo==bar) std::cout << "foo and bar are equal\n";
+        if (foo!=bar) std::cout << "foo and bar are not equal\n";
+        if (foo< bar) std::cout << "foo is less than bar\n";
+        if (foo> bar) std::cout << "foo is greater than bar\n";
+        if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+        if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
     }
     /*-----------------swap (vector)-----------------------*/
 
     {
-      unsigned int i;
-      ft::vector<int> foo (3,100);   // three ints with a value of 100
-      ft::vector<int> bar (5,200);   // five ints with a value of 200
+        ft::vector<int> foo (3,100);   // three ints with a value of 100
 
-      foo.swap(bar);
+        ft::vector<int> bar (5,200);   // five ints with a value of 200
 
-      std::cout << "foo contains:";
-      for (ft::vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
-        std::cout << ' ' << *it;
-      std::cout << '\n';
+        ft::swap(foo, bar);
+        std::cout << "foo contains:";
+        for (ft::vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+          std::cout << ' ' << *it;
+        std::cout << '\n';
 
-      std::cout << "bar contains:";
-      for (ft::vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
-        std::cout << ' ' << *it;
-      std::cout << '\n';
-
-    }
+        std::cout << "bar contains:";
+        for (ft::vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+          std::cout << ' ' << *it;
+         std::cout << '\n';
+      }
   //   /*---------------------------------tests for stack ------------------------------------*/
   //   /*-----------------------push---------------*/
   //   {
@@ -539,7 +535,7 @@ int main ()
   //     std::cout << "alice >  eve returns " << (alice > eve) << '\n';
   //     std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
   //  }
-  // /*----------------test for map ----------------------------------------------*/
+  /*----------------test for map ----------------------------------------------*/
   // /*----------------------Construct map-----------------*/
   //   {
   //     ft::map<char,int> first;
@@ -646,37 +642,37 @@ int main ()
     
   //   /*-------------------------erase----------------------------*/ 
 
-    // {
-    //  std::map<char,int> mymap;
-    //  std::map<char,int>::iterator it;
+  //   {
+  //    std::map<char,int> mymap;
+  //    std::map<char,int>::iterator it;
 
-    //   // insert some values:
-    //   mymap['a']=10;
-    //   mymap['b']=20;
-    //   mymap['c']=30;
-    //   mymap['d']=40;
-    //   mymap['e']=50;
-    //   mymap['f']=60;
+  //     // insert some values:
+  //     mymap['a']=10;
+  //     mymap['b']=20;
+  //     mymap['c']=30;
+  //     mymap['d']=40;
+  //     mymap['e']=50;
+  //     mymap['f']=60;
 
-    //   it = mymap.find('b');
-    //   mymap.erase (it);  // erasing by iterator 
+  //     it = mymap.find('b');
+  //     mymap.erase (it);  // erasing by iterator 
                       
-    //   std::cout<<" After erasing by iterator\n";
-    //   for ( std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    //       std::cout << it->first << " => " << it->second << '\n';
+  //     std::cout<<" After erasing by iterator\n";
+  //     for ( std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+  //         std::cout << it->first << " => " << it->second << '\n';
           
-    //   mymap.erase ('c');                  // erasing by key
-    //   std::cout<<" After  erasing by key\n";
-    //   for ( std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    //     std::cout << it->first << " => " << it->second << '\n';
+  //     mymap.erase ('c');                  // erasing by key
+  //     std::cout<<" After  erasing by key\n";
+  //     for ( std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
         
-    //   it=mymap.find ('e');
-    //   mymap.erase (mymap.begin(), it);    // erasing by range
-    //   // show content:
-    //    std::cout<<" After  erasing by range\n";
-    //   for ( std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    //     std::cout << it->first << " => " << it->second << '\n';
-    // }
+  //     it=mymap.find ('e');
+  //     mymap.erase (mymap.begin(), it);    // erasing by range
+  //     // show content:
+  //      std::cout<<" After  erasing by range\n";
+  //     for ( std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
+  //   }
   //   /*-----------------find----------------*/
 
   //   {
