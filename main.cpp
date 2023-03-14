@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/13 17:11:30 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/14 01:35:32 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,14 +214,16 @@ int main ()
       // erase the 6th element
       myvector.erase (myvector.begin()+5);
 
-      // erase the first 3 elements:
+     // erase the first 3 elements:
       myvector.erase (myvector.begin(),myvector.begin()+3);
 
       std::cout << "myvector contains:";
       for (unsigned i=0; i<myvector.size(); ++i)
         std::cout << ' ' << myvector[i];
       std::cout << '\n';
+      
     }
+    
     /*-----------------------get_allocator--------------*/
 
       {
@@ -376,7 +378,7 @@ int main ()
     
     /*----------------resize-------------------------*/
     {
-      ft::vector<int> myvector;
+      std::vector<int> myvector;
 
       // set some initial content:
       for (int i=1;i<10;i++) 
@@ -407,10 +409,9 @@ int main ()
       std::cout << "3. size: " << myints.size() << '\n';
     }
     /*-------------------swap-------------------------*/
-
-    {
      ft::vector<int> foo (3,100);   // three ints with a value of 100
      ft::vector<int> bar (5,200);   // five ints with a value of 200
+    {
 
       foo.swap(bar);
 
@@ -457,573 +458,573 @@ int main ()
       std::cout << '\n';
 
     }
-    /*---------------------------------tests for stack ------------------------------------*/
-    /*-----------------------push---------------*/
-    {
-      ft::stack<int> mystack;
-      int sum (0);
+  //   /*---------------------------------tests for stack ------------------------------------*/
+  //   /*-----------------------push---------------*/
+  //   {
+  //     ft::stack<int> mystack;
+  //     int sum (0);
 
-      for (int i=1;i<=10;i++) mystack.push(i);
+  //     for (int i=1;i<=10;i++) mystack.push(i);
 
-      while (!mystack.empty())
-      {
-        sum += mystack.top();
-        mystack.pop();
-      }
+  //     while (!mystack.empty())
+  //     {
+  //       sum += mystack.top();
+  //       mystack.pop();
+  //     }
 
-      std::cout << "total: " << sum << '\n';
+  //     std::cout << "total: " << sum << '\n';
 
-      /*------------push and pop---------------*/
-      ft::stack<int> mystack1;
+  //     /*------------push and pop---------------*/
+  //     ft::stack<int> mystack1;
 
-      for (int i=0; i<5; ++i) mystack1.push(i);
+  //     for (int i=0; i<5; ++i) mystack1.push(i);
 
-      std::cout << "Popping out elements...";
-      while (!mystack1.empty())
-      {
-        std::cout << ' ' << mystack1.top();
-        mystack1.pop();
-      }
-      std::cout << '\n';
-      /*--------------size----------------*/
-     ft::stack<int> myints;
-      std::cout << "0. size: " << myints.size() << '\n';
+  //     std::cout << "Popping out elements...";
+  //     while (!mystack1.empty())
+  //     {
+  //       std::cout << ' ' << mystack1.top();
+  //       mystack1.pop();
+  //     }
+  //     std::cout << '\n';
+  //     /*--------------size----------------*/
+  //    ft::stack<int> myints;
+  //     std::cout << "0. size: " << myints.size() << '\n';
 
-      for (int i=0; i<5; i++) myints.push(i);
-      std::cout << "1. size: " << myints.size() << '\n';
+  //     for (int i=0; i<5; i++) myints.push(i);
+  //     std::cout << "1. size: " << myints.size() << '\n';
 
-      myints.pop();
-      std::cout << "2. size: " << myints.size() << '\n';
-      /*------------top---------------------*/
+  //     myints.pop();
+  //     std::cout << "2. size: " << myints.size() << '\n';
+  //     /*------------top---------------------*/
 
-      ft::stack<int> mystack2;
-      mystack2.push(10);
-      mystack2.push(20);
+  //     ft::stack<int> mystack2;
+  //     mystack2.push(10);
+  //     mystack2.push(20);
 
-      mystack2.top() -= 5;
+  //     mystack2.top() -= 5;
 
-      std::cout << "mystack2.top() is now " << mystack2.top() << '\n';
+  //     std::cout << "mystack2.top() is now " << mystack2.top() << '\n';
       
-      /*--------------comparition--------------*/
-      ft::stack<int> alice;
-      ft::stack<int> bob;
-      ft::stack<int> eve;
-      alice.push(1);
-      alice.push(2);
-      alice.push(3);
+  //     /*--------------comparition--------------*/
+  //     ft::stack<int> alice;
+  //     ft::stack<int> bob;
+  //     ft::stack<int> eve;
+  //     alice.push(1);
+  //     alice.push(2);
+  //     alice.push(3);
       
-      bob.push(8);
-      bob.push(9);
-      bob.push(10);
+  //     bob.push(8);
+  //     bob.push(9);
+  //     bob.push(10);
       
-      eve.push(1);
-      eve.push(2);
-      eve.push(3);
-      std::cout << std::boolalpha;
-      // Compare non equal containers
-      std::cout << "alice == bob returns " << (alice == bob) << '\n';
-      std::cout << "alice != bob returns " << (alice != bob) << '\n';
-      std::cout << "alice <  bob returns " << (alice < bob) << '\n';
-      std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
-      std::cout << "alice >  bob returns " << (alice > bob) << '\n';
-      std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
+  //     eve.push(1);
+  //     eve.push(2);
+  //     eve.push(3);
+  //     std::cout << std::boolalpha;
+  //     // Compare non equal containers
+  //     std::cout << "alice == bob returns " << (alice == bob) << '\n';
+  //     std::cout << "alice != bob returns " << (alice != bob) << '\n';
+  //     std::cout << "alice <  bob returns " << (alice < bob) << '\n';
+  //     std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
+  //     std::cout << "alice >  bob returns " << (alice > bob) << '\n';
+  //     std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
   
-      std::cout << '\n';
+  //     std::cout << '\n';
   
-      // Compare equal containers
-      std::cout << "alice == eve.push(n)s " << (alice == eve) << '\n';
-      std::cout << "alice != eve returns " << (alice != eve) << '\n';
-      std::cout << "alice <  eve returns " << (alice < eve) << '\n';
-      std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
-      std::cout << "alice >  eve returns " << (alice > eve) << '\n';
-      std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
-   }
-  /*----------------test for map ----------------------------------------------*/
-  /*----------------------Construct map-----------------*/
-    {
-      ft::map<char,int> first;
-      first['a']=10;
-      first['b']=30;
-      first['c']=50;
-      first['d']=70;
+  //     // Compare equal containers
+  //     std::cout << "alice == eve.push(n)s " << (alice == eve) << '\n';
+  //     std::cout << "alice != eve returns " << (alice != eve) << '\n';
+  //     std::cout << "alice <  eve returns " << (alice < eve) << '\n';
+  //     std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
+  //     std::cout << "alice >  eve returns " << (alice > eve) << '\n';
+  //     std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
+  //  }
+  // /*----------------test for map ----------------------------------------------*/
+  // /*----------------------Construct map-----------------*/
+  //   {
+  //     ft::map<char,int> first;
+  //     first['a']=10;
+  //     first['b']=30;
+  //     first['c']=50;
+  //     first['d']=70;
       
-      std::cout<<"element of map --> "<<first['a']<<std::endl;
-      std::cout<<"element of map --> "<<first['b']<<std::endl;
-      std::cout<<"element of map --> "<<first['c']<<std::endl;
-      std::cout<<"element of map --> "<<first['d']<<std::endl;
+  //     std::cout<<"element of map --> "<<first['a']<<std::endl;
+  //     std::cout<<"element of map --> "<<first['b']<<std::endl;
+  //     std::cout<<"element of map --> "<<first['c']<<std::endl;
+  //     std::cout<<"element of map --> "<<first['d']<<std::endl;
       
-      ft::map<char,int> second (first.begin(),first.end());
-      std::cout<<"begin of map --> "<<second.begin()->second<<std::endl;
-      std::cout<<"end of map --> "<<second.end()->second<<std::endl;
-      ft::map<char,int> third (second);
-      std::cout<<"begin of second --> "<<third.begin()->second<<std::endl;
-    }
-    /*--------------------begin--------------------------*/
-    {
-      ft::map<char,int> mymap;
+  //     ft::map<char,int> second (first.begin(),first.end());
+  //     std::cout<<"begin of map --> "<<second.begin()->second<<std::endl;
+  //     std::cout<<"end of map --> "<<second.end()->second<<std::endl;
+  //     ft::map<char,int> third (second);
+  //     std::cout<<"begin of second --> "<<third.begin()->second<<std::endl;
+  //   }
+  //   /*--------------------begin--------------------------*/
+  //   {
+  //     ft::map<char,int> mymap;
 
-      mymap['a'] = 10;
-      mymap['b'] = 20;
-      mymap['c'] = 30;
+  //     mymap['a'] = 10;
+  //     mymap['b'] = 20;
+  //     mymap['c'] = 30;
      
-      // show content:
-      for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); it++)
-        std::cout << it->first << " => " << it->second << '\n';
-    }
+  //     // show content:
+  //     for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); it++)
+  //       std::cout << it->first << " => " << it->second << '\n';
+  //   }
     
-    /*-------------------------clear--------------------------*/
-    {
-      ft::map<char,int> mymap;
+  //   /*-------------------------clear--------------------------*/
+  //   {
+  //     ft::map<char,int> mymap;
 
-      mymap['x']=100;
-      mymap['y']=200;
-      mymap['z']=300;
+  //     mymap['x']=100;
+  //     mymap['y']=200;
+  //     mymap['z']=300;
 
-      std::cout << "mymap contains:\n";
-      for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
+  //     std::cout << "mymap contains:\n";
+  //     for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
 
-      mymap.clear();
-      mymap['a']=1101;
-      mymap['b']=2202;
+  //     mymap.clear();
+  //     mymap['a']=1101;
+  //     mymap['b']=2202;
 
-      std::cout << "mymap contains:\n";
-      for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
+  //     std::cout << "mymap contains:\n";
+  //     for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
 
-    }
-    /*-----------------------------count------------------------*/
-    {
-      ft::map<char,int> mymap;
-      char c;
+  //   }
+  //   /*-----------------------------count------------------------*/
+  //   {
+  //     ft::map<char,int> mymap;
+  //     char c;
 
-      mymap ['a']=101;
-      mymap ['c']=202;
-      mymap ['f']=303;
+  //     mymap ['a']=101;
+  //     mymap ['c']=202;
+  //     mymap ['f']=303;
 
-      for (c='a'; c<'h'; c++)
-      {
-        std::cout << c;
-        if (mymap.count(c)>0)
-          std::cout << " is an element of mymap.\n";
-        else 
-          std::cout << " is not an element of mymap.\n";
-      }
-    }
-    /*----------------empty--------------------------------*/
-    {
-      ft::map<char,int> mymap;
+  //     for (c='a'; c<'h'; c++)
+  //     {
+  //       std::cout << c;
+  //       if (mymap.count(c)>0)
+  //         std::cout << " is an element of mymap.\n";
+  //       else 
+  //         std::cout << " is not an element of mymap.\n";
+  //     }
+  //   }
+  //   /*----------------empty--------------------------------*/
+  //   {
+  //     ft::map<char,int> mymap;
 
-      mymap['a']=10;
-      mymap['b']=20;
-      mymap['c']=30;
+  //     mymap['a']=10;
+  //     mymap['b']=20;
+  //     mymap['c']=30;
 
-      while (!mymap.empty())
-      {
-        std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
-        mymap.erase(mymap.begin());
-      }
-    }
+  //     while (!mymap.empty())
+  //     {
+  //       std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
+  //       mymap.erase(mymap.begin());
+  //     }
+  //   }
 
-    /*------------------equal_range-------------------*/
-    {
-      ft::map<char,int> mymap;
+  //   /*------------------equal_range-------------------*/
+  //   {
+  //     ft::map<char,int> mymap;
 
-      mymap['a']=10;
-      mymap['b']=20;
-      mymap['c']=30;
+  //     mymap['a']=10;
+  //     mymap['b']=20;
+  //     mymap['c']=30;
 
-      ft::pair<ft::map<char,int>::iterator,ft::map<char,int>::iterator> ret;
-      ret = mymap.equal_range('b');
+  //     ft::pair<ft::map<char,int>::iterator,ft::map<char,int>::iterator> ret;
+  //     ret = mymap.equal_range('b');
 
-      std::cout << "lower bound points to: ";
-      std::cout << ret.first->first << " => " << ret.first->second << '\n';
+  //     std::cout << "lower bound points to: ";
+  //     std::cout << ret.first->first << " => " << ret.first->second << '\n';
 
-      std::cout << "upper bound points to: ";
-      std::cout << ret.second->first << " => " << ret.second->second << '\n';
-    }
+  //     std::cout << "upper bound points to: ";
+  //     std::cout << ret.second->first << " => " << ret.second->second << '\n';
+  //   }
     
-    /*-------------------------erase----------------------------*/ 
+  //   /*-------------------------erase----------------------------*/ 
 
-    {
-     ft::map<char,int> mymap;
-     ft::map<char,int>::iterator it;
+    // {
+    //  std::map<char,int> mymap;
+    //  std::map<char,int>::iterator it;
 
-      // insert some values:
-      mymap['a']=10;
-      mymap['b']=20;
-      mymap['c']=30;
-      mymap['d']=40;
-      mymap['e']=50;
-      mymap['f']=60;
+    //   // insert some values:
+    //   mymap['a']=10;
+    //   mymap['b']=20;
+    //   mymap['c']=30;
+    //   mymap['d']=40;
+    //   mymap['e']=50;
+    //   mymap['f']=60;
 
-      it = mymap.find('b');
-      mymap.erase (it);  // erasing by iterator 
+    //   it = mymap.find('b');
+    //   mymap.erase (it);  // erasing by iterator 
                       
-      std::cout<<" After erasing by iterator\n";
-      for ( ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-          std::cout << it->first << " => " << it->second << '\n';
+    //   std::cout<<" After erasing by iterator\n";
+    //   for ( std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+    //       std::cout << it->first << " => " << it->second << '\n';
           
-      mymap.erase ('c');                  // erasing by key
-      std::cout<<" After  erasing by key\n";
-      for ( ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
+    //   mymap.erase ('c');                  // erasing by key
+    //   std::cout<<" After  erasing by key\n";
+    //   for ( std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+    //     std::cout << it->first << " => " << it->second << '\n';
         
-      it=mymap.find ('e');
-      mymap.erase (mymap.begin(), it);    // erasing by range
-      // show content:
-       std::cout<<" After  erasing by range\n";
-      for ( ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-    }
-    /*-----------------find----------------*/
+    //   it=mymap.find ('e');
+    //   mymap.erase (mymap.begin(), it);    // erasing by range
+    //   // show content:
+    //    std::cout<<" After  erasing by range\n";
+    //   for ( std::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+    //     std::cout << it->first << " => " << it->second << '\n';
+    // }
+  //   /*-----------------find----------------*/
 
-    {
-      ft::map<char,int> mymap;
-      ft::map<char,int>::iterator it;
+  //   {
+  //     ft::map<char,int> mymap;
+  //     ft::map<char,int>::iterator it;
 
-      mymap['a']=50;
-      mymap['b']=100;
-      mymap['c']=150;
-      mymap['d']=200;
+  //     mymap['a']=50;
+  //     mymap['b']=100;
+  //     mymap['c']=150;
+  //     mymap['d']=200;
       
-      // print content:
-      std::cout << "elements in mymap:" << '\n';
-      std::cout << "a => " << mymap.find('a')->second << '\n';
-      std::cout << "c => " << mymap.find('c')->second << '\n';
-      std::cout << "d => " << mymap.find('d')->second << '\n';
-    }
+  //     // print content:
+  //     std::cout << "elements in mymap:" << '\n';
+  //     std::cout << "a => " << mymap.find('a')->second << '\n';
+  //     std::cout << "c => " << mymap.find('c')->second << '\n';
+  //     std::cout << "d => " << mymap.find('d')->second << '\n';
+  //   }
 
-    /*---------------get_allocator--------------------*/
+  //   /*---------------get_allocator--------------------*/
 
-    {
-      int psize;
-      ft::map<char,int> mymap;
-      ft::pair<const char,int>* p;
+  //   {
+  //     int psize;
+  //     ft::map<char,int> mymap;
+  //     ft::pair<const char,int>* p;
 
-      // allocate an array of 5 elements using mymap's allocator:
-      p=mymap.get_allocator().allocate(5);
+  //     // allocate an array of 5 elements using mymap's allocator:
+  //     p=mymap.get_allocator().allocate(5);
 
-      // assign some values to array
-      psize = sizeof(ft::map<char,int>::value_type)*5;
+  //     // assign some values to array
+  //     psize = sizeof(ft::map<char,int>::value_type)*5;
 
-      std::cout << "The allocated array has a size of " << psize << " bytes.\n";
+  //     std::cout << "The allocated array has a size of " << psize << " bytes.\n";
 
-      mymap.get_allocator().deallocate(p,5);
-    }
-    /*-----------------insert----------------*-----------*/ 
+  //     mymap.get_allocator().deallocate(p,5);
+  //   }
+  //   /*-----------------insert----------------*-----------*/ 
     
-    {
-      ft::map<char,int> mymap;
+  //   {
+  //     ft::map<char,int> mymap;
 
-      // first insert function version (single parameter):
-      mymap.insert ( ft::pair<char,int>('a',100) );
-      mymap.insert ( ft::pair<char,int>('z',200) );
-      ft::pair<ft::map<char,int>::iterator,bool> ret;
-      ret = mymap.insert ( ft::pair<char,int>('z',500) );
-      if (ret.second==false) {
-        std::cout << "element 'z' already existed\n";
-        std::cout << " with a value of " << ret.first->second << '\n';
-      }
+  //     // first insert function version (single parameter):
+  //     mymap.insert ( ft::pair<char,int>('a',100) );
+  //     mymap.insert ( ft::pair<char,int>('z',200) );
+  //     ft::pair<ft::map<char,int>::iterator,bool> ret;
+  //     ret = mymap.insert ( ft::pair<char,int>('z',500) );
+  //     if (ret.second==false) {
+  //       std::cout << "element 'z' already existed\n";
+  //       std::cout << " with a value of " << ret.first->second << '\n';
+  //     }
 
-     // second insert function version (with hint position):
-      // ft::map<char,int>::iterator it = mymap.begin();
-      // mymap.insert (it,ft::pair<char,int>('b',300));  // max efficiency inserting
-      // mymap.insert (it,ft::pair<char,int>('c',400));  // no max efficiency inserting
+  //    // second insert function version (with hint position):
+  //     // ft::map<char,int>::iterator it = mymap.begin();
+  //     // mymap.insert (it,ft::pair<char,int>('b',300));  // max efficiency inserting
+  //     // mymap.insert (it,ft::pair<char,int>('c',400));  // no max efficiency inserting
       
-      // third insert function version (range insertion):
-      ft::map<char,int> anothermap;
-      anothermap.insert(mymap.begin(),mymap.find('c'));
-      // showing contents:
-      std::cout << "mymap contains:\n";
-      for (ft::map<char,int>::iterator it = mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
+  //     // third insert function version (range insertion):
+  //     ft::map<char,int> anothermap;
+  //     anothermap.insert(mymap.begin(),mymap.find('c'));
+  //     // showing contents:
+  //     std::cout << "mymap contains:\n";
+  //     for (ft::map<char,int>::iterator it = mymap.begin(); it!=mymap.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
 
-      std::cout << "anothermap contains:\n";
-      for (ft::map<char,int>::iterator it = anothermap.begin(); it!=anothermap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-    }
-    /*---------------------------key_comp------------------------*/
+  //     std::cout << "anothermap contains:\n";
+  //     for (ft::map<char,int>::iterator it = anothermap.begin(); it!=anothermap.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
+  //   }
+  //   /*---------------------------key_comp------------------------*/
 
-    {
-      ft::map<char,int> mymap;
+  //   {
+  //     ft::map<char,int> mymap;
 
-      ft::map<char,int>::key_compare mycomp = mymap.key_comp();
+  //     ft::map<char,int>::key_compare mycomp = mymap.key_comp();
 
-      mymap['a']=100;
-      mymap['b']=200;
-      mymap['c']=300;
+  //     mymap['a']=100;
+  //     mymap['b']=200;
+  //     mymap['c']=300;
 
-      std::cout << "mymap contains:\n";
+  //     std::cout << "mymap contains:\n";
 
-      char highest = mymap.begin()->first;     // key value of last element
+  //     char highest = mymap.begin()->first;     // key value of last element
 
-      ft::map<char,int>::iterator it = mymap.begin();
-      do {
-        std::cout << it->first << " => " << it->second << '\n';
-      } while ( mycomp((*it++).first, highest) );
-      std::cout << '\n';
-    }
+  //     ft::map<char,int>::iterator it = mymap.begin();
+  //     do {
+  //       std::cout << it->first << " => " << it->second << '\n';
+  //     } while ( mycomp((*it++).first, highest) );
+  //     std::cout << '\n';
+  //   }
     
-    /*------------------lower_bound-------------------------------*/ 
+  //   /*------------------lower_bound-------------------------------*/ 
 
-    {
-      ft::map<char,int> mymap;
-      ft::map<char,int>::iterator itlow,itup;
+  //   {
+  //     ft::map<char,int> mymap;
+  //     ft::map<char,int>::iterator itlow,itup;
 
-      mymap['a']=20;
-      mymap['b']=40;
-      mymap['c']=60;
-      mymap['d']=80;
-      mymap['e']=100;
+  //     mymap['a']=20;
+  //     mymap['b']=40;
+  //     mymap['c']=60;
+  //     mymap['d']=80;
+  //     mymap['e']=100;
 
-      itlow=mymap.lower_bound ('b');  // itlow points to b
-      itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+  //     itlow=mymap.lower_bound ('b');  // itlow points to b
+  //     itup=mymap.upper_bound ('d');   // itup points to e (not d!)
 
-      std::cout <<"tlow points to b  "<<itlow->first << " => " <<itlow->second << '\n';
-      std::cout <<"itup points to e  "<<itup->first << " => " <<itup->second << '\n';
+  //     std::cout <<"tlow points to b  "<<itlow->first << " => " <<itlow->second << '\n';
+  //     std::cout <<"itup points to e  "<<itup->first << " => " <<itup->second << '\n';
 
-      // print content:
-      for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
+  //     // print content:
+  //     for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
 
-    }
-    /*------------------------max_size----------------------------*/
+  //   }
+  //   /*------------------------max_size----------------------------*/
 
-    {
-      int i;
-      ft::map<int,int> mymap;
+  //   {
+  //     int i;
+  //     ft::map<int,int> mymap;
 
-      if (mymap.max_size()>1000)
-      {
-        for (i=0; i<1000; i++) mymap[i]=0;
-        std::cout << "The map contains 1000 elements.\n";
-      }
-      else std::cout << "The map could not hold 1000 elements.\n";
-    }
+  //     if (mymap.max_size()>1000)
+  //     {
+  //       for (i=0; i<1000; i++) mymap[i]=0;
+  //       std::cout << "The map contains 1000 elements.\n";
+  //     }
+  //     else std::cout << "The map could not hold 1000 elements.\n";
+  //   }
     
-    /*--------------------------operator[]----------------------*/
+  //   /*--------------------------operator[]----------------------*/
     
-    {
-     ft::map<char,std::string> mymap;
+  //   {
+  //    ft::map<char,std::string> mymap;
 
-      mymap['a']="an element";
-      mymap['b']="another element";
-      mymap['c']=mymap['b'];
+  //     mymap['a']="an element";
+  //     mymap['b']="another element";
+  //     mymap['c']=mymap['b'];
 
-      std::cout << "mymap['a'] is " << mymap['a'] << '\n';
-      std::cout << "mymap['b'] is " << mymap['b'] << '\n';
-      std::cout << "mymap['c'] is " << mymap['c'] << '\n';
-      std::cout << "mymap['d'] is " << mymap['d'] << '\n';
+  //     std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+  //     std::cout << "mymap['b'] is " << mymap['b'] << '\n';
+  //     std::cout << "mymap['c'] is " << mymap['c'] << '\n';
+  //     std::cout << "mymap['d'] is " << mymap['d'] << '\n';
 
-      std::cout << "mymap now contains " << mymap.size() << " elements.\n";
-    } 
+  //     std::cout << "mymap now contains " << mymap.size() << " elements.\n";
+  //   } 
     
-    /*---------------------operator=----------------------------*/ 
+  //   /*---------------------operator=----------------------------*/ 
     
-      {
-      ft::map<char,int> first;
-      ft::map<char,int> second;
+  //     {
+  //     ft::map<char,int> first;
+  //     ft::map<char,int> second;
 
-      first['x']=8;
-      first['y']=16;
-      first['z']=32;
+  //     first['x']=8;
+  //     first['y']=16;
+  //     first['z']=32;
 
-     second = first;                // second now contains 3 ints
+  //    second = first;                // second now contains 3 ints
    
 
-      std::cout << "Size of first: " << first.size() << '\n';
-      std::cout << "Size of second: " << second.size() << '\n';
-    }
-    /*---------------------size----------------------------*/
-    {
-     ft::map<char,int> mymap;
-      mymap['a']=101;
-      mymap['b']=202;
-      mymap['c']=302;
-      std::cout << "mymap.size() is " << mymap.size() << '\n';
-    }
+  //     std::cout << "Size of first: " << first.size() << '\n';
+  //     std::cout << "Size of second: " << second.size() << '\n';
+  //   }
+  //   /*---------------------size----------------------------*/
+  //   {
+  //    ft::map<char,int> mymap;
+  //     mymap['a']=101;
+  //     mymap['b']=202;
+  //     mymap['c']=302;
+  //     std::cout << "mymap.size() is " << mymap.size() << '\n';
+  //   }
     
-    /*--------------------swap----------------------------*/ 
+  //   /*--------------------swap----------------------------*/ 
 
-    {
-      ft::map<char,int> foo,bar;
+  //   {
+  //     ft::map<char,int> foo,bar;
 
-      foo['x']=100;
-      foo['y']=200;
+  //     foo['x']=100;
+  //     foo['y']=200;
 
-      bar['a']=11;
-      bar['b']=22;
-      bar['c']=33;
+  //     bar['a']=11;
+  //     bar['b']=22;
+  //     bar['c']=33;
 
-      foo.swap(bar);
+  //     foo.swap(bar);
 
-      std::cout << "foo contains:\n";
-      for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
+  //     std::cout << "foo contains:\n";
+  //     for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
 
-      std::cout << "bar contains:\n";
-      for (ft::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-    }
+  //     std::cout << "bar contains:\n";
+  //     for (ft::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
+  //   }
     
-    /*-------------------upper_bound-------------------*/ 
+  //   /*-------------------upper_bound-------------------*/ 
 
-    {
-      ft::map<char,int> mymap;
-      ft::map<char,int>::iterator itlow,itup;
+  //   {
+  //     ft::map<char,int> mymap;
+  //     ft::map<char,int>::iterator itlow,itup;
 
-      mymap['a']=20;
-      mymap['b']=40;
-      mymap['c']=60;
-      mymap['d']=80;
-      mymap['e']=100;
+  //     mymap['a']=20;
+  //     mymap['b']=40;
+  //     mymap['c']=60;
+  //     mymap['d']=80;
+  //     mymap['e']=100;
 
-      itlow=mymap.lower_bound ('b');  // itlow points to b
-      itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+  //     itlow=mymap.lower_bound ('b');  // itlow points to b
+  //     itup=mymap.upper_bound ('d');   // itup points to e (not d!)
 
-      std::cout <<"tlow points to b  "<<itlow->first << " => " <<itlow->second << '\n';
-      std::cout <<"itup points to e  "<<itup->first << " => " <<itup->second << '\n';
+  //     std::cout <<"tlow points to b  "<<itlow->first << " => " <<itlow->second << '\n';
+  //     std::cout <<"itup points to e  "<<itup->first << " => " <<itup->second << '\n';
 
-      // print content:
-      // for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-      //   std::cout << it->first << " => " << it->second << '\n';
-    }  
-    /*--------------------value_comp--------------------------*/
-    {
-      ft::map<char,int> mymap;
+  //     // print content:
+  //     // for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+  //     //   std::cout << it->first << " => " << it->second << '\n';
+  //   }  
+  //   /*--------------------value_comp--------------------------*/
+  //   {
+  //     ft::map<char,int> mymap;
 
-      mymap['x']=1001;
-      mymap['y']=2002;
-      mymap['z']=3003;
+  //     mymap['x']=1001;
+  //     mymap['y']=2002;
+  //     mymap['z']=3003;
 
-      std::cout << "mymap contains:\n";
+  //     std::cout << "mymap contains:\n";
 
-      ft::pair<char,int> highest = *mymap.begin();          // last element
+  //     ft::pair<char,int> highest = *mymap.begin();          // last element
 
-      ft::map<char,int>::iterator it = mymap.begin();
-      do {
-        std::cout << it->first << " => " << it->second << '\n';
-      } while ( mymap.value_comp()(*it++, highest) );
-    }
-    /*----------------------non-member overloads------------------*/
+  //     ft::map<char,int>::iterator it = mymap.begin();
+  //     do {
+  //       std::cout << it->first << " => " << it->second << '\n';
+  //     } while ( mymap.value_comp()(*it++, highest) );
+  //   }
+  //   /*----------------------non-member overloads------------------*/
     
-    {
-     ft::map<char,int> foo,bar;
-      foo['a']=100;
-      foo['b']=200;
-      bar['a']=10;
-      bar['z']=1000;
+  //   {
+  //    ft::map<char,int> foo,bar;
+  //     foo['a']=100;
+  //     foo['b']=200;
+  //     bar['a']=10;
+  //     bar['z']=1000;
 
-      // foo ({{a,100},{b,200}}) vs bar ({a,10},{z,1000}}):
-      if (foo==bar) std::cout << "foo and bar are equal\n";
-      if (foo!=bar) std::cout << "foo and bar are not equal\n";
-      if (foo< bar) std::cout << "foo is less than bar\n";
-      if (foo> bar) std::cout << "foo is greater than bar\n";
-      if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
-      if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
-    }  
+  //     // foo ({{a,100},{b,200}}) vs bar ({a,10},{z,1000}}):
+  //     if (foo==bar) std::cout << "foo and bar are equal\n";
+  //     if (foo!=bar) std::cout << "foo and bar are not equal\n";
+  //     if (foo< bar) std::cout << "foo is less than bar\n";
+  //     if (foo> bar) std::cout << "foo is greater than bar\n";
+  //     if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+  //     if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+  //   }  
     
-     /*----------------swap (map)---------------------------*/ 
+  //    /*----------------swap (map)---------------------------*/ 
      
-     {
-      ft::map<char,int> foo,bar;
+  //    {
+  //     ft::map<char,int> foo,bar;
 
-      foo['x']=100;
-      foo['y']=200;
+  //     foo['x']=100;
+  //     foo['y']=200;
 
-      bar['a']=11;
-      bar['b']=22;
-      bar['c']=33;
+  //     bar['a']=11;
+  //     bar['b']=22;
+  //     bar['c']=33;
 
-      swap(foo,bar);
+  //     swap(foo,bar);
       
-      std::cout << "foo contains:\n";
-      for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
+  //     std::cout << "foo contains:\n";
+  //     for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
 
-      std::cout << "bar contains:\n";
-      for (ft::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-    }
-    /*---------------------------rend---------------------------*/ /*---error hier----*/
-    {
-      ft::map<char,int> mymap;
-      mymap['x'] = 100;
-      mymap['y'] = 200;
-      mymap['z'] = 300;
-      // show content:
-      std::cout <<"rbegin --- "<< mymap.rbegin()->first << " => " <<mymap.rbegin()->second << '\n';
-      ft::map<char,int>::reverse_iterator rit = mymap.rbegin();
-       for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit){
-        std::cout << rit->first << " => " << rit->second << '\n';
-      }
-    }
+  //     std::cout << "bar contains:\n";
+  //     for (ft::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+  //       std::cout << it->first << " => " << it->second << '\n';
+  //   }
+  //   /*---------------------------rend---------------------------*/ /*---error hier----*/
+  //   {
+  //     ft::map<char,int> mymap;
+  //     mymap['x'] = 100;
+  //     mymap['y'] = 200;
+  //     mymap['z'] = 300;
+  //     // show content:
+  //     std::cout <<"rbegin --- "<< mymap.rbegin()->first << " => " <<mymap.rbegin()->second << '\n';
+  //     ft::map<char,int>::reverse_iterator rit = mymap.rbegin();
+  //      for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit){
+  //       std::cout << rit->first << " => " << rit->second << '\n';
+  //     }
+  //   }
     
-  /*-------------------------------  iterator_traits --------------------------------------*/
-    {
-    ft::vector<int> v;
-    v.push_back(1);
-    v.push_back(2);
-    v.push_back(3);
-    v.push_back(4);
-    v.push_back(5);
-    v.push_back(6);
-    v.push_back(7);
-    std::cout << "Sum of vector elements = " << sum(v.begin(), v.end()) << std::endl;
-  }
+  // /*-------------------------------  iterator_traits --------------------------------------*/
+  //   {
+  //   ft::vector<int> v;
+  //   v.push_back(1);
+  //   v.push_back(2);
+  //   v.push_back(3);
+  //   v.push_back(4);
+  //   v.push_back(5);
+  //   v.push_back(6);
+  //   v.push_back(7);
+  //   std::cout << "Sum of vector elements = " << sum(v.begin(), v.end()) << std::endl;
+  // }
   
-  /*-------------------------------  algorithm --------------------------------------*/
-  {
-      ft::vector<int> v1;
-      ft::vector<int> v2 ;
-      ft::vector<int> v3;
-        int j = 2;
-        while (j < 12){
-          v1.push_back(j);
-            j++;
-        }
-        j = 2;
-        while (j < 12){
-          v2.push_back(j);
-            j++;
-        }
-      j = 0;
-        while (j < 4){
-          v3.push_back(j);
-            j++;
-        }
+  // /*-------------------------------  algorithm --------------------------------------*/
+  // {
+  //     ft::vector<int> v1;
+  //     ft::vector<int> v2 ;
+  //     ft::vector<int> v3;
+  //       int j = 2;
+  //       while (j < 12){
+  //         v1.push_back(j);
+  //           j++;
+  //       }
+  //       j = 2;
+  //       while (j < 12){
+  //         v2.push_back(j);
+  //           j++;
+  //       }
+  //     j = 0;
+  //       while (j < 4){
+  //         v3.push_back(j);
+  //           j++;
+  //       }
 
-        if (ft::equal(v1.begin(), v1.end(), v2.begin())) {
-          std::cout << "v1 and v2 are equal." << std::endl;
-        }
-        if (!ft::equal(v1.begin(), v1.end(), v3.begin())) {
-          std::cout << "v1 and v3 are not equal." << std::endl;
-        } 
-        // using predicate comparison:
-        if ( std::equal (v1.begin(), v1.end(), v2.begin(), mypredicate) )
-          std::cout << "The contents of both sequences are equal.\n";
-        else
-          std::cout << "The contents of both sequences differ.\n";
+  //       if (ft::equal(v1.begin(), v1.end(), v2.begin())) {
+  //         std::cout << "v1 and v2 are equal." << std::endl;
+  //       }
+  //       if (!ft::equal(v1.begin(), v1.end(), v3.begin())) {
+  //         std::cout << "v1 and v3 are not equal." << std::endl;
+  //       } 
+  //       // using predicate comparison:
+  //       if ( std::equal (v1.begin(), v1.end(), v2.begin(), mypredicate) )
+  //         std::cout << "The contents of both sequences are equal.\n";
+  //       else
+  //         std::cout << "The contents of both sequences differ.\n";
 
-        std::cout << "Using default comparison (operator<): ";
-        bool result = ft::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end());
-          std::cout << std::boolalpha << result << std::endl; 
-        std::cout << "Using mycomp as comparison object: ";
-        std::cout << ft::lexicographical_compare(v3.begin(), v3.end(), v2.begin(), v2.end(),mycomp);
-        std::cout << '\n';
+  //       std::cout << "Using default comparison (operator<): ";
+  //       bool result = ft::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end());
+  //         std::cout << std::boolalpha << result << std::endl; 
+  //       std::cout << "Using mycomp as comparison object: ";
+  //       std::cout << ft::lexicographical_compare(v3.begin(), v3.end(), v2.begin(), v2.end(),mycomp);
+  //       std::cout << '\n';
 
-    }
+  //   }
     
-    /*-----------------------------is_integral---------------------------*/
+  //   /*-----------------------------is_integral---------------------------*/
     
-    {
-        std::cout << "char: " << ft::is_integral < char >::value << std::endl;
-        std::cout << "bool: " << ft::is_integral < bool >::value << std::endl;
-        std::cout << "int: " << ft::is_integral < int >::value << std::endl;
-        std::cout << "float: " << ft::is_integral < float >::value << std::endl;
-        std::cout << "double: " << ft::is_integral < double >::value << std::endl;
-    }
+  //   {
+  //       std::cout << "char: " << ft::is_integral < char >::value << std::endl;
+  //       std::cout << "bool: " << ft::is_integral < bool >::value << std::endl;
+  //       std::cout << "int: " << ft::is_integral < int >::value << std::endl;
+  //       std::cout << "float: " << ft::is_integral < float >::value << std::endl;
+  //       std::cout << "double: " << ft::is_integral < double >::value << std::endl;
+  //   }
     
   }
   catch(const std::exception& e)

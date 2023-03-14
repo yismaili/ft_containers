@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/13 18:04:05 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/14 01:31:30 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ public:
     //---------> default constructor
     vector(const allocator_type & alloc = allocator_type()){
         size_v = 0;
-        ptr = NULL;
+        _data = NULL;
         capacity_v = 0;
         (void)alloc;
     }
@@ -81,10 +81,10 @@ public:
         size_v = n;
         (void) allocc;
         capacity_v = n; 
-        ptr = alloc.allocate(n);
+        _data = alloc.allocate(n); //Allocate block of storage
         size_t i = 0;
         while (i < n){
-            alloc.construct(ptr + i, val);
+            alloc.construct(_data + i, val); // Construct an object
             i++;
         }
     }
@@ -97,11 +97,11 @@ public:
         size_v = last - first;
         capacity_v =  last - first;
         (void) allocc;
-        ptr = alloc.allocate(capacity_v);
+        _data = alloc.allocate(capacity_v);
         size_t i = 0;
         while (first < last)
         {
-            alloc.construct(ptr + i, *first);
+            alloc.construct(_data + i, *first);
             first++;
             i++;
         }
@@ -110,11 +110,13 @@ public:
         
     vector (const vector& x){
         size_v = x.size_v;
-        ptr = alloc.allocate(x.size_v);
-         for(size_t i = 0; i < x.size_v; i++){
-            alloc.construct(x.ptr + i);
+        capacity_v = x.capacity_v;
+        _data = alloc.allocate(capacity_v);
+        size_t i = 0;
+         while (i < x.size_v){
+            alloc.construct(x._data + i);
+            i++;
         }
-        capacity_v = x.size_v;
     }
     /*-----------------Vector destructor------------*/
     ~vector(){
@@ -122,11 +124,13 @@ public:
     }
     
     void free_memory(){
-          for (size_t i = 0; i < size_v; i++){
-            alloc.destroy(ptr + i);
+        size_t i = 0;
+          while(i < size_v){
+            alloc.destroy(_data + i); // Destroy an object
+            i++;
         }
-        if (ptr){
-            alloc.deallocate(ptr, capacity_v);    
+        if (_data){
+            alloc.deallocate(_data, capacity_v); // Release block of storage
         }
     }
     /*--------------------Assign ---------------------*/
@@ -134,9 +138,9 @@ public:
     {
         free_memory();
         size_v = x.size_v;
-        ptr = alloc.allocate(x.size_v);
+        _data = alloc.allocate(x.size_v);
          for(size_t i = 0; i < x.size_v; i++){
-            alloc.construct(x.ptr + i);
+            alloc.construct(x._data + i);
         }
         capacity_v = x.size_v;
         return (*this);
@@ -164,30 +168,30 @@ public:
         size_t i = 0;
 			
 		if (sizeR > capacity_v){
-            value_type	*ptr_tmp;
+            value_type	*_data_tmp;
 			free_memory();
 			capacity_v *= 2;
 			if (sizeR > capacity_v){
 			    capacity_v = sizeR;
             }
-			ptr_tmp = alloc.allocate(capacity_v);
+            
+			_data_tmp = alloc.allocate(capacity_v);
 			while (i < capacity_v){
-				alloc.construct(ptr_tmp + i);
+				alloc.construct(_data_tmp + i);
                 i++;
             }
-            i = 0;
             while (first != last){
-				ptr_tmp[i] = *first;
+				_data_tmp[i] = *first;
 				i++;
                 first++;
             }
-			ptr = ptr_tmp;
+			_data = _data_tmp;
 			size_v = sizeR;
 		}
 		else{
             i = 0;
             while (i < sizeR){
-				ptr[i] = *first;
+				_data[i] = *first;
 				first++;
 				i++;
             }
@@ -198,30 +202,30 @@ public:
     {
        size_type i = 0;
 		if (n > capacity_v){
-            value_type	*ptr_tmp;
+            value_type	*_data_tmp;
 			free_memory();
 			capacity_v *= 2;
 			if (n > capacity_v){
 			    capacity_v = n;
             }
-			ptr_tmp = alloc.allocate(capacity_v);
+			_data_tmp = alloc.allocate(capacity_v);
 			while (i < capacity_v){
-				alloc.construct(ptr_tmp + i);
+				alloc.construct(_data_tmp + i);
                 i++;
             }
             while (i < n){
-				ptr_tmp[i] = val;
+				_data_tmp[i] = val;
        
 				i++;
             }
-			ptr = ptr_tmp;
+			_data = _data_tmp;
             i = 0;
 			size_v = n;
 		}
 		else{
             i = 0;
             while (i < n){
-				ptr[i] = val;
+				_data[i] = val;
 				i++;
             }
         }
@@ -230,49 +234,49 @@ public:
    /*----------Element access----------------------*/
    reference at( size_type pos )
    {
-    if (pos >= size()){
+    if (pos >= size_v){
          throw std::out_of_range("Position out of range");
     }
-    return (ptr[pos]);
+    return (_data[pos]);
    }
    
    const_reference at( size_type pos ) const{
-    if (pos >= size()){
+    if (pos >= size_v){
        throw std::out_of_range("Position out of range");
     }
-    return (ptr[pos]);
+    return (_data[pos]);
    }
    
    reference operator[]( size_type pos ){
-    return (ptr[pos]);
+    return (_data[pos]);
    }
    
    const_reference operator[]( size_type pos ) const{
-    return (ptr[pos]);
+    return (_data[pos]);
    }
    
    reference front(){
-    return (ptr[0]);
+    return (_data[0]);
    }
    
    const_reference front() const{
-    return (ptr[0]);
+    return (_data[0]);
    }
    
    reference back(){
-    return (ptr[size() -1]);
+    return (_data[size_v -1]);
    }
    
    const_reference back() const{
-    return (ptr[size() -1]);
+    return (_data[size_v -1]);
    }
    
    T* data(){
-    return (ptr);
+    return (_data);
    }
    
    const T* data() const{
-    return (ptr);
+    return (_data);
    }
    
    /*-------------Capacity------------------*/
@@ -280,11 +284,13 @@ public:
    size_type size() const{
     return (size_v);
    }
+   
    allocator_type get_allocator() const{
     return (alloc);
    }
+   
    bool empty() const{
-    if (begin() == end()){
+    if (size_v == 0){
         return (true);
     }
     else {
@@ -304,160 +310,159 @@ public:
     if (new_cap < capacity_v){
         return ;
     }
-    pointer ptr_tmp ;
-    ptr_tmp = alloc.allocate(new_cap);
+    pointer _data_tmp ;
+    _data_tmp = alloc.allocate(new_cap);
     int i  = 0;
     while (i < (int)size_v)
     {
-        alloc.construct(ptr_tmp + i, *(ptr + i)); 
+        alloc.construct(_data_tmp + i, *(_data + i)); 
         i++;
     }
     i = 0;
     while (i < (int)size_v)
     {
-        alloc.destroy(ptr + i);
+        alloc.destroy(_data + i);
         i++;
     }
-    alloc.deallocate(ptr, capacity_v);
-    std::swap(ptr, ptr_tmp);
+    alloc.deallocate(_data, capacity_v);
+    std::swap(_data, _data_tmp);
     capacity_v = new_cap;
    }
    
     /*---------------Iterators--------------------*/
+    
      iterator begin(){
-        return (iterator(ptr));
+        return (iterator(_data));
     }
     const_iterator begin() const{
-        return (const_iterator(ptr)); 
+        return (const_iterator(_data)); 
     }
     iterator end(){
-        return (iterator(ptr + size_v));
+        return (iterator(_data + size_v));
     }
     const_iterator end() const{
-        return (const_iterator(ptr + size_v)); 
+        return (const_iterator(_data + size_v)); 
     }
     reverse_iterator rbegin(){
-        return (reverse_iterator(ptr + (size_v - 1)));  
+        return (reverse_iterator(_data + (size_v - 1)));  
     }
     const_reverse_iterator rbegin() const{
-        return (const_reverse_iterator(ptr + (size_v - 1)));  
+        return (const_reverse_iterator(_data + (size_v - 1)));  
     }
     reverse_iterator rend(){
-        return (reverse_iterator(ptr - 1));  
+        return (reverse_iterator(_data - 1));  
     }
     const_reverse_iterator rend() const{
-        return (const_reverse_iterator(ptr - 1)); 
+        return (const_reverse_iterator(_data - 1)); 
     }
+    
    /*-------------- Modifiers ------------------*/
 
    void clear(){
-    while (size_v){
-        alloc.destroy(ptr + size_v);
-        size_v--;
-    }
+        while (size_v){
+            alloc.destroy(_data + size_v);
+            size_v--;
+        }
     }
    
     iterator insert(iterator pos, const T& value){
         
         if (capacity_v == size_v){
             capacity_v *= 2;
-        pointer ptr_tmp =  alloc.allocate(capacity_v);
-        int i  = 0;
-        while (i < (int)size_v){
-            alloc.construct(ptr_tmp + i, *(ptr + i)); 
+        pointer _data_tmp =  alloc.allocate(capacity_v);
+        size_t i  = 0;
+        while (i < size_v){
+            alloc.construct(_data_tmp + i, *(_data + i)); 
             i++;
         }
         
         i = size_v;
-        int  j = pos - begin();
+        size_t  j = pos - begin();
         while (i >= j)
         {
-            ptr_tmp[i + 1] = ptr_tmp[i];
+            _data_tmp[i + 1] = _data_tmp[i];
             i--;
         }
         size_v++;
-        ptr_tmp[j] = value;
+        _data_tmp[j] = value;
         free_memory();
-        std::swap(ptr, ptr_tmp);
+        std::swap(_data, _data_tmp);
     }else{
-        int i = size_v;
-        int  j = pos - begin();
+        size_t i = size_v;
+        size_t  j = pos - begin();
         while (i >= j)
         {
-            ptr[i + 1] = ptr[i];
+            _data[i + 1] = _data[i];
             i--;
         }
         size_v++;
     }
-        return (ptr);
+        return (iterator(_data));
    }
 
    iterator insert(iterator pos, size_type count, const T& value){
     size_type l = 0;
     if (capacity_v == size_v){
-        reserve(capacity_v * 2);
-    }else{
-        capacity_v *= 2;   
+        reserve(capacity_v *= 2);
     }
     while (l < count)
     {
         int i = size_v;
         int  j = pos - begin();
         while (i >= j){
-            ptr[i + 1] = ptr[i];
+            _data[i + 1] = _data[i];
             i--;
         }
         size_v++;
-        ptr[j] = std::move(value);
+        _data[l] = std::move(value);
         l++;
    }
-    return (ptr);
+    return (iterator(_data));
    }
    
    template< class InputIt >
    typename ft::enable_if<!ft::is_integral<InputIt>::value, bool>::type 
    insert( iterator pos, InputIt first, InputIt last){
     if (capacity_v == size_v){
-        reserve(capacity_v * 2);
+        capacity_v *= 2;
     }
     size_t n = 1;
     size_t range_size = last - first;
-    pointer ptr_tmp;
-    ptr_tmp = alloc.allocate(capacity_v);
+    pointer _data_tmp;
+    _data_tmp = alloc.allocate(capacity_v);
     size_type l = 0;
     while (l++ <= size()){
-        alloc.construct(ptr_tmp + l, *(last - l)); 
+        alloc.construct(_data_tmp + l, *(last - l)); 
      }
     while (n <= range_size)
     {
         int  j = pos - begin();
         int i = size_v;
         while (i >= j){
-            ptr[i + 1] = ptr[i];
+            _data[i + 1] = _data[i];
             i--;
         }
         size_v++;
-        ptr[j] = std::move(*(ptr_tmp + n));
+        _data[j] = std::move(*(_data_tmp + n));
         n++;
    }
-    reserve(capacity_v * 2);
-    return (ptr);
+    return (_data);
    }
    
    void push_back( const T& value ){
     if (capacity_v == 0){
         reserve(1);
     }
-   else if (capacity_v == size_v){
-        reserve((capacity_v) * 2);
+    else if (capacity_v == size_v){
+        reserve(capacity_v * 2);
     }
-    alloc.construct(ptr + size_v, value);
+    alloc.construct(_data + size_v, value);
     size_v++;
    }
    
    void pop_back(){
-    if (!empty()){
-       alloc.destroy(ptr + (size_v - 1));
+    if (size_v){
+       alloc.destroy(_data +(size_v));
        size_v--;
     }else {
         throw std::out_of_range("Empty !!!");
@@ -466,13 +471,23 @@ public:
 
     void resize( size_type count, T value = T() ){
         if (size_v > count){
-            pop_back();
+            while (1)
+            {
+                if (size_v > count){
+                    pop_back();
+                }
+                else{
+                    break;
+                }
+            }
         }
         else {
         size_t k = count - size_v;
         capacity_v = count;
-            for (size_t i = 0; i < k; i++){
-                push_back(value);   
+        size_t i = 0;
+           while(i < k){
+                push_back(value);  
+                i++; 
             }  
         }
     }
@@ -480,29 +495,28 @@ public:
     void swap( vector& other ){ 
         size_type capacity_tmp = other.capacity_v;
         size_type size_tmp = other.size_v;
-        pointer ptr_tmp = other.ptr;
+        pointer _data_tmp = other._data;
         //  size_t i = 0;
-        //  ptr_tmp = alloc.allocate(capacity_tmp);
+        //  _data_tmp = alloc.allocate(capacity_tmp);
         //   while (i < size_tmp){
-        //     alloc.construct(ptr_tmp + i, *(other.ptr));
+        //     alloc.construct(_data_tmp + i, *(other._data));
         //     i++;
         // }
         other.capacity_v = capacity_v;
         capacity_v = capacity_tmp;
         other.size_v = size_v;
         size_v = size_tmp;
-        other.ptr = ptr;
-        ptr = ptr_tmp; 
+        other._data = _data;
+        _data = _data_tmp; 
     }
 
     iterator erase( iterator pos ){
         size_t i = pos - begin();
         while (i < size_v){
-            ptr[i] = ptr[i + 1];
+            _data[i] = _data[i + 1];
             i++;
         }
         size_v--;
-        alloc.destroy(ptr + size_v);
         return(pos);
     }
 
@@ -518,7 +532,7 @@ public:
     private:
         allocator_type alloc;
         size_type size_v;
-        pointer ptr;
+        pointer _data;
         size_type capacity_v;
         
     };
@@ -531,7 +545,7 @@ public:
 		{
 			while ( i < lhs.size())
             {
-                if (lhs.ptr[i] != rhs.ptr[i]){
+                if (lhs._data[i] != rhs._data[i]){
 					check = false;
                     break; 
                 }
@@ -568,7 +582,7 @@ public:
         }
 		while(i < size_min)
 		{
-			if (lhs.ptr[i] < rhs.ptr[i])
+			if (lhs._data[i] < rhs._data[i])
 				return true;
             i++;
 		}
@@ -587,7 +601,7 @@ public:
         }
 		while(i < size_min)
 		{
-			if (lhs.ptr[i] <= rhs.ptr[i])
+			if (lhs._data[i] <= rhs._data[i])
 				return true;
             i++;
 		}
@@ -606,7 +620,7 @@ public:
         }
 		while(i > size_min)
 		{
-			if (lhs.ptr[i] > rhs.ptr[i])
+			if (lhs._data[i] > rhs._data[i])
 				return true;
             i++;
 		}
@@ -625,7 +639,7 @@ public:
         }
 		while(i < size_min)
 		{
-			if (lhs.ptr[i] >= rhs.ptr[i])
+			if (lhs._data[i] >= rhs._data[i])
 				return true;
             i++;
 		}
