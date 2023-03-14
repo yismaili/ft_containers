@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/14 23:08:02 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/14 23:35:21 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -651,8 +651,7 @@ public:
 	{
 		size_t size_min;
         size_t i = 0;
-        std::cout<<"--**-----\n";
-		if (rhs.size() < lhs.size()){
+		if (rhs.size() > lhs.size()){
 		    size_min = lhs.size();  
         }else{
             size_min = rhs.size();

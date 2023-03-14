@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 23:20:47 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/15 00:55:53 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 
 	template< class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > > class map {
 		public:
-			avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
 			typedef Key																									key_type;
 			typedef T																									mapped_type;
 			typedef ft::pair<const key_type, mapped_type>																value_type;
@@ -106,9 +105,7 @@
 			
 			map& operator=( const map& other ) {
 				clear();
-				size_m = other.size();
 				compare_m = other.compare_m;
-				size_m = other.size_m;
 				insert(other.begin(), other.end());
 				return *this;
 			}
@@ -331,7 +328,7 @@
 			} 
 			
 			private:
-				// avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
+				avlTree<ft::pair<const Key, T> , Compare, Allocator>	avl_tree;
 				Allocator												alloc_m;
 				Compare												    compare_m;
 				std::size_t												size_m;
@@ -346,10 +343,10 @@
 
 		template< class Key, class T, class Compare, class Alloc >
 		bool operator!=( const ft::map<Key, T, Compare, Alloc>& lhs,const ft::map<Key, T, Compare, Alloc>& rhs ){
-			if (lhs.size() != rhs.size()){
-				return (true);
+			if (lhs.size() == rhs.size()){
+				return (false);
 			}
-			return (false);
+			return (true);
 		}
 		template< class Key, class T, class Compare, class Alloc >
 		bool operator<( const ft::map<Key, T, Compare, Alloc>& lhs, const ft::map<Key, T, Compare, Alloc>& rhs ){

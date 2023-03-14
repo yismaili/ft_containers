@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/12 21:23:59 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/14 23:41:09 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,10 +178,10 @@
           typedef std::ptrdiff_t                            difference_type;
           typedef T									value_type;
 
-     bidirectional_iterator() :ptr(NULL), nodeAvl(NULL){
+     bidirectional_iterator() :nodeAvl(NULL), ptr(NULL){
      }
           
-     bidirectional_iterator(pointer ptr_, const avlTree<T, Compare, Alloc> *node_avl = NULL) :ptr(ptr_), nodeAvl(node_avl){
+     bidirectional_iterator(pointer ptr_, const avlTree<T, Compare, Alloc> *node_avl = NULL) : nodeAvl(node_avl), ptr(ptr_){
    
      }
      ~bidirectional_iterator(){}

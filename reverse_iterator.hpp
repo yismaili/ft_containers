@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:26:20 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/11 23:17:27 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/14 23:42:23 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@
      reverse_bidirectional_iterator() :ptr(NULL), nodeAvl(NULL){
      }
           
-     reverse_bidirectional_iterator(pointer ptr_, const avlTree<T, Compare, Alloc> *node_avl = NULL) :ptr(ptr_), nodeAvl(node_avl){
+     reverse_bidirectional_iterator(pointer ptr_, const avlTree<T, Compare, Alloc> *node_avl = NULL) : nodeAvl(node_avl), ptr(ptr_){
    
      }
      ~reverse_bidirectional_iterator(){}
