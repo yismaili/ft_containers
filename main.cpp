@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/15 15:39:01 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/15 17:42:51 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -756,7 +756,6 @@ int main ()
       std::cout << "mymap contains:\n";
 
       char highest = mymap.begin()->first;     // key value of last element
-
       ft::map<char,int>::iterator it = mymap.begin();
       do {
         std::cout << it->first << " => " << it->second << '\n';
@@ -785,7 +784,6 @@ int main ()
       // print content:
       for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
-
     }
     /*------------------------max_size----------------------------*/
 
@@ -842,7 +840,6 @@ int main ()
       mymap['c']=302;
       std::cout << "mymap.size() is " << mymap.size() << '\n';
     }
-    
     /*--------------------swap----------------------------*/ 
 
     {
@@ -884,9 +881,10 @@ int main ()
       std::cout <<"tlow points to b  "<<itlow->first << " => " <<itlow->second << '\n';
       std::cout <<"itup points to e  "<<itup->first << " => " <<itup->second << '\n';
 
-      // print content:
-      // for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-      //   std::cout << it->first << " => " << it->second << '\n';
+    //  print content:
+      for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+                  
     }  
     /*--------------------value_comp--------------------------*/
     {
@@ -905,7 +903,7 @@ int main ()
         std::cout << it->first << " => " << it->second << '\n';
       } while ( mymap.value_comp()(*it++, highest) );
     }
-     /*----------------swap (map)---------------------------*/ 
+    //  /*----------------swap (map)---------------------------*/ 
      
      {
       ft::map<char,int> foo,bar;
@@ -916,8 +914,6 @@ int main ()
       bar['a']=11;
       bar['b']=22;
       bar['c']=33;
-
-      swap(foo,bar);
       
       std::cout << "foo contains:\n";
       for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
