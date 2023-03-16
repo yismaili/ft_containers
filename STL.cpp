@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 11:43:47 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/15 17:43:21 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/15 18:39:53 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int main ()
       /*-------------tests for vector ---------------*/
       
       /*-------------Construct vector -----------------------*/
-     { std::vector<int> first;                                // empty vector of ints
+     { 
+      std::vector<int> first;                                // empty vector of ints
       std::vector<int> second (4,100);   
       std::cout << second.size() << "\n";                   // four ints with value 100
       std::vector<int> third (second.begin(),second.end());  // iterating through second

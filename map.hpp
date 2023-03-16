@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/15 17:34:16 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:43:59 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@
 		public:
 			typedef Key																									key_type;
 			typedef T																									mapped_type;
-			typedef ft::pair<const key_type, mapped_type>																value_type;
+			typedef ft::pair<const key_type,  mapped_type>																value_type;
 			typedef std::size_t																							size_type;
 			typedef std::ptrdiff_t																						difference_type;
-			typedef Compare																								key_compare;
+			typedef Compare																								key_compare; //Function object for performing comparisons that provides a less-than comparison for keys
 			typedef Allocator																							allocator_type;
 			typedef value_type&																							reference;
 			typedef const value_type&																					const_reference;
 			typedef typename Allocator::pointer																			pointer;
 			typedef typename Allocator::const_pointer																	const_pointer;
 			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>									iterator;
-			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>							const_iterator;
+			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>									const_iterator;
 			typedef typename ft::reverse_bidirectional_iterator<value_type, Compare, Allocator>							reverse_iterator;
 			typedef typename ft::reverse_bidirectional_iterator<const value_type, Compare, Allocator>					const_reverse_iterator;
 			/*---------------------- friend-----------------------------*/
@@ -61,20 +61,26 @@
 			template <class Key1, class T1, class Compare1, class Alloc1>
   			friend void swap (map<Key1, T1, Compare1, Alloc1>& x, map<Key1, T1, Compare1, Alloc1>& y);
 
-			
+			//compares objects of type value_type
 			 class value_compare 
-                : public std::binary_function<value_type, value_type, bool>
+                : public std::binary_function<value_type, value_type, bool> // is a base class for creating function objects with two arguments.
 			{
 
                 public:
                     key_compare comp;
 					value_compare(){}
-                    value_compare(const key_compare& c) : comp(c){}
+                    value_compare(const key_compare& c){
+						comp = c;
+					}
                     bool operator()(const value_type&lt,const value_type&rt) const{
-                        return (comp(lt.first, rt.first));    
+						if (comp(lt.first, rt.first)){
+							return (true);  
+						}
+                        return (false);    
                     }
+				
             };
-			/*---------------------> Member functions <--------------------*/
+			/*---------------------> contructers of map <--------------------*/
 			
 			map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()){
 				alloc_m = alloc;
@@ -88,6 +94,7 @@
 				compare_m = comp;
 				(void)alloc;
 				size_m = 0;
+				avl_tree.check = false;
 				while (first != last){
 					avl_tree.root->left = avl_tree.insert_endnode(avl_tree.root, *first);
 					if (avl_tree.check){
@@ -106,6 +113,7 @@
 			map& operator=( const map& other ) {
 				clear();
 				compare_m = other.compare_m;
+				alloc_m = other.alloc_m;
 				insert(other.begin(), other.end());
 				return *this;
 			}
@@ -121,6 +129,7 @@
 			// }
 			
 			mapped_type& operator[]( const Key& key ) {
+				// class template that provides a way to store two heterogeneous objects as a single unit.
 				value_type value = ft::make_pair<const key_type, mapped_type>(key, mapped_type());
 				insert(value);
 				return (avl_tree.find(value)->data->second);
@@ -207,14 +216,18 @@
 				// std::cout << "Hello" << std::endl;
 				// std::cout << "We will erase " << pos->first << " " << pos->second << std::endl;
 				avl_tree.delete_(ft::make_pair<key_type, mapped_type>(pos->first, pos->second));
-				size_m--;
+				if (avl_tree.check == true){
+						size_m--;
+				}
 			}
 			
 			void erase( iterator first, iterator last ){
 				while (first != last){
 					avl_tree.delete_(ft::make_pair<key_type, mapped_type>(first->first, first->second));
 					first++;
-					size_m--;
+					if (avl_tree.check == true){
+						size_m--;
+					}
 				}
 				// while (first != last)
 				// {
@@ -246,7 +259,19 @@
 			}
 			
 			void swap( map& other ){
+				
+				Allocator	tmp_alloc = other.alloc_m;
+				Compare		tmp_compare = other.compare_m;
+				size_t		tmp_size = other.size_m;
 				std::swap(avl_tree.root, other.avl_tree.root);
+				
+				other.alloc_m = alloc_m;
+				other.compare_m = compare_m;
+				other.size_m = size_m;
+
+				alloc_m = tmp_alloc;
+				compare_m = tmp_compare;
+				size_m = tmp_size;
 			}
 			/*----------------Lookup------------------------------*/
 
@@ -273,52 +298,76 @@
 			}
 			
 			iterator lower_bound( const key_type& key ){
+				//returns an iterator pointing to the first element in the map whose key is not less than the given key
+				avl_tree.check = false;
 				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
-				iterator tmp_it = find(key);
-				if (tmp_it !=  end()){
-					return (tmp_it);
+				iterator tmp_it(avl_tree.find_find(p_r)->data, &avl_tree);
+				if (avl_tree.check == false){
+					return (upper_bound(key));
 				}
-				return( end());
+				if (tmp_it !=  end()){
+					return (ft::pair<iterator, bool>(tmp_it,  avl_tree.check).first);
+				}else{
+					return(ft::pair<iterator, bool>(end(),  avl_tree.check).first);	
+				}
 			}
 			
 			const_iterator lower_bound( const key_type& key ) const{
+				avl_tree.check = false;
 				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
-				const_iterator tmp_it = find(key);
-				if (tmp_it !=  begin()){
-					return (tmp_it);
+				iterator tmp_it(avl_tree.find_find(p_r)->data, &avl_tree);
+				if (avl_tree.check == false){
+					return (upper_bound(key));
 				}
-				return(begin());
+				if (tmp_it !=  end()){
+					return (ft::pair<const_iterator, bool>(tmp_it,  avl_tree.check).first);
+				}else{
+					return(ft::pair<const_iterator, bool>(end(),  avl_tree.check).first);	
+				}
 			}
 			
 			iterator upper_bound( const key_type& key ){
+				avl_tree.check = false;
+				// that returns an iterator pointing to the first element in a sorted range that is not less than a given value
 				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
 				iterator tmp_it (avl_tree.upper(avl_tree.root->left, p_r)->data, &avl_tree);
-				return(tmp_it);
+				return(ft::pair<iterator, bool>(tmp_it,  avl_tree.check).first);
 			}
 			
 			const_iterator upper_bound( const key_type& key ) const{
 				ft::pair<key_type, mapped_type> p_r(key, mapped_type());
 				const_iterator tmp_it (avl_tree.upper(avl_tree.root->left, p_r)->data, &avl_tree);
-				return(tmp_it);
+				return(ft::pair<const_iterator, bool>(tmp_it,  avl_tree.check).first);
 			}
 			
 			ft::pair<iterator,iterator> equal_range( const key_type& key ){
-				ft::pair<iterator, iterator> p_r (lower_bound(key), upper_bound(key));
-				return (p_r);
+				// the range of elements that are equivalent to a given value
+				
+				// Find the lower bound of the key usingft::lower_bound or equivalent
+				iterator first = lower_bound(key);
+
+				// Find the upper bound of the key usingft::upper_bound or equivalent
+				iterator last = upper_bound(key);
+				// Return the range [first, last)
+				return ft::make_pair(first, last);
 			}
 
 			ft::pair<const_iterator,const_iterator> equal_range( const key_type& key ) const{
-				ft::pair<const_iterator, const_iterator> p_r (lower_bound(key), upper_bound(key));
-				return (p_r);
+
+				const_iterator first = lower_bound(key);
+				const_iterator last = upper_bound(key);
+				return ft::make_pair(first, last);
 			}
 			
 			/*----------------Observers----------------*/
 
 			key_compare key_comp() const{
+				// Returns a copy of the comparison object used by the container to compare keys
 				return (compare_m);
 			}
 			
 			value_compare value_comp() const{
+				// Returns a comparison object that can be used to compare two elements to get whether the key of the first one goes before the second
 				return (value_compare());
 			}
 			
@@ -333,6 +382,7 @@
 				Compare												    compare_m;
 				std::size_t												size_m;
 	};
+	
 	template< class Key, class T, class Compare, class Alloc >
 		bool operator==( const ft::map<Key, T, Compare, Alloc>& lhs,const ft::map<Key, T, Compare, Alloc>& rhs ){
 			if (lhs.size() == rhs.size()){

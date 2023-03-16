@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:38:03 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/14 23:41:09 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/15 23:30:40 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,11 @@
     int operator-(const Random_access_iterator& other){
           return (ptr - other.ptr);
      }
-     // Random_access_iterator&
-     pointer operator+=(const int n){ //!!!!!!!!!
+     pointer operator+=(const int n){
           ptr += n;
           return (ptr);
      }
-     pointer operator-=(const int n){//!!!!!!!!!!!
+     pointer operator-=(const int n){
           ptr -=n;
           return (ptr);
      }
@@ -178,7 +177,7 @@
           typedef std::ptrdiff_t                            difference_type;
           typedef T									value_type;
 
-     bidirectional_iterator() :nodeAvl(NULL), ptr(NULL){
+     bidirectional_iterator() :nodeAvl(), ptr(){
      }
           
      bidirectional_iterator(pointer ptr_, const avlTree<T, Compare, Alloc> *node_avl = NULL) : nodeAvl(node_avl), ptr(ptr_){
@@ -198,13 +197,14 @@
           return (*this);
      }
      reference operator*(){
+          // access a member of an objec
           return (*ptr);
      }
      pointer operator->(){
-          return (&*ptr);
+          return (ptr);
      }
      bool operator == (const bidirectional_iterator &opj) {
-          if ((ptr == opj.ptr) && (nodeAvl == opj.nodeAvl)){
+          if ((ptr == opj.ptr)){
                return (true);
           }else {
                return (false);
@@ -219,14 +219,14 @@
           }
        }
        
-     bidirectional_iterator operator++(int){
+     bidirectional_iterator operator++(int){ // post-increment operator
         bidirectional_iterator temp = *this;
      //    std::cout << "We will increment " << temp->first << " " << temp->second << std::endl;
         ++(*this);
         return (temp);
      }
      
-     bidirectional_iterator &operator++(){
+     bidirectional_iterator &operator++(){ // pre-increment operator
      if (nodeAvl->successor(*ptr)){
           
           ptr = nodeAvl->successor(*ptr)->data;
@@ -244,7 +244,7 @@
      }
      
      bidirectional_iterator &operator--(){
-           if (nodeAvl->predecessor(*ptr)){
+          if (nodeAvl->predecessor(*ptr)){
              ptr = nodeAvl->predecessor(*ptr)->data;
          }
         else{

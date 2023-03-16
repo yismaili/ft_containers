@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/15 17:42:51 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:42:23 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -877,7 +877,7 @@ int main ()
 
       itlow=mymap.lower_bound ('b');  // itlow points to b
       itup=mymap.upper_bound ('d');   // itup points to e (not d!)
-
+      
       std::cout <<"tlow points to b  "<<itlow->first << " => " <<itlow->second << '\n';
       std::cout <<"itup points to e  "<<itup->first << " => " <<itup->second << '\n';
 
@@ -903,7 +903,7 @@ int main ()
         std::cout << it->first << " => " << it->second << '\n';
       } while ( mymap.value_comp()(*it++, highest) );
     }
-    //  /*----------------swap (map)---------------------------*/ 
+     /*----------------swap (map)---------------------------*/ 
      
      {
       ft::map<char,int> foo,bar;

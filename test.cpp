@@ -3,23 +3,23 @@
 #include <type_traits>
 #include "utils.hpp"
 
-template <typename T>
-typename ft::enable_if<ft::is_integral<T>::value, void>::type
-foo(T arg) {
-    std::cout << "foo() called with an integral type" << std::endl;
-}
+// template <typename T>
+// typename ft::enable_if<ft::is_integral<T>::value, void>::type
+// foo(T arg) {
+//     std::cout << "foo() called with an integral type" << std::endl;
+// }
 
-template <typename T>
-typename ft::enable_if<std::is_floating_point<T>::value, void>::type
-foo(T arg) {
-    std::cout << "foo() called with a floating point type" << std::endl;
-}
+// template <typename T>
+// typename ft::enable_if<std::is_floating_point<T>::value, void>::type
+// foo(T arg) {
+//     std::cout << "foo() called with a floating point type" << std::endl;
+// }
 
-int main() {
-    foo(42);      // calls the first foo() template function
-     foo(3.14f);   // calls the second foo() template function
-    return 0;
-}
+// int main() {
+//     foo(42);      // calls the first foo() template function
+//      foo(3.14f);   // calls the second foo() template function
+//     return 0;
+// }
 
 
 
@@ -97,3 +97,43 @@ int main() {
 //     return 0;
 //}
 
+// namespace ft {
+//     template <class T1, class T2>
+//     struct pair {
+//         typedef T1 first_type;
+//         typedef T2 second_type;
+//         first_type first;
+//         second_type second;
+
+//         pair() : first(), second() {}
+//         pair(const first_type& a, const second_type& b) : first(a), second(b) {}
+//         template<class U, class V>
+//         pair(const pair<U, V>& p) : first(p.first), second(p.second) {}
+//     };
+// }
+
+// int main() {
+//     ft::pair<const char, int> myPair('a', 1);
+//     std::cout<<myPair.first<< "  "<< myPair.second<<std::endl;
+//     return 0;
+// }
+
+#include <map>
+#include <string>
+#include <iostream>
+
+int main() {
+    std::map<int, std::string> myMap;
+        myMap.insert(std::make_pair(1, "one"));
+        myMap.insert(std::make_pair(2, "two"));
+        myMap.insert(std::make_pair(3, "tre"));
+        myMap.insert( std::make_pair(4, "four"));
+std::map<int, std::string>::iterator it = myMap.upper_bound(4);
+    if (it != myMap.end()) {
+        std::cout << "The key " << it->first << " maps to value " << it->second << std::endl;
+    } else {
+        std::cout << "No element with key 3 or greater was found" << std::endl;
+    }
+
+    return 0;
+}

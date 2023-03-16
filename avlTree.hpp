@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/15 17:28:15 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:00:10 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,22 +316,21 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
         if (node->left == NULL && node->right == NULL) 
           {
             if (node->data){
-              //root->alloc_pairs.destroy(node->data);
+              root->alloc_pairs.destroy(node->data);
               root->alloc_pairs.deallocate(node->data, 1);
             }
             if (node){
-              //  node_alloc.destroy(node);
+                 node_alloc.destroy(node);
                 node_alloc.deallocate(node, 1);
             }
             check = true;
             return NULL;
           }
-          else if(node->left == NULL)
-          {
+          else if(node->left == NULL){
             node_avl * temp = node->right;
             if (node->data){
-              root->alloc_pairs.destroy(node->data);
-              root->alloc_pairs.deallocate(node->data, 1);
+                root->alloc_pairs.destroy(node->data);
+                root->alloc_pairs.deallocate(node->data, 1);
             }
             if (node){
               node_alloc.destroy(node);
@@ -369,16 +368,6 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
             // Deleting the node with val_to_delete now as a leaf node
             node->right = delete_element(node->right, *(min_right_subtree->data));
           }
-        // }
-        // keep searching for node
-        // else
-        // {
-        //   if (compare(val_to_delete.first, node->data->first)){
-        //     node->left = delete_element(node->left, val_to_delete);
-        //   }
-        //   else if (compare(node->data->first, val_to_delete.first)){
-        //     node->right = delete_element(node->right, val_to_delete);
-        //   }
          }
         node = balanceTree(node);
         return node ;
@@ -489,19 +478,23 @@ node_avl  *find_find(const T& key){
    
 node_avl* upper(node_avl *node, const T& key){
   node_avl *tmp = node;
-  while (node)
-  {
-    if (compare(key.first, node->data->first)){
-      tmp = node;
-      node = node->left;
-    }else{
-      node = node->right;
+    check = true;
+    while (node)
+    {
+        if (compare(key.first, node->data->first)){
+          tmp = node;
+         
+          node = node->left;
+        }else{
+
+          node = node->right;
+        }
     }
-  }
-    if (compare(tmp->data->first, key.first)){
-      return (endNode());
-    }
-  return (tmp);
+      if (compare(tmp->data->first, key.first)){
+        check = false;
+        return (endNode());
+      }
+    return (tmp);
 }
 
 node_avl  *find_element(node_avl *node, const T& key) const {
