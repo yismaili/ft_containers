@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:06 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/16 15:00:10 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/16 18:54:43 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ class avlTree
    	node_alloc.construct(newNode, node_avl(key));
     return (newNode);
   }
-  // Rotate right
   void fix_height(node_avl *node){
     int hl = getHeight(node->left);
     int hr = getHeight(node->right);
+    
     if (hl > hr){
       node->height = hl + 1;
     }else{
@@ -92,19 +92,13 @@ class avlTree
     }
   }
 
+  // Rotate right
   node_avl *rotate_right(node_avl *node) {
-    // node_avl* R = node->left;
-    // node->left = node->left->right;
-    // R->right = node;
-    // fix_height(node);
-    // fix_height(R);
-    // return R;
     	node_avl *newRoot = node->left;
-			if (!newRoot)
-				return node;
 			node_avl *tmpR = newRoot->right;
-			if (newRoot->right)
+			if (newRoot->right){
 				newRoot->right->parent = node;
+      }
 			newRoot->right = node;
 			node->left = tmpR;
 			newRoot->parent = node->parent;
@@ -116,23 +110,18 @@ class avlTree
 
   // Rotate left
   node_avl *rotate_left(node_avl *node) {
-    // node_avl* R = node->right;
-    // node->right = node->right->left;
-    // R->left = node;
-    // fix_height(node);
-    // fix_height(R);
-    // return R;
-    node_avl *newRoot = node->right;
+      node_avl *newRoot = node->right;
 			node_avl *tmpL = newRoot->left;
-			if (newRoot->left)
-				newRoot->left->parent = node;
+			if (newRoot->left){
+				newRoot->left->parent = node; 
+      }
 			newRoot->left = node;
 			node->right = tmpL;
 			newRoot->parent = node->parent;
 			node->parent = newRoot;
       fix_height(node);
       fix_height(newRoot);
-      return (newRoot);
+    return (newRoot);
   }
 
   // Get the balance factor of each node
@@ -221,18 +210,20 @@ class avlTree
 
   // Node with minimum value
   node_avl *minValue(node_avl *node)const {
-    node_avl *current = node;
-    while (current->left != NULL)
-      current = current->left;
-    return current;
+    node_avl *current_node = node;
+    while (current_node->left != NULL){
+      current_node = current_node->left;
+    }
+    return current_node;
   }
 
   // Node with maximum value
   node_avl *maxValue(node_avl *node) const {
-  node_avl *current = node;
-    while (current->right != NULL)
-      current = current->right;
-    return current;
+  node_avl *current_node = node;
+    while (current_node->right != NULL){
+      current_node = current_node->right;
+    }
+    return current_node;
   }
   
   node_avl* endNode() const {
@@ -251,11 +242,12 @@ class avlTree
     node_avl* node = minValue(root->left);
     return (node);
   }
+  
    node_avl* maxNode()const{
     node_avl* node = maxValue(root->left);
     return (node);
   }
-  // Delete a node
+  
   node_avl *balanceTree(node_avl *node){
     // balance the tree
     node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
@@ -320,7 +312,7 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
               root->alloc_pairs.deallocate(node->data, 1);
             }
             if (node){
-                 node_alloc.destroy(node);
+                node_alloc.destroy(node);
                 node_alloc.deallocate(node, 1);
             }
             check = true;
@@ -363,7 +355,7 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
             }
             min_right_subtree = current;
             // switching the values 
-            node->data = min_right_subtree->data;
+            // node->data = min_right_subtree->data;
             root->alloc_pairs.construct(node->data, *(min_right_subtree->data));
             // Deleting the node with val_to_delete now as a leaf node
             node->right = delete_element(node->right, *(min_right_subtree->data));
@@ -381,59 +373,45 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
   }
   
   node_avl *findPredecessor(node_avl *node, const T& key) const {
-      // if (node == NULL){
-      //   return(0);
-      // }
-      // node_avl *prev = NULL;
-      // while (1){
-      //   if (compare(key.first, node->data->first)){
-      //       node = node->left;
-      //   }
-      //   else if (compare(node->data->first, key.first)){
-      //       exit(1);
-      //     prev = node;
-      //     node = node->right;
-      //   }
-      //   else{
-      //     if (node->left){
-      //       prev = maxValue(node->left);
-      //     }
-      //     break;
-      //   }
-      //   if (node == NULL){
-      //     return(prev);
-      //   }
-      // }
-      // return (prev); 
+    
       node_avl*	findNode = find_element(node, key);
-			if (findNode == NULL)
-				return NULL;
-			if (findNode->left)
-				return maxValue(findNode->left);
-			node_avl*	pred = findNode->parent;
-			while (pred && pred->right != findNode) {
-				findNode = pred;
-				pred = findNode->parent;
-        if (findNode == root->left){
-          return (root);
-        }
-			}
-			return pred;
+			node_avl*	prnt = findNode->parent;
+      
+			if (findNode == NULL){
+				return (NULL);
+      }
+      else{
+          if (findNode->left){
+            return maxValue(findNode->left);   
+          }
+          
+          while (prnt && prnt->right != findNode) {
+            node_avl*	tmp = findNode;
+            findNode = prnt;
+            prnt = tmp->parent;
+            
+            if (findNode == root->left){
+              return (root);
+            } 
+          }
+          return prnt;  
+      }
   }
+
   node_avl *successor(const T& key)const{
   if (root && root->left)
       return (findSuccessor(root->left, key));
     return nullptr;
   }
-       
+    // set next pointer to the inorder successor    
   node_avl *findSuccessor(node_avl* node, const T& key)const{
-    node_avl *next = find_element(node, key);
     if (node == nullptr) {
         return nullptr;
     }
+    node_avl *tmp = nullptr;
     while (1){
       if (compare(key.first, node->data->first)){
-          next = node;
+          tmp = node;
           node = node->left;
       }
       else if (compare(node->data->first, key.first)) {
@@ -444,15 +422,15 @@ node_avl * delete_element(node_avl * node, const T& val_to_delete)
       }
       else {
           if (node->right){
-            next = minValue(node->right);
+            tmp = minValue(node->right);
           }
           break;
       }
       if (!node) {
-        return next;
+        return tmp;
       }
       }
-      return next;
+      return tmp;
   }
   
 //  node_avl* swap(node_avl* root, node_avl* other) {
