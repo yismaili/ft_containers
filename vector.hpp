@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:17:52 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/14 23:35:21 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:17:30 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ template<typename T, class allocator = std::allocator<T> >
 class vector
 {
 public:
-    //create an alternative name for a type T
-    typedef T                                           value_type;
-    // typedef is defining a new type for use in your code, like a shorthand
+  //create an alternative name for a type T
+    typedef T                                           value_type; // give a new name to an existing type
     typedef allocator                                   allocator_type;
-    // typename here is letting the compiler know that value_type is a type and not a static member of _MyBase
-    typedef typename 	allocator_type::reference       reference; 
+    // allocator is an object that is responsible for allocating and deallocating memory for a container
+    typedef typename 	allocator_type::reference       reference; //specify that a dependent name in a template is a type
+    //The reference member type of the allocator_type is used to specify 
+    //the type of the reference to the value stored in the container
     typedef typename 	allocator_type::const_reference const_reference;
     typedef typename 	allocator_type::pointer         pointer;
     typedef typename 	allocator_type::const_pointer   const_pointer;
@@ -45,7 +46,8 @@ public:
     typedef typename allocator_type::size_type          size_type;
     
     /*------------------- friend------------------------*/
-
+    // it is not a member of the class, but it can access the private 
+    //and protected members of the class as if it were a member function
     template <class T1, class Alloc>
 	friend bool operator==(const vector<T1,Alloc>& lhs, const vector<T1,Alloc>& rhs);
 			
@@ -114,11 +116,12 @@ public:
         _data = alloc.allocate(capacity_v);
         size_t i = 0;
          while (i < x.size_v){
-            alloc.construct(x._data + i);
+            alloc.construct(_data, *(x._data + i));
             i++;
         }
     }
     /*-----------------Vector destructor------------*/
+    
     ~vector(){
         free_memory();
     }
@@ -134,17 +137,21 @@ public:
         }
     }
     /*--------------------Assign ---------------------*/
+    
     vector& operator= (const vector& x)
     {
         free_memory();
         size_v = x.size_v;
-        _data = alloc.allocate(x.size_v);
-         for(size_t i = 0; i < x.size_v; i++){
-            alloc.construct(x._data + i);
+        _data = alloc.allocate(x.capacity_v);
+        capacity_v = x.capacity_v;
+        size_t i = 0;
+         while (i < x.size_v){
+            alloc.construct(_data, *(x._data + i));
+            i++;
         }
-        capacity_v = x.size_v;
         return (*this);
     }
+    
     template <class InputIterator>
     size_type cont_size(InputIterator first, InputIterator last) {
         size_type len = 0;
@@ -153,6 +160,7 @@ public:
         }
         return (len);
    }
+   
     /*------------Assign vector content--------------------*/
     
     // SFINAE is typically used in combination with template specializations 
@@ -168,19 +176,16 @@ public:
         size_t i = 0;
 			
 		if (sizeR > capacity_v){
-            // value_type	*_data_tmp;
-			// free_memory();
-			// capacity_v *= 2;
-			// if (sizeR > capacity_v){
-			//     capacity_v = sizeR;
-            // }
-            
-			// _data_tmp = alloc.allocate(capacity_v);
-			// while (i < capacity_v){
-			// 	alloc.construct(_data_tmp + i);
-            //     i++;
-            // }
-            reserve(capacity_v * 2);
+			capacity_v *= 2;
+			if (sizeR > capacity_v){
+			    capacity_v = sizeR;
+            }
+            free_memory();
+           _data = alloc.allocate(capacity_v);
+			while (i < capacity_v){
+				alloc.construct(_data + i);
+                i++;
+            }
             while (first != last){
 				_data[i] = *first;
 				i++;
@@ -310,28 +315,28 @@ public:
     if (new_cap < capacity_v){
         return ;
     }
-    pointer _data_tmp ;
-    _data_tmp = alloc.allocate(new_cap);
-    int i  = 0;
-    while (i < (int)size_v)
-    {
-        alloc.construct(_data_tmp + i, *(_data + i)); 
-        i++;
+    else{
+        pointer _data_tmp;
+        _data_tmp = alloc.allocate(new_cap);
+       size_t i  = 0;
+        while (i < size_v){
+            alloc.construct(_data_tmp + i, *(_data + i)); 
+            i++;
+        }
+        i = 0;
+        while (i < size_v){
+            alloc.destroy(_data + i);
+            i++;
+        }
+        alloc.deallocate(_data, capacity_v);
+        std::swap(_data, _data_tmp);
+        capacity_v = new_cap;
     }
-    i = 0;
-    while (i < (int)size_v)
-    {
-        alloc.destroy(_data + i);
-        i++;
-    }
-    alloc.deallocate(_data, capacity_v);
-    std::swap(_data, _data_tmp);
-    capacity_v = new_cap;
    }
    
     /*---------------Iterators--------------------*/
     
-     iterator begin(){
+    iterator begin(){
         return (iterator(_data));
     }
     const_iterator begin() const{
@@ -368,18 +373,17 @@ public:
     iterator insert(iterator pos, const T& value){
         
         if (capacity_v == size_v){
+            
             capacity_v *= 2;
-        pointer _data_tmp =  alloc.allocate(capacity_v);
-        size_t i  = 0;
-        while (i < size_v){
-            alloc.construct(_data_tmp + i, *(_data + i)); 
-            i++;
-        }
-        
+            pointer _data_tmp =  alloc.allocate(capacity_v);
+            size_t i  = 0;
+            while (i < size_v){
+                alloc.construct(_data_tmp + i, *(_data + i)); 
+                i++;
+            }
         i = size_v;
         size_t  j = pos - begin();
-        while (i >= j)
-        {
+        while (i >= j){
             _data_tmp[i + 1] = _data_tmp[i];
             i--;
         }
@@ -387,29 +391,33 @@ public:
         _data_tmp[j] = value;
         free_memory();
         std::swap(_data, _data_tmp);
-    }else{
+    }
+    else{
         size_t i = size_v;
         size_t  j = pos - begin();
-        while (i >= j)
-        {
+        while (i >= j){
             _data[i + 1] = _data[i];
             i--;
         }
         size_v++;
     }
-        return (iterator(_data));
+    return (_data);
    }
 
   iterator insert(iterator pos, size_type count, const T& value){
+    
     if (capacity_v < size_v + count){
-       capacity_v *= 2;
-       if (capacity_v < size_v + count){
-            capacity_v = size_v + count;
-       }
+        
+        capacity_v *= 2;
+        if (capacity_v < size_v + count){
+                capacity_v = size_v + count;
+        }
+        
     }
+    
     pointer data_tmp = alloc.allocate(capacity_v);
     size_t i = 0;
-     size_t j = 0;
+    size_t j = 0;
     while (i < capacity_v){
        alloc.construct(data_tmp + i);
        i++;
@@ -429,7 +437,7 @@ public:
         j++;
     }
     while (i < (size_v + count)){
-        _data[i] = _data[i - count];
+        data_tmp[i] = _data[i - count];
         i++;
     }
     free_memory();
@@ -441,30 +449,45 @@ public:
    template< class InputIt >
    typename ft::enable_if<!ft::is_integral<InputIt>::value, bool>::type 
    insert( iterator pos, InputIt first, InputIt last){
-    if (capacity_v == size_v){
-        capacity_v *= 2;
-    }
-    size_t n = 1;
-    size_t range_size = last - first;
-    pointer _data_tmp;
-    _data_tmp = alloc.allocate(capacity_v);
-    size_type l = 0;
-    while (l++ <= size()){
-        alloc.construct(_data_tmp + l, *(last - l)); 
-     }
-    while (n <= range_size)
-    {
-        int  j = pos - begin();
-        int i = size_v;
-        while (i >= j){
-            _data[i + 1] = _data[i];
-            i--;
+    
+        size_t range_size = last - first;
+        if (capacity_v < (range_size + size_v)){
+            capacity_v *= 2;
+            if (capacity_v < (range_size + size_v)){
+                capacity_v = (range_size + size_v);
+            }
         }
-        size_v++;
-        _data[j] = std::move(*(_data_tmp + n));
-        n++;
-   }
-    return (_data);
+        
+        pointer data_tmp = alloc.allocate(capacity_v);
+        size_t i = 0;
+        size_t j = 0;
+        while (i < capacity_v){
+        alloc.construct(data_tmp + i);
+        i++;
+        }
+        i = 0;
+        while (i < size_v){
+            if (pos ==( begin() + j)){
+                break;
+            }
+            data_tmp[i] = _data[i];
+            i++;
+        }
+        j = 0;
+        while (j < range_size){
+            data_tmp[i] = *first;
+            i++;
+            j++;
+            first++;
+        }
+        while (i < (size_v + range_size)){
+            data_tmp[i] = _data[i - range_size];
+            i++;
+        }
+        free_memory();
+        size_v += range_size;
+        _data =  data_tmp;
+        return (_data);
    }
    
    void push_back( const T& value ){

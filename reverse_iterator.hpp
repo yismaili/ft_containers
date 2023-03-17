@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 19:26:20 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/14 23:42:23 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:34:11 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
    private:
         T *ptr;
    public:
-   typedef T& reference;
-   typedef T* pointer;
-   typedef std::ptrdiff_t difference_type;
+     typedef T& reference;
+     typedef T* pointer;
+     typedef std::ptrdiff_t difference_type;
+   
     reverse_iterator(){
      ptr = NULL;
     }
@@ -53,84 +54,128 @@
      reference operator*(){
           return (*ptr);
      }
+     
+     pointer base() const {
+          return ptr;
+     }
+     
      pointer operator->(){
           return (&*ptr);
      }
+     
      reverse_iterator& operator--(){
           ++ptr;
           return (*this);
      }
+
      reverse_iterator& operator++(){
           --ptr;
           return (*this);
      }
+     
      reverse_iterator operator--(int){
           ptr++;
           return (ptr);
      }
+
      reverse_iterator operator++(int){
           ptr--;
           return (ptr);
      }
+     
      reverse_iterator operator+(const int n){
-          return (ptr - n);
-     }
-     reverse_iterator operator-(const int n){
           return (ptr + n);
      }
-    int operator-(const reverse_iterator& other){
+
+     reverse_iterator operator-(const int n){
+          return (ptr - n);
+     }
+     
+     int operator-(const reverse_iterator& other){
           return (ptr - other.ptr);
      }
+     
      pointer operator+=(const int n){
-          ptr -= n;
+          ptr += n;
           return (ptr);
      }
+     
      pointer operator-=(const int n){
-          ptr +=n;
+          ptr -=n;
           return (ptr);
      }
+     
      reverse_iterator& operator+=(const reverse_iterator &obj){
-          return (ptr - obj.ptr);
-     }
-     reverse_iterator& operator-=(const reverse_iterator &obj){
           return (ptr + obj.ptr);
      }
-     bool operator<(const reverse_iterator &obj){
-          if (ptr < obj.ptr){
-               return (true);
-          }
-          else {
+     
+     reverse_iterator& operator-=(const reverse_iterator &obj){
+          return (ptr - obj.ptr);
+     }
+};
+
+     template <class Iter1, class Iter2>  
+     bool operator==(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
+          if (lhs.base() == rhs.base()){
+		     return (true);   
+          }else{
                return (false);
           }
-     }
-     bool operator>(const reverse_iterator &obj){
-          if (ptr > obj.ptr){
+	}
+     
+	template <class Iter1, class Iter2>  
+     bool operator!=(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
+		 if (lhs.base() == rhs.base()){
+		     return (false);   
+          }else{
                return (true);
           }
-          else {
+     }
+     
+	template <class Iter1, class Iter2>  
+     bool operator<(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
+		 if (lhs.base() < rhs.base()){
+		     return (true);   
+          }else{
                return (false);
           }
-     }
-     bool operator<=(const reverse_iterator &obj){
-          if (ptr <= obj.ptr){
-               return (true);
-          }
-          else {
+	}
+     
+	template <class Iter1, class Iter2> 
+      bool operator<=(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
+		 if (lhs.base() <= rhs.base()){
+		     return (true);   
+          }else{
                return (false);
           }
-     }
-     bool operator>=(const reverse_iterator &obj){
-          if (ptr >= obj.ptr){
-               return (true);
-          }
-          else {
+	}
+     
+	template <class Iter1, class Iter2>  
+     bool operator>(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
+		if (lhs.base() > rhs.base()){
+		     return (true);   
+          }else{
                return (false);
           }
-     }
-      reverse_iterator& operator[](const int n){
-          return (ptr[n]);
-     }
-    };
+	}
+     
+	template <class Iter1, class Iter2>  
+     bool operator>=(const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
+		if (lhs.base() >= rhs.base()){
+		     return (true);   
+          }else{
+               return (false);
+          }
+	}
+	template <class Iterator> 
+     Random_access_iterator<Iterator> operator+( typename Random_access_iterator<Iterator>::difference_type n, const Random_access_iterator<Iterator> &it) {
+		return ((it.base() + n));
+	}
+	template <class Iter1, class Iter2>
+     typename Random_access_iterator<Iter1>::difference_type operator-( const Random_access_iterator<Iter1> &lhs, const Random_access_iterator<Iter2> &rhs) {
+		return (lhs.base() - rhs.base());
+	}
+
     /*--------------------------------reverse_bidirectional_iterator-------------------------*/
 
     template<typename T, typename Compare, typename Alloc> 

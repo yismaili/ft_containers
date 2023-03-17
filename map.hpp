@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 23:24:51 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/16 15:43:59 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:35:38 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 			typedef typename ft::bidirectional_iterator<value_type, Compare, Allocator>									const_iterator;
 			typedef typename ft::reverse_bidirectional_iterator<value_type, Compare, Allocator>							reverse_iterator;
 			typedef typename ft::reverse_bidirectional_iterator<const value_type, Compare, Allocator>					const_reverse_iterator;
+			
 			/*---------------------- friend-----------------------------*/
 			template <class Key1, class T1, class Compare1, class Alloc1>
 			friend	bool operator==(const map<Key1, T1, Compare1, Alloc1>& lhs, const map<Key1, T1, Compare1, Alloc1>& rhs);

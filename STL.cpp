@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 11:43:47 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/15 18:39:53 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:33:58 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,35 @@ int main ()
 {
   try
    {
-      /*-------------tests for vector ---------------*/
+    //   /*-------------tests for vector ---------------*/
       
-      /*-------------Construct vector -----------------------*/
-     { 
-      std::vector<int> first;                                // empty vector of ints
-      std::vector<int> second (4,100);   
-      std::cout << second.size() << "\n";                   // four ints with value 100
-      std::vector<int> third (second.begin(),second.end());  // iterating through second
-      std::vector<int> fourth (third);                       // a copy of third
-      // the iterator constructor can also be used to construct from arrays:
-      int myints[] = {16,2,77,29};
-      std::vector<int> fistdh (myints, myints + sizeof(myints) / sizeof(int) );
+    //   /*-------------Construct vector -----------------------*/
+    //  { 
+    //   std::vector<int> first;                                // empty vector of ints
+    //   std::vector<int> second (4,100);   
+    //   std::cout << second.size() << "\n";                   // four ints with value 100
+    //   std::vector<int> third (second.begin(),second.end());  // iterating through second
+    //   std::vector<int> fourth (third);                       // a copy of third
+    //   // the iterator constructor can also be used to construct from arrays:
+    //   int myints[] = {16,2,77,29};
+    //   std::vector<int> fistdh (myints, myints + sizeof(myints) / sizeof(int) );
 
-      std::cout << "The contents of fistdh are:";
-      for (std::vector<int>::iterator it = fistdh.begin(); it != fistdh.end(); ++it)
-        std::cout << ' ' << *it;
-      std::cout << '\n';
-     }
+    //   std::cout << "The contents of fistdh are:";
+    //   for (std::vector<int>::iterator it = fistdh.begin(); it != fistdh.end(); ++it)
+    //     std::cout << ' ' << *it;
+    //   std::cout << '\n';
+    //  }
 
-      /*----------------operator=-----------------*/
-     { std::vector<int> foo (3,0);
-      std::vector<int> bar (5,0);
+    //   /*----------------operator=-----------------*/
+    //  { std::vector<int> foo (3,0);
+    //   std::vector<int> bar (5,0);
       
-      bar = foo;
-      foo = std::vector<int>();
+    //   bar = foo;
+    //   foo = std::vector<int>();
 
-      std::cout << "Size of foo: " << int(foo.size()) << '\n';
-      std::cout << "Size of bar: " << int(bar.size()) << '\n';
-    }
+    //   std::cout << "Size of foo: " << int(foo.size()) << '\n';
+    //   std::cout << "Size of bar: " << int(bar.size()) << '\n';
+    // }
       /*-----------------Iterators ----------------*/
       {
       std::vector<int> myvector;
@@ -90,8 +90,10 @@ int main ()
           std::cout << ' ' << *it;
         std::cout << '\n';
         }
+      
       /*------------Assign vector content--------------------*/
       {
+        exit(1);
       std::vector<int> first1;
       std::vector<int> second1;
       std::vector<int> third1;

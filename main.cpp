@@ -6,7 +6,7 @@
 /*   By: yismaili <yismaili@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 13:50:25 by yismaili          #+#    #+#             */
-/*   Updated: 2023/03/16 18:56:37 by yismaili         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:18:11 by yismaili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <numeric>
 #include "algorithm.hpp"
 #include <cctype>       // std::tolower
+#include "iterator_traits.hpp"
 
 
 // a case-insensitive comparison function:
@@ -58,57 +59,58 @@ int main ()
      }
 
       /*----------------operator=-----------------*/
-     { ft::vector<int> foo (3,0);
-      ft::vector<int> bar (5,0);
-      
-      bar = foo;
-      foo = ft::vector<int>();
+      { 
+        ft::vector<int> foo (3,0);
+        ft::vector<int> bar (5,0);
+        
+        bar = foo;
+        foo = ft::vector<int>();
 
-      std::cout << "Size of foo: " << int(foo.size()) << '\n';
-      std::cout << "Size of bar: " << int(bar.size()) << '\n';
-    }
+        std::cout << "Size of foo: " << int(foo.size()) << '\n';
+        std::cout << "Size of bar: " << int(bar.size()) << '\n';
+      }
       /*-----------------Iterators ----------------*/
       {
-      ft::vector<int> myvector;
-      for (int i=1; i<=5; i++) myvector.push_back(i);
+        ft::vector<int> myvector;
+        for (int i=1; i<=5; i++) myvector.push_back(i);
 
-      std::cout << "myvector contains:";
-      for (ft::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
-        std::cout << ' ' << *it;
-      std::cout << '\n';
+        std::cout << "myvector contains:";
+        for (ft::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+          std::cout << ' ' << *it;
+        std::cout << '\n';
       }
       /*----------------reverse iterator------------*/
       {
-      ft::vector<int> myvector1 (5);  // 5 default-constructed ints
-        int i=0;
-       ft::vector<int>::reverse_iterator rit = myvector1.rbegin();
-         for (; rit != myvector1.rend(); ++rit){
-           *rit = ++i;
-         }
+        ft::vector<int> myvector1 (5);  // 5 default-constructed ints
+          int i=0;
+        ft::vector<int>::reverse_iterator rit = myvector1.rbegin();
+          for (; rit != myvector1.rend(); ++rit){
+            *rit = ++i;
+          }
 
-        std::cout << "myvector contains:";
-        for (ft::vector<int>::iterator it = myvector1.begin(); it != myvector1.end(); ++it)
-          std::cout << ' ' << *it;
-        std::cout << '\n';
+          std::cout << "myvector contains:";
+          for (ft::vector<int>::iterator it = myvector1.begin(); it != myvector1.end(); ++it)
+            std::cout << ' ' << *it;
+          std::cout << '\n';
         }
       /*------------Assign vector content--------------------*/
       {
-      ft::vector<int> first1;
-      ft::vector<int> second1;
-      ft::vector<int> third1;
+        ft::vector<int> first1;
+        ft::vector<int> second1;
+        ft::vector<int> third1;
 
-      first1.assign (7,100);             // 7 ints with a value of 100
+        first1.assign (7,100);             // 7 ints with a value of 100
 
-      ft::vector<int>::iterator it;
-      it = first1.begin()+1;
+        ft::vector<int>::iterator it;
+        it = first1.begin()+1;
 
-      second1.assign (it,first1.end()-1); // the 5 central values of first1
-      int myints1[] = {1776,7,4};
-      third1.assign (myints1,myints1+3);   // assigning from array.
+        second1.assign (it,first1.end()-1); // the 5 central values of first1
+        int myints1[] = {1776,7,4};
+        third1.assign (myints1,myints1+3);   // assigning from array.
 
-      std::cout << "Size of first1: " << int (first1.size()) << '\n';
-      std::cout << "Size of second1: " << int (second1.size()) << '\n';
-      std::cout << "Size of third1: " << int (third1.size()) << '\n';
+        std::cout << "Size of first1: " << int (first1.size()) << '\n';
+        std::cout << "Size of second1: " << int (second1.size()) << '\n';
+        std::cout << "Size of third1: " << int (third1.size()) << '\n';
       }
       /*------------------at--------------------------*/
       {
